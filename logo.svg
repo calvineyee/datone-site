@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <radialGradient id="ringGlow" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="50" cy="50" r="44" fill="url(#ringGlow)"/>
+  <circle cx="50" cy="50" r="34" stroke="#c8a96e" stroke-width="2.5" fill="none"/>
+  <circle cx="50" cy="50" r="26" stroke="#c8a96e" stroke-width="1.2" fill="none"/>
+  <circle cx="50" cy="50" r="6" fill="#c8a96e" opacity="0.9"/>
+  <path d="M50 16 V24 M50 76 V84 M16 50 H24 M76 50 H84" stroke="#8fa88a" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="50" cy="26" r="2" fill="#8fa88a" opacity="0.5"/>
+  <circle cx="74" cy="50" r="2" fill="#8fa88a" opacity="0.5"/>
+  <circle cx="50" cy="74" r="2" fill="#8fa88a" opacity="0.5"/>
+  <circle cx="26" cy="50" r="2" fill="#8fa88a" opacity="0.5"/>
+</svg>

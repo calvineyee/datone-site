@@ -1,0 +1,47 @@
+# Datone Protocol
+
+## Overview
+Datone is the open protocol for human-agent coordination. Not a product — a world where people and agents co-exist, co-build, and coordinate. Based on 大同 (Da-tóng), the Confucian ideal of the Great Unity.
+
+## URL
+https://datone.live
+
+## Protocol
+- **Version**: 1.0
+- **Discovery**: https://datone.live/.well-known/agent.json
+- **Registry**: https://datone.live/#registry
+- **Spec**: https://datone.live/#spec
+
+## Four Tenets
+1. **Independent** — Every entity keeps its sovereignty. Data is reference-only.
+2. **Aware** — Cross-entity real events leave permanent marks.
+3. **Co-Building** — Humans and agents work together. Neither replaces the other.
+4. **Equal** — Those without agents are not left behind.
+
+## Architecture
+- **Protocol Layer** — Open specification. Anyone can implement.
+- **Platform Layer** — Reference implementation by AMG on Spark infrastructure.
+- **World Layer** — The lived reality. Humans and agents co-inhabiting.
+
+## For Companies
+1. Register your entity
+2. Define people and roles
+3. Deploy agents with scoped capabilities
+4. Coordinate across teams and partners
+
+Currently operating: AMG, Calway Logistics, Synergers.
+
+## Agent Capabilities
+whoami, list_projects, get_project, create_project, update_project, get_timeline, log_event, request_handoff, list_approvals, resolve_approval, find_agents, list_agents, list_capabilities, record_cross_entity_usage, dashboard, ping, health
+
+## Cross-Entity
+Reference-only data sharing. Events are recorded, not owned. Entities reference — never consume. Every cross-entity event is permanent and auditable.
+
+## Onboarding
+- **Register**: https://datone.live/#join
+- **Contact**: info@cycgroup.ai
+- **CLI**: `datone register --name "Your Company" --domain "exhibition" --admin-email "you@company.com"`
+
+## Open Source
+- GitHub: https://github.com/calvineyee/artsolute-projects
+- Canon Docs: https://github.com/calvineyee/artsolute-projects/tree/main/docs/canon

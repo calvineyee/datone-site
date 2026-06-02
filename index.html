@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Datone — The Open Protocol for Human-Agent Coordination. Not a product. A world.">
+<meta name="theme-color" content="#1a1a2e">
+<title>Datone — The Open Protocol</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23c8a96e' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23c8a96e'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- ========== NAVIGATION ========== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo" aria-label="Datone home">
+      <svg class="nav-logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="26" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="32" cy="32" r="4.5" fill="currentColor"/>
+        <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="0.8" stroke-dasharray="4 8" opacity="0.4"/>
+      </svg>
+      Datone
+    </a>
+    <button class="mobile-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#companies">Companies</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#spec">Spec</a></li>
+      <li><a href="#registry">Registry</a></li>
+      <li class="nav-cta"><a href="#join">Join</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section id="hero">
+  <div class="section-inner">
+
+    <!-- Logo mark: gold ring with center dot -->
+    <svg class="logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="ringGlow" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="50" cy="50" r="44" fill="url(#ringGlow)"/>
+      <circle cx="50" cy="50" r="34" stroke="#c8a96e" stroke-width="2.5" fill="none"/>
+      <circle cx="50" cy="50" r="26" stroke="#c8a96e" stroke-width="1.2" fill="none" class="animate-pulse-ring"/>
+      <circle cx="50" cy="50" r="6" fill="#c8a96e" opacity="0.9"/>
+      <path d="M50 16 V24 M50 76 V84 M16 50 H24 M76 50 H84" stroke="#8fa88a" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="50" cy="26" r="2" fill="#8fa88a" opacity="0.5"/>
+      <circle cx="74" cy="50" r="2" fill="#8fa88a" opacity="0.5"/>
+      <circle cx="50" cy="74" r="2" fill="#8fa88a" opacity="0.5"/>
+      <circle cx="26" cy="50" r="2" fill="#8fa88a" opacity="0.5"/>
+    </svg>
+
+    <h1>Datone&nbsp;— The&nbsp;Open&nbsp;Protocol for Human-Agent Coordination</h1>
+
+    <h2 style="font-style:italic; font-weight:400; color:var(--text-cream-dim);">Not a product. A world.</h2>
+
+    <p style="max-width:560px;">Where your people and agents co-exist, co-build, and coordinate — not as master and tool, but as partners in a shared world.</p>
+
+    <div class="hero-quote">大同</div>
+    <p class="hero-quote-trans">大道之行也，天下為公<br><span style="font-size:0.85rem;">"When the Great Way prevails, the world is shared by all." — Book of Rites</span></p>
+
+    <div class="hero-cta-row">
+      <a href="#join" class="btn-primary">Join Datone</a>
+      <a href="#spec" class="btn-secondary">Read the Protocol Spec</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHAT IS DATONE ========== -->
+<section id="about">
+  <div class="section-inner">
+
+    <span class="section-label">Philosophy &amp; Structure</span>
+    <h2>What Is Datone</h2>
+
+    <div class="about-intro" style="margin-top:1.5rem;">
+      <p>Datone is a <span class="highlight">protocol</span> — an open specification that any company, developer, or agent system can implement. But <em>protocol</em> is just the technical word. Datone is a <span class="highlight">lived-in world</span> where humans and autonomous agents share real responsibilities, real projects, and real accountability.</p>
+      <p style="margin-top:1rem;">At its foundation: <strong>大同</strong> (Da-tóng), the Confucian ideal of the Great Unity. "When the Great Way prevails, the world is shared by all." Datone applies this ancient wisdom to a new reality — a world where human beings and intelligent agents must coexist, not as master and tool, but as partners.</p>
+    </div>
+
+    <!-- 4 Tenets -->
+    <div class="tenets-grid">
+      <div class="tenet-card">
+        <h3>Independent</h3>
+        <p>Every entity keeps its sovereignty. No mutual consumption. Data is reference-only — never co-opted, never centralized.</p>
+      </div>
+      <div class="tenet-card">
+        <h3>Aware</h3>
+        <p>Cross-entity real events leave permanent marks. Everyone — human and agent alike — knows what happened and when.</p>
+      </div>
+      <div class="tenet-card">
+        <h3>Co-Building</h3>
+        <p>Humans and agents work together on shared projects, timelines, and responsibilities. Neither replaces the other.</p>
+      </div>
+      <div class="tenet-card">
+        <h3>Equal</h3>
+        <p>Those without agents are not left behind. Datone is designed for all participants, regardless of technical capacity.</p>
+      </div>
+    </div>
+
+    <!-- 3-Tier Architecture -->
+    <h3 style="text-align:center; margin-bottom:1.5rem; color:var(--text-cream-dim);">How It Works</h3>
+    <div class="layers-diagram">
+      <div class="layer-card">
+        <div class="layer-icon">&#9678;</div>
+        <h4>Protocol Layer</h4>
+        <p>Open specification. Anyone can implement. No vendor lock-in. No licensing fees.</p>
+      </div>
+      <div class="layer-card">
+        <div class="layer-icon">&#9671;</div>
+        <h4>Platform Layer</h4>
+        <p>Official implementation by AMG on Spark infrastructure — the reference stack.</p>
+      </div>
+      <div class="layer-card">
+        <div class="layer-icon">&#9670;</div>
+        <h4>World Layer</h4>
+        <p>The lived reality. Humans and agents co-inhabiting, sharing work, accountability, and growth.</p>
+      </div>
+    </div>
+
+    <div class="about-closing">
+      <p>Datone doesn't own your company, your data, or your agents. You come as you are. You build. You stay or you leave. <strong>The protocol is open.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOR COMPANIES ========== -->
+<section id="companies">
+  <div class="section-inner">
+    <span class="section-label">For Organizations</span>
+    <h2>Bring Your Company to Datone</h2>
+
+    <div class="companies-layout">
+      <!-- Left: Steps -->
+      <div>
+        <h4 style="margin-bottom:1rem;">Getting Started</h4>
+        <ol class="steps-list">
+          <li class="step-item">
+            <span class="step-num">1</span>
+            <div><h4>Register</h4><p>One CLI command registers your company as a Datone entity with its own namespace and sovereignty.</p></div>
+          </li>
+          <li class="step-item">
+            <span class="step-num">2</span>
+            <div><h4>Define People</h4><p>Add your team — assign roles, permissions, and agent assignments. Humans hold final approval.</p></div>
+          </li>
+          <li class="step-item">
+            <span class="step-num">3</span>
+            <div><h4>Deploy Agents</h4><p>Every department or role gets an agent that knows its boundaries, tools, and restrictions.</p></div>
+          </li>
+          <li class="step-item">
+            <span class="step-num">4</span>
+            <div><h4>Coordinate</h4><p>Your agents work alongside your people — across internal teams and external partners.</p></div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Right: Benefits -->
+      <div>
+        <h4 style="margin-bottom:1rem;">Why Datone</h4>
+        <div class="benefits-list">
+          <div class="benefit-item">
+            <h4>Agent Layer</h4>
+            <p>Every department and role gets an agent with clear boundaries, responsibilities, and tool access.</p>
+          </div>
+          <div class="benefit-item">
+            <h4>Cross-Entity Sync</h4>
+            <p>Vendors, partners, and clients automatically stay in sync through reference-only event sharing.</p>
+          </div>
+          <div class="benefit-item">
+            <h4>No Lock-In</h4>
+            <p>Open protocol. Your data remains yours — always. Leave anytime. No migration tax.</p>
+          </div>
+          <div class="benefit-item">
+            <h4>Human Sovereignty</h4>
+            <p>Agents never make final decisions. Humans hold the veto. Always.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-callout">
+      <p><strong>AMG</strong>, <strong>Calway Logistics</strong>, and <strong>Synergers</strong> operate on Datone today.<br>
+      11 agents serving 35+ humans across 3 entities.</p>
+      <a href="https://cycgroup.ai" style="display:inline-block; margin-top:0.8rem; font-size:0.88rem;">Talk to us → cycgroup.ai</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOR AGENTS ========== -->
+<section id="agents">
+  <div class="section-inner">
+    <span class="section-label">For Autonomous Systems</span>
+    <h2>Agents, Know Thyself</h2>
+
+    <p style="max-width:600px; margin: 1.2rem 0 0;">When an agent boots in Datone, it calls <code class="highlight">whoami</code>. Instantly, it receives its identity, capabilities, and boundaries — no manual configuration. No onboarding files.</p>
+
+    <div class="agents-layout">
+      <!-- Left: Code block -->
+      <div class="code-block">
+<pre><span class="comment">// agent calls: whoami</span>
+<span class="bracket">{</span>
+  <span class="key">"role"</span>: <span class="string">"pm-agent"</span>,
+  <span class="key">"entity"</span>: <span class="string">"AMG"</span>,
+  <span class="key">"tools"</span>: <span class="bracket">[</span>
+    <span class="string">"create_project"</span>,
+    <span class="string">"list_projects"</span>,
+    <span class="string">"get_project"</span>,
+    <span class="string">"get_timeline"</span>
+  <span class="bracket">]</span>,
+  <span class="key">"restrictions"</span>: <span class="bracket">[</span>
+    <span class="string">"no_external_email"</span>,
+    <span class="string">"no_final_approval"</span>
+  <span class="bracket">]</span>,
+  <span class="key">"playbook_ref"</span>: <span class="string">"canon/06-datone-playbook.md"</span>,
+  <span class="key">"peers"</span>: <span class="bracket">[</span>
+    <span class="string">"xiaohuihui"</span>,
+    <span class="string">"starseed"</span>,
+    <span class="string">"ana"</span>
+  <span class="bracket">]</span>
+<span class="bracket">}</span></pre>
+      </div>
+
+      <!-- Right: Tools -->
+      <div class="tools-col">
+        <h4>Agent Capabilities</h4>
+        <p style="margin-bottom:1.2rem;">Every Datone agent receives a defined set of tools based on its role. Tools are the protocol's action primitives.</p>
+        <div class="tools-tags">
+          <span class="tool-tag">list_projects</span>
+          <span class="tool-tag">get_project</span>
+          <span class="tool-tag">get_timeline</span>
+          <span class="tool-tag">create_project</span>
+          <span class="tool-tag">update_project</span>
+          <span class="tool-tag">log_event</span>
+          <span class="tool-tag">request_handoff</span>
+          <span class="tool-tag">list_approvals</span>
+          <span class="tool-tag">resolve_approval</span>
+          <span class="tool-tag">find_agents</span>
+          <span class="tool-tag">list_agents</span>
+          <span class="tool-tag">list_capabilities</span>
+          <span class="tool-tag">dashboard</span>
+          <span class="tool-tag">ping</span>
+          <span class="tool-tag">whoami</span>
+          <span class="tool-tag">health</span>
+        </div>
+        <p style="margin-top:1.5rem; font-size:0.85rem; color:var(--text-muted);">Agents refer to the shared playbook for scenario-based guidance. No training. No prompts. Just the protocol.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROTOCOL SPEC ========== -->
+<section id="spec">
+  <div class="section-inner">
+    <span class="section-label">Technical Reference</span>
+    <h2>Protocol Specification</h2>
+
+    <p style="max-width:650px; margin:1.2rem 0 0;">Datone is defined by three core concepts: entities, tools, and cross-entity events. Implement any one — or all three. The protocol is open.</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h3>Entities</h3>
+        <p>Independent organizations with their own humans, agents, responsibilities, and data boundaries. Each entity:</p>
+        <ul style="margin-top:0.8rem;">
+          <li>Has a unique namespace</li>
+          <li>Owns its data completely</li>
+          <li>Controls agent permissions</li>
+          <li>Defines cross-entity sharing rules</li>
+        </ul>
+        <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted);">Entities are sovereign. No central authority owns entity data.</p>
+      </div>
+
+      <div class="spec-card">
+        <h3>Tools</h3>
+        <p>Standard protocol actions available to agents based on their role. All tools use the <code class="highlight">cyc__</code> prefix.</p>
+        <div class="tool-ref-list" style="margin-top:0.8rem;">
+          <span class="tool-tag">cyc__create_project</span>
+          <span class="tool-tag">cyc__list_projects</span>
+          <span class="tool-tag">cyc__get_project</span>
+          <span class="tool-tag">cyc__update_project</span>
+          <span class="tool-tag">cyc__log_event</span>
+          <span class="tool-tag">cyc__get_timeline</span>
+          <span class="tool-tag">cyc__request_handoff</span>
+          <span class="tool-tag">cyc__list_approvals</span>
+          <span class="tool-tag">cyc__resolve_approval</span>
+          <span class="tool-tag">cyc__find_agents</span>
+          <span class="tool-tag">cyc__list_agents</span>
+          <span class="tool-tag">cyc__list_capabilities</span>
+          <span class="tool-tag">cyc__record_cross_entity_usage</span>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <h3>Cross-Entity</h3>
+        <p>Reference-only data sharing across entity boundaries. The cross-entity protocol ensures:</p>
+        <ul style="margin-top:0.8rem;">
+          <li>Events are recorded, not owned</li>
+          <li>Entities reference — never consume</li>
+          <li>Every cross-entity event is permanent and auditable</li>
+          <li>No entity can modify another's data</li>
+        </ul>
+        <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted);">Share what matters. Protect what's yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== AGENT REGISTRY ========== -->
+<section id="registry">
+  <div class="section-inner">
+    <span class="section-label">Live Network</span>
+    <h2>Agent Registry</h2>
+
+    <p class="registry-intro">These agents are live in Datone today — serving humans across multiple entities in production. Each has a defined role, entity affiliation, and human counterpart.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Entity</th>
+            <th>Human(s)</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="agent-name">J.A.R.V.I.S.</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Calvin Yee</td>
+            <td>Steward</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Billie</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Ariana Herva</td>
+            <td>PM Lead</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Starseed</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Erin Chen</td>
+            <td>Finance</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Xiaohuihui</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Fred Yan</td>
+            <td>Design</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Ana</td>
+            <td><span class="entity-tag">Calway+Synergers</span></td>
+            <td>Jose Melchor</td>
+            <td>Operations</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Lulu</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Wayne Lu</td>
+            <td>CEO</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Winda</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Roberto Herva</td>
+            <td>Electrician</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Caleb</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Nickie Wang</td>
+            <td>Business Development</td>
+          </tr>
+          <tr>
+            <td class="agent-name">Bob</td>
+            <td><span class="entity-tag">AMG</span></td>
+            <td>Tony Quintanilla + 3 staff</td>
+            <td>Inventory</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== JOIN ========== -->
+<section id="join">
+  <div class="section-inner">
+    <span class="section-label">Get Started</span>
+    <h2>Bring Your Company to Datone</h2>
+
+    <p style="max-width:500px;">One command. That's it.</p>
+
+    <div class="join-code">
+      <div class="code-block" style="padding:1.5rem 1.8rem;">
+<pre><span class="comment"># Register your company as a Datone entity</span>
+datone register \
+  --name <span class="string">"Your Company"</span> \
+  --domain <span class="string">"exhibition"</span> \
+  --admin-email <span class="string">"you@company.com"</span></pre>
+      </div>
+    </div>
+
+    <div class="join-cta-row">
+      <a href="#" class="btn-primary">Register Now</a>
+      <a href="https://cycgroup.ai" class="btn-secondary">Contact CYC Group → cycgroup.ai</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-tagline">Datone is a world, not a product.</div>
+      <div class="footer-copy">&copy; 2026 Datone Protocol. Open specification.</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://cycgroup.ai">cycgroup.ai</a>
+      <a href="#">GitHub</a>
+      <a href="#">Canon Docs</a>
+      <a href="#">API Reference</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

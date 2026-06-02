@@ -364,6 +364,78 @@ code, pre {
 
 .registry-intro { max-width: 500px; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted); }
 
+/* --- ENTITY REGISTRY TABLE --- */
+.entity-registry-table {
+  width: 100%;
+  max-width: 700px;
+  margin: 1.5rem auto 0;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-cream);
+}
+
+.entity-registry-table thead {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.entity-registry-table th {
+  text-align: left;
+  padding: 0.7rem 1rem;
+  font-weight: 500;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.entity-registry-table tbody tr {
+  border-bottom: 1px solid var(--border-card);
+  transition: background 0.2s;
+}
+
+.entity-registry-table tbody tr:hover {
+  background: rgba(200, 169, 110, 0.04);
+}
+
+.entity-registry-table td {
+  padding: 0.8rem 1rem;
+  vertical-align: middle;
+}
+
+.entity-name {
+  font-weight: 500;
+  color: var(--text-cream);
+}
+
+.domain-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(143, 168, 138, 0.12);
+  color: var(--sage);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.agent-count {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.entity-date {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+}
+
+.entity-description {
+  color: var(--text-cream-dim);
+  font-size: 0.82rem;
+  max-width: 250px;
+  line-height: 1.4;
+}
+
 /* --- JOIN --- */
 #join {
   background:

@@ -1,0 +1,14 @@
+{
+  "protocol": "datone",
+  "version": "1.0",
+  "entity": {
+    "name": "Datone Protocol",
+    "id": "datone",
+    "url": "https://datone.live"
+  },
+  "capabilities": ["spec", "registry"],
+  "onboarding": {
+    "register_endpoint": "https://datone.live/api/v1/entities/register",
+    "contact": "info@cycgroup.ai"
+  }
+}

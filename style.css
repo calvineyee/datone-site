@@ -336,36 +336,33 @@ code, pre {
 /* --- AGENT REGISTRY --- */
 #registry { background: var(--bg-indigo); }
 
-.registry-intro { max-width: 600px; margin-bottom: 2rem; }
-
-.table-wrap {
-  overflow-x: auto; border: 1px solid var(--border-card);
-  border-radius: 6px;
+#registry .section-inner {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
 }
 
-table {
-  width: 100%; border-collapse: collapse;
-  font-size: 0.88rem;
+.live-stat {
+  margin: 1rem 0 0.8rem;
+  display: flex; flex-direction: column; align-items: center;
 }
 
-thead { border-bottom: 2px solid var(--border-subtle); }
-th {
-  text-align: left; padding: 0.9rem 1.2rem;
-  font-family: var(--font-body); font-size: 0.75rem; font-weight: 500;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--accent-gold-dim); background: rgba(13,13,26,0.5);
+.live-stat-number {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 8vw, 7rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent-gold);
+  letter-spacing: -0.02em;
 }
-td {
-  padding: 0.8rem 1.2rem;
-  border-bottom: 1px solid var(--border-card);
+
+.live-stat-label {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text-cream-dim);
+  margin-top: -0.2rem;
 }
-tr:hover td { background: rgba(200,169,110,0.04); }
-.agent-name { font-weight: 500; color: var(--text-cream); }
-.entity-tag {
-  display: inline-block; padding: 0.15rem 0.6rem;
-  border-radius: 3px; font-size: 0.72rem; font-weight: 500;
-  background: rgba(143,168,138,0.15); color: var(--sage);
-}
+
+.registry-intro { max-width: 500px; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted); }
 
 /* --- JOIN --- */
 #join {

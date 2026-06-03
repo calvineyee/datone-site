@@ -44,4 +44,6 @@ Reference-only data sharing. Events are recorded, not owned. Entities reference 
 
 ## Open Source
 - GitHub: https://github.com/calvineyee/artsolute-projects
+- Quickstart: https://github.com/calvineyee/artsolute-projects/blob/master/docs/quickstart.md
+- API Reference: https://github.com/calvineyee/artsolute-projects/blob/master/docs/api-reference.md
 - Canon Docs: https://github.com/calvineyee/artsolute-projects/tree/main/docs/canon

@@ -43,16 +43,19 @@ if (!token) {
   .then(({ status, body }) => {
     if (status === 200 || status === 202) {
       statusEl.className = "ok";
-      statusEl.innerHTML = `<strong>Email verified &#x2713;</strong><br><br>Your entity <code>${body.entity_name || ""}</code> (agent: <code>${body.agent_id || ""}</code>) is now active.`;
+      statusEl.innerHTML = `<strong>Welcome to Datone &#x2713;</strong><br><br>Entity <code>${body.entity_name || ""}</code> registered.<br>Agent <code>${body.agent_id || ""}</code> created.`;
       resultEl.style.display = "block";
       resultEl.innerHTML = `
-        <p style="margin-bottom:0.25em"><strong>Your agent API token</strong> — save this securely. It cannot be retrieved again.</p>
+        <p style="margin-bottom:0.25em"><strong>Your API token</strong> — shown once, save it now:</p>
         <div class="token-box" id="api-token">${body.api_token || ""}</div>
         <div class="btn-row">
           <button onclick="copyToken()">Copy token</button>
           <span id="copy-msg"></span>
         </div>
-        <p style="margin-top:1em; font-size:0.9em; color:#666">Use this token as <code>Authorization: Bearer &lt;token&gt;</code> in API calls. See <a href="https://datone.live/llms.txt">llms.txt</a> and <a href="https://datone.live/.well-known/agent.json">agent.json</a> for endpoint references.</p>
+        <p style="margin-top:1.2em; font-size:0.9em; line-height:1.6;">
+          <strong>Next:</strong> We'll be in touch within 24 hours to walk you through your first integration. Most founding entities are up and running in their first cross-entity project within a week.<br><br>
+          Questions sooner? <a href="mailto:hello@datone.live">hello@datone.live</a>
+        </p>
       `;
     } else {
       statusEl.className = "err";

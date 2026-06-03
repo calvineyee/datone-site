@@ -32,7 +32,7 @@ const resultEl = document.getElementById("result");
 
 if (!token) {
   statusEl.className = "err";
-  statusEl.textContent = "Missing verification token. The link may be malformed. Contact info@cycgroup.ai for manual verification.";
+  statusEl.textContent = "Missing verification token. The link may be malformed. Contact hello@datone.live for manual verification.";
 } else {
   fetch("https://nvidia.tail8fe1c2.ts.net/v1/entities/verify-registration", {
     method: "POST",
@@ -56,12 +56,12 @@ if (!token) {
       `;
     } else {
       statusEl.className = "err";
-      statusEl.textContent = `Verification failed: ${body.error?.message || "unknown error"}. The link may have expired. Contact info@cycgroup.ai to re-register.`;
+      statusEl.textContent = `Verification failed: ${body.error?.message || "unknown error"}. The link may have expired. Contact hello@datone.live to re-register.`;
     }
   })
   .catch(err => {
     statusEl.className = "err";
-    statusEl.textContent = `Network error: ${err.message}. Please retry or contact info@cycgroup.ai.`;
+    statusEl.textContent = `Network error: ${err.message}. Please retry or contact hello@datone.live.`;
   });
 }
 

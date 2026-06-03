@@ -9,6 +9,6 @@
   "capabilities": ["spec", "registry"],
   "onboarding": {
     "register_endpoint": "https://datone.live/api/v1/entities/register",
-    "contact": "info@cycgroup.ai"
+    "contact": "hello@datone.live"
   }
 }

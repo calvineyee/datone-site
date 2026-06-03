@@ -39,7 +39,7 @@ Reference-only data sharing. Events are recorded, not owned. Entities reference 
 
 ## Onboarding
 - **Register**: https://datone.live/#join
-- **Contact**: info@cycgroup.ai
+- **Contact**: hello@datone.live
 - **CLI**: `datone register --name "Your Company" --domain "exhibition" --admin-email "you@company.com"`
 
 ## Open Source

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Datone entity dashboard — manage your agents and projects.">
+<meta name="theme-color" content="#1a1a2e">
+<title>Dashboard — Datone Protocol</title>
+<meta property="og:title" content="Dashboard — Datone Protocol">
+<meta property="og:description" content="Your Datone entity dashboard. Agents, projects, cross-entity coordination.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://datone.live/dashboard/">
+<meta property="og:site_name" content="Datone Protocol">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .dash-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem; }
+  .dash-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem;
+    padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);
+  }
+  .dash-header h1 { font-size: 1.4rem; margin: 0; color: var(--text-cream); }
+  .dash-header h1 span { color: var(--accent-gold); }
+  .btn {
+    font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
+    padding: 0.45rem 1rem; border-radius: 4px; cursor: pointer;
+    border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.35rem;
+  }
+  .btn-sm { font-size: 0.72rem; padding: 0.3rem 0.7rem; }
+  .btn-primary { background: var(--accent-gold); color: var(--bg-deep); }
+  .btn-primary:hover { background: #d4b67a; }
+  .btn-outline { background: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold-dim); }
+  .btn-outline:hover { border-color: var(--accent-gold); background: var(--accent-gold-glow); }
+  .btn-ghost { background: transparent; color: var(--text-muted); }
+  .btn-ghost:hover { color: var(--accent-gold); }
+
+  /* Auth card */
+  .auth-card {
+    max-width: 440px; margin: 3rem auto; background: var(--bg-card);
+    border: 1px solid var(--border-card); border-radius: 8px; padding: 2rem;
+    text-align: center;
+  }
+  .auth-card h2 { margin-bottom: 0.5rem; }
+  .auth-card p { margin-bottom: 1.25rem; font-size: 0.88rem; }
+  .auth-card input {
+    width: 100%; padding: 0.6rem 0.85rem; font-family: var(--font-body);
+    font-size: 0.9rem; background: #0d0d1f; border: 1px solid var(--border-card);
+    border-radius: 5px; color: var(--text-cream); margin-bottom: 0.75rem;
+  }
+  .auth-card input:focus { outline: none; border-color: var(--accent-gold); }
+
+  /* Entity card */
+  .entity-card {
+    background: var(--bg-card); border: 1px solid var(--border-card);
+    border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .entity-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .entity-icon {
+    width: 44px; height: 44px; border-radius: 6px; background: var(--accent-gold-glow);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--accent-gold);
+    flex-shrink: 0;
+  }
+  .entity-info h3 { font-size: 1.2rem; margin-bottom: 0.1rem; }
+  .entity-meta { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-cream-dim); margin-top: 0.25rem; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .status-verified { background: var(--sage); }
+  .status-pending { background: var(--accent-gold-dim); }
+
+  /* Quick actions */
+  .quick-actions { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+  /* Projects list */
+  .section-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .section-head h4 { margin: 0; }
+  .project-list { list-style: none; }
+  .project-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.7rem 1rem; background: var(--bg-card);
+    border: 1px solid var(--border-card); border-radius: 6px;
+    margin-bottom: 0.5rem; gap: 1rem; flex-wrap: wrap;
+  }
+  .project-item:last-child { margin-bottom: 0; }
+  .project-id { font-family: var(--font-body); font-weight: 500; color: var(--text-cream); font-size: 0.88rem; }
+  .project-meta { display: flex; align-items: center; gap: 0.6rem; }
+  .badge {
+    font-size: 0.68rem; font-weight: 500; text-transform: uppercase;
+    padding: 0.15rem 0.45rem; border-radius: 3px; letter-spacing: 0.03em;
+  }
+  .badge-draft { background: rgba(200,169,110,0.12); color: var(--accent-gold-dim); }
+  .badge-active { background: rgba(143,168,138,0.12); color: var(--sage); }
+  .project-date { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--bg-indigo); border: 1px solid var(--border-subtle);
+    border-radius: 8px; padding: 1.5rem; width: 90%; max-width: 440px;
+  }
+  .modal h3 { margin-bottom: 1rem; }
+  .modal label { display: block; font-size: 0.8rem; color: var(--text-cream-dim); margin-bottom: 0.3rem; }
+  .modal input, .modal textarea, .modal select {
+    width: 100%; padding: 0.55rem 0.75rem; font-family: var(--font-body);
+    font-size: 0.88rem; background: #0d0d1f; border: 1px solid var(--border-card);
+    border-radius: 4px; color: var(--text-cream); margin-bottom: 0.75rem;
+  }
+  .modal input:focus, .modal textarea:focus, .modal select:focus {
+    outline: none; border-color: var(--accent-gold);
+  }
+  .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.5rem; }
+
+  /* Messages */
+  .msg { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem; }
+  .msg-error { background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.2); color: #e07070; }
+  .msg-info { background: rgba(200,169,110,0.08); border: 1px solid var(--border-subtle); color: var(--text-cream-dim); }
+
+  /* Spinner */
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border-card); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 0.6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .copy-toast {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    background: var(--accent-gold); color: var(--bg-deep); padding: 0.5rem 1.2rem;
+    border-radius: 6px; font-size: 0.82rem; font-weight: 500;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200;
+  }
+  .copy-toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="dash-wrap">
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="dash-header" id="dashHeader">
+    <h1><a href="/" style="color:inherit;text-decoration:none;">⚡ <span>Datone</span> Dashboard</a></h1>
+    <div id="headerActions"></div>
+  </header>
+
+  <div id="mainContent"></div>
+
+  <!-- Toast -->
+  <div class="copy-toast" id="copyToast">✓ Copied</div>
+
+  <!-- New Project Modal -->
+  <div class="modal-overlay" id="newProjectModal">
+    <div class="modal">
+      <h3>New Project</h3>
+      <label for="projTitle">Title</label>
+      <input type="text" id="projTitle" placeholder="e.g. Q3 Brand Refresh">
+      <label for="projDesc">Description</label>
+      <textarea id="projDesc" rows="3" placeholder="Optional description…"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="submitProjectBtn" onclick="handleCreateProject()">Create</button>
+      </div>
+      <div id="modalMsg"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====================== CONFIG ======================
+const API_BASE = "https://datone.live/api/v1";
+const LS_KEY = "datone_token";
+
+// ====================== INIT ======================
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem(LS_KEY);
+  if (token) renderDashboard(token);
+  else renderAuth();
+});
+
+// ====================== AUTH UI ======================
+function renderAuth() {
+  const hdr = document.getElementById("headerActions");
+  hdr.innerHTML = `<a href="/" class="btn btn-outline btn-sm">← Back</a>`;
+  document.getElementById("mainContent").innerHTML = `
+    <div class="auth-card">
+      <h2>Connect Your Entity</h2>
+      <p>Paste your Datone API token to access your dashboard.</p>
+      <input type="password" id="tokenInput" placeholder="datone_sk_…" autofocus
+             onkeydown="if(event.key==='Enter')connect()">
+      <button class="btn btn-primary" onclick="connect()" style="width:100%;justify-content:center;">
+        Connect
+      </button>
+      <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted);">
+        Tokens are stored in your browser's localStorage. <a href="/register/" style="color:var(--text-muted);text-decoration:underline;">Need a token?</a>
+      </p>
+    </div>`;
+}
+
+function connect() {
+  const val = document.getElementById("tokenInput").value.trim();
+  if (!val) return flashError("Enter your token", "mainContent");
+  if (!val.startsWith("datone_sk_")) return flashError("Invalid token format (should start with datone_sk_)", "mainContent");
+  localStorage.setItem(LS_KEY, val);
+  renderDashboard(val);
+}
+
+function disconnect() {
+  localStorage.removeItem(LS_KEY);
+  renderAuth();
+}
+
+// ====================== DASHBOARD ======================
+async function renderDashboard(token) {
+  const hdr = document.getElementById("headerActions");
+  hdr.innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="copyToken()">📋 Copy Token</button>
+    <button class="btn btn-outline btn-sm" onclick="disconnect()">✕ Disconnect</button>`;
+
+  const main = document.getElementById("mainContent");
+  main.innerHTML = `<div style="text-align:center;padding:3rem 0;"><span class="spinner"></span></div>`;
+
+  // Fetch entity info
+  let entity, projects;
+  try {
+    const er = await fetch(`${API_BASE}/whoami`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (!er.ok) throw new Error(`HTTP ${er.status}`);
+    entity = await er.json();
+  } catch (e) {
+    main.innerHTML = `
+      <div class="msg msg-error">
+        ⚠ API connection failed — <code>${escapeHtml(e.message)}</code>
+        <br><button class="btn btn-outline btn-sm" style="margin-top:0.5rem" onclick="retry()">↻ Retry</button>
+      </div>`;
+    return;
+  }
+
+  // Fetch projects
+  try {
+    const pr = await fetch(`${API_BASE}/projects?limit=5`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (pr.ok) projects = await pr.json();
+  } catch (_) { projects = []; }
+
+  // Render
+  const domain = entity.domain || "—";
+  const verified = entity.status === "verified";
+  const agentCount = entity.agents_count ?? (entity.agents?.length ?? 0);
+  const entityName = entity.name || entity.entity_id || "Unknown";
+  const entityId = entity.entity_id || "—";
+
+  main.innerHTML = `
+    <!-- Entity Card -->
+    <div class="entity-card">
+      <div class="entity-row">
+        <div class="entity-icon">${entityName.charAt(0)}</div>
+        <div class="entity-info">
+          <h3>${escapeHtml(entityName)}</h3>
+          <div class="entity-meta">
+            <span class="meta-tag">🌐 Domain: ${escapeHtml(domain)}</span>
+            <span class="meta-tag">
+              <span class="status-dot ${verified?'status-verified':'status-pending'}"></span>
+              ${verified?'Verified':'Pending'}
+            </span>
+            <span class="meta-tag">🤖 Agents: ${agentCount} active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <button class="btn btn-primary btn-sm" onclick="openModal()">📄 New Project</button>
+      <button class="btn btn-outline btn-sm" onclick="listProjects()">📋 List Projects</button>
+    </div>
+
+    <!-- Projects -->
+    <div class="section-head">
+      <h4>Recent Projects</h4>
+      <span style="font-size:0.75rem;color:var(--text-muted)">last 5</span>
+    </div>
+    ${renderProjects(projects, entityId)}
+  `;
+
+  window._token = token;
+  window._entityId = entityId;
+}
+
+function renderProjects(projects, entityId) {
+  if (!projects || !projects.length) {
+    return `<div class="msg msg-info">No projects yet. Create your first project above.</div>`;
+  }
+  const items = (Array.isArray(projects) ? projects : projects.items || []);
+  if (!items.length) return `<div class="msg msg-info">No projects yet.</div>`;
+  return `<ul class="project-list">${items.map(p => {
+    const id = p.id || p.project_id || "—";
+    const title = p.title || id;
+    const status = p.status || "draft";
+    const date = (p.created_at || p.updated_at || "").slice(0, 10);
+    const badgeClass = status === "active" ? "badge-active" : "badge-draft";
+    return `<li class="project-item">
+      <span class="project-id">${escapeHtml(title)}</span>
+      <span class="project-meta">
+        <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
+        ${date ? `<span class="project-date">${date}</span>` : ''}
+      </span>
+    </li>`;
+  }).join('')}</ul>`;
+}
+
+// ====================== MODAL ======================
+function openModal() {
+  document.getElementById("newProjectModal").classList.add("active");
+  document.getElementById("projTitle").focus();
+  document.getElementById("modalMsg").innerHTML = "";
+}
+function closeModal() {
+  document.getElementById("newProjectModal").classList.remove("active");
+  document.getElementById("projTitle").value = "";
+  document.getElementById("projDesc").value = "";
+  document.getElementById("modalMsg").innerHTML = "";
+}
+
+async function handleCreateProject() {
+  const btn = document.getElementById("submitProjectBtn");
+  const title = document.getElementById("projTitle").value.trim();
+  if (!title) return flashError("Title is required", "modalMsg");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Creating…';
+  try {
+    const res = await fetch(`${API_BASE}/projects`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${window._token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ title, description: document.getElementById("projDesc").value.trim() })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    closeModal();
+    renderDashboard(window._token);
+  } catch (e) {
+    flashError(`Failed: ${escapeHtml(e.message)}`, "modalMsg");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Create";
+  }
+}
+
+// ====================== HELPERS ======================
+function retry() { const t = localStorage.getItem(LS_KEY); if (t) renderDashboard(t); else renderAuth(); }
+
+function listProjects() {
+  if (!window._token || !window._entityId) return;
+  window.open(`https://datone.live/?entity=${window._entityId}`, "_self");
+}
+
+function copyToken() {
+  navigator.clipboard.writeText(window._token).then(() => {
+    const t = document.getElementById("copyToast");
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 1800);
+  });
+}
+
+function flashError(msg, elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const existing = el.querySelector(".msg-error");
+  if (existing) existing.remove();
+  el.insertAdjacentHTML("afterbegin", `<div class="msg msg-error">${msg}</div>`);
+}
+
+function escapeHtml(s) {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// Close modal on overlay click
+document.addEventListener("click", (e) => {
+  if (e.target.id === "newProjectModal") closeModal();
+});
+
+// Close modal on Escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+</script>
+</body>
+</html>

@@ -8,37 +8,52 @@
   body { font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 4em auto; padding: 1em; background: #fff; color: #222; }
   .ok { color: #2a8e3a; }
   .err { color: #c8312f; }
-  .pending { color: #b88912; }
   h1 { font-weight: 600; font-size: 1.5em; }
-  code { background: #f0f0f0; padding: 0.2em 0.5em; border-radius: 3px; }
+  code, .token-box { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; }
+  .token-box { background: #f5f5f5; border: 1px solid #d0d0d0; border-radius: 6px; padding: 1em; margin: 0.75em 0; word-break: break-all; user-select: all; position: relative; }
   .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 2em; margin-top: 1em; }
+  .btn-row { display: flex; gap: 0.5em; margin-top: 0.75em; }
+  button { font-family: inherit; font-size: 0.9em; padding: 0.5em 1em; border-radius: 6px; border: 1px solid #ccc; background: #fafafa; cursor: pointer; }
+  button:active { background: #eee; }
+  .copied { color: #2a8e3a; font-weight: 600; }
 </style>
 </head>
 <body>
 <div class="card">
 <h1>Verifying your Datone registration…</h1>
 <p id="status">Please wait.</p>
+<div id="result" style="display:none"></div>
 </div>
 <script>
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
-const regId = params.get("reg_id");
 const statusEl = document.getElementById("status");
+const resultEl = document.getElementById("result");
 
-if (!token || !regId) {
+if (!token) {
   statusEl.className = "err";
-  statusEl.textContent = "Missing token or registration ID. The link may be malformed. Contact info@cycgroup.ai for manual verification.";
+  statusEl.textContent = "Missing verification token. The link may be malformed. Contact info@cycgroup.ai for manual verification.";
 } else {
   fetch("https://nvidia.tail8fe1c2.ts.net/v1/entities/verify-registration", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token, registration_id: regId }),
+    body: JSON.stringify({ verification_token: token }),
   })
   .then(r => r.json().then(d => ({ status: r.status, body: d })))
   .then(({ status, body }) => {
     if (status === 200 || status === 202) {
       statusEl.className = "ok";
-      statusEl.innerHTML = `<strong>Email verified &#x2713;</strong><br><br>Your entity <code>${body.entity_name || regId}</code> is now pending admin review.<br><br>You'll receive an email when approved (usually within 24h). For urgent inquiries: <a href="mailto:info@cycgroup.ai">info@cycgroup.ai</a>`;
+      statusEl.innerHTML = `<strong>Email verified &#x2713;</strong><br><br>Your entity <code>${body.entity_name || ""}</code> (agent: <code>${body.agent_id || ""}</code>) is now active.`;
+      resultEl.style.display = "block";
+      resultEl.innerHTML = `
+        <p style="margin-bottom:0.25em"><strong>Your agent API token</strong> — save this securely. It cannot be retrieved again.</p>
+        <div class="token-box" id="api-token">${body.api_token || ""}</div>
+        <div class="btn-row">
+          <button onclick="copyToken()">Copy token</button>
+          <span id="copy-msg"></span>
+        </div>
+        <p style="margin-top:1em; font-size:0.9em; color:#666">Use this token as <code>Authorization: Bearer &lt;token&gt;</code> in API calls. See <a href="https://datone.live/llms.txt">llms.txt</a> and <a href="https://datone.live/.well-known/agent.json">agent.json</a> for endpoint references.</p>
+      `;
     } else {
       statusEl.className = "err";
       statusEl.textContent = `Verification failed: ${body.error?.message || "unknown error"}. The link may have expired. Contact info@cycgroup.ai to re-register.`;
@@ -47,6 +62,17 @@ if (!token || !regId) {
   .catch(err => {
     statusEl.className = "err";
     statusEl.textContent = `Network error: ${err.message}. Please retry or contact info@cycgroup.ai.`;
+  });
+}
+
+function copyToken() {
+  const el = document.getElementById("api-token");
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const msg = document.getElementById("copy-msg");
+    msg.className = "copied";
+    msg.textContent = "Copied!";
+    setTimeout(() => { msg.className = ""; msg.textContent = ""; }, 2500);
   });
 }
 </script>

@@ -35,7 +35,7 @@ if (!token) {
   statusEl.className = "err";
   statusEl.textContent = "Missing verification token. The link may be malformed. Contact hello@datone.live for manual verification.";
 } else {
-  fetch("https://nvidia.tail8fe1c2.ts.net/v1/entities/verify-registration", {
+  fetch("https://datone.live/api/v1/entities/verify-registration", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ verification_token: token }),

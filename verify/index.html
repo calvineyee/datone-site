@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify your Datone registration</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 4em auto; padding: 1em; background: #fff; color: #222; }
+  .ok { color: #2a8e3a; }
+  .err { color: #c8312f; }
+  .pending { color: #b88912; }
+  h1 { font-weight: 600; font-size: 1.5em; }
+  code { background: #f0f0f0; padding: 0.2em 0.5em; border-radius: 3px; }
+  .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 2em; margin-top: 1em; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Verifying your Datone registration…</h1>
+<p id="status">Please wait.</p>
+</div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+const regId = params.get("reg_id");
+const statusEl = document.getElementById("status");
+
+if (!token || !regId) {
+  statusEl.className = "err";
+  statusEl.textContent = "Missing token or registration ID. The link may be malformed. Contact info@cycgroup.ai for manual verification.";
+} else {
+  fetch("https://nvidia.tail8fe1c2.ts.net/v1/entities/verify-registration", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, registration_id: regId }),
+  })
+  .then(r => r.json().then(d => ({ status: r.status, body: d })))
+  .then(({ status, body }) => {
+    if (status === 200 || status === 202) {
+      statusEl.className = "ok";
+      statusEl.innerHTML = `<strong>Email verified &#x2713;</strong><br><br>Your entity <code>${body.entity_name || regId}</code> is now pending admin review.<br><br>You'll receive an email when approved (usually within 24h). For urgent inquiries: <a href="mailto:info@cycgroup.ai">info@cycgroup.ai</a>`;
+    } else {
+      statusEl.className = "err";
+      statusEl.textContent = `Verification failed: ${body.error?.message || "unknown error"}. The link may have expired. Contact info@cycgroup.ai to re-register.`;
+    }
+  })
+  .catch(err => {
+    statusEl.className = "err";
+    statusEl.textContent = `Network error: ${err.message}. Please retry or contact info@cycgroup.ai.`;
+  });
+}
+</script>
+</body>
+</html>

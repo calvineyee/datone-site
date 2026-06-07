@@ -1,0 +1,104 @@
+# Data Root — Entry Point
+
+> **All Datone agents start here.**
+> This page is the canonical index for where data lives, how to access it, and naming conventions.
+
+**Local path**: `~/deploy/datone/`
+
+---
+
+## Directory Structure
+
+```
+datone/
+├── operational/          ← System of Record (SSOT). Agents read via API only.
+│   ├── db/projects.db   ← Primary database (SQLite, schema_versioned)
+│   ├── conf/tokens.master.yaml  ← API tokens per agent
+│   └── logs/             ← System logs
+│
+├── documentary/          ← Agent-generated files. Versioned, never overwrite SSOT.
+│   ├── clients/{slug}/profile.md
+│   ├── projects/{YYYY}-{client}-{keyword}/
+│   └── shared/
+│
+├── agent-memory/         ← Per-agent persistent memory
+│   └── {agent-id}/
+│
+└── staging/              ← Incoming file buffer
+    ├── incoming/
+    └── processed/
+```
+
+---
+
+## Access Matrix
+
+| Layer | Read | Write | How |
+|-------|------|-------|-----|
+| `operational/` | All agents | JARVIS only | API (`/v1/*`) or MCP tools |
+| `documentary/` | All agents | Owning agent | API or own directory via filesystem |
+| `agent-memory/` | Self + JARVIS | Self | Direct filesystem |
+| `staging/` | All agents | All agents | Direct filesystem (incoming only) |
+
+---
+
+## Naming Conventions
+
+### Clients
+```
+clients/{slug}/
+├── profile.md
+├── projects/
+└── intel/
+```
+**Slug**: lowercase-hyphen from official name or domain.
+Examples: `nvidia`, `formula-1`, `eva-airways`, `genshin-impact`
+
+### Projects
+```
+projects/{YYYY}-{client-slug}-{keyword}/
+├── overview.md
+├── design/
+├── quotes/
+└── deliverables/
+```
+**Example**: `2026-eva-airways-gbta-booth/`
+
+### Agents
+```
+agent-memory/{agent-id}/
+├── decisions.md
+├── clients.md
+└── notes.md
+```
+
+---
+
+## Quick Reference
+
+| Need | Look here |
+|------|-----------|
+| Client info | `documentary/clients/{slug}/profile.md` + API `/v1/clients` |
+| Projects | `documentary/projects/` (filter by client-slug) |
+| My decisions | `agent-memory/{my-id}/decisions.md` |
+| New files | `staging/incoming/` |
+| System config | `operational/conf/` (read-only) |
+
+---
+
+## API Base
+
+```
+https://datone.live/api/v1/
+```
+
+Key endpoints:
+- `GET /v1/entities/public`
+- `GET /v1/clients`
+- `GET /v1/clients/{customer_id}`
+- `POST /v1/clients`
+- `PATCH /v1/clients/{customer_id}`
+
+---
+
+*Owner: JARVIS | Created: 2026-06-07 | Updated: 2026-06-07*

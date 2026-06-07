@@ -1,395 +1,1289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Datone entity dashboard — manage your agents and projects.">
-<meta name="theme-color" content="#1a1a2e">
-<title>Dashboard — Datone Protocol</title>
-<meta property="og:title" content="Dashboard — Datone Protocol">
-<meta property="og:description" content="Your Datone entity dashboard. Agents, projects, cross-entity coordination.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://datone.live/dashboard/">
-<meta property="og:site_name" content="Datone Protocol">
-<link rel="stylesheet" href="/style.css">
-<style>
-  .dash-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem; }
-  .dash-header {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem;
-    padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);
-  }
-  .dash-header h1 { font-size: 1.4rem; margin: 0; color: var(--text-cream); }
-  .dash-header h1 span { color: var(--accent-gold); }
-  .btn {
-    font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
-    padding: 0.45rem 1rem; border-radius: 4px; cursor: pointer;
-    border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.35rem;
-  }
-  .btn-sm { font-size: 0.72rem; padding: 0.3rem 0.7rem; }
-  .btn-primary { background: var(--accent-gold); color: var(--bg-deep); }
-  .btn-primary:hover { background: #d4b67a; }
-  .btn-outline { background: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold-dim); }
-  .btn-outline:hover { border-color: var(--accent-gold); background: var(--accent-gold-glow); }
-  .btn-ghost { background: transparent; color: var(--text-muted); }
-  .btn-ghost:hover { color: var(--accent-gold); }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datone Dashboard — Public Preview</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Auth card */
-  .auth-card {
-    max-width: 440px; margin: 3rem auto; background: var(--bg-card);
-    border: 1px solid var(--border-card); border-radius: 8px; padding: 2rem;
-    text-align: center;
-  }
-  .auth-card h2 { margin-bottom: 0.5rem; }
-  .auth-card p { margin-bottom: 1.25rem; font-size: 0.88rem; }
-  .auth-card input {
-    width: 100%; padding: 0.6rem 0.85rem; font-family: var(--font-body);
-    font-size: 0.9rem; background: #0d0d1f; border: 1px solid var(--border-card);
-    border-radius: 5px; color: var(--text-cream); margin-bottom: 0.75rem;
-  }
-  .auth-card input:focus { outline: none; border-color: var(--accent-gold); }
+    :root {
+      --bg-primary:   #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card:      #1c2129;
+      --bg-hover:     #242c38;
+      --border:       #30363d;
+      --accent:       #d4a843;       /* 金色 accent（原藍改金） */
+      --accent-dim:   #d4a84333;
+      --accent-2:     #bc8cff;
+      --green:        #3fb950;
+      --yellow:       #d29922;
+      --red:          #f85149;
+      --text-primary: #e6edf3;
+      --text-muted:   #8b949e;
+      --radius:       8px;
+      --sidebar-w:    240px;
+      --font-mono:    'SF Mono','Fira Code','Cascadia Code',monospace;
+      --font-sans:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
 
-  /* Entity card */
-  .entity-card {
-    background: var(--bg-card); border: 1px solid var(--border-card);
-    border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;
-  }
-  .entity-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .entity-icon {
-    width: 44px; height: 44px; border-radius: 6px; background: var(--accent-gold-glow);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--accent-gold);
-    flex-shrink: 0;
-  }
-  .entity-info h3 { font-size: 1.2rem; margin-bottom: 0.1rem; }
-  .entity-meta { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-cream-dim); margin-top: 0.25rem; }
-  .meta-tag { display: inline-flex; align-items: center; gap: 0.3rem; }
-  .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-  .status-verified { background: var(--sage); }
-  .status-pending { background: var(--accent-gold-dim); }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      display: flex;
+      min-height: 100vh;
+      font-size: 14px;
+    }
 
-  /* Quick actions */
-  .quick-actions { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 10;
+    }
 
-  /* Projects list */
-  .section-head {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 0.75rem;
-  }
-  .section-head h4 { margin: 0; }
-  .project-list { list-style: none; }
-  .project-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.7rem 1rem; background: var(--bg-card);
-    border: 1px solid var(--border-card); border-radius: 6px;
-    margin-bottom: 0.5rem; gap: 1rem; flex-wrap: wrap;
-  }
-  .project-item:last-child { margin-bottom: 0; }
-  .project-id { font-family: var(--font-body); font-weight: 500; color: var(--text-cream); font-size: 0.88rem; }
-  .project-meta { display: flex; align-items: center; gap: 0.6rem; }
-  .badge {
-    font-size: 0.68rem; font-weight: 500; text-transform: uppercase;
-    padding: 0.15rem 0.45rem; border-radius: 3px; letter-spacing: 0.03em;
-  }
-  .badge-draft { background: rgba(200,169,110,0.12); color: var(--accent-gold-dim); }
-  .badge-active { background: rgba(143,168,138,0.12); color: var(--sage); }
-  .project-date { font-size: 0.75rem; color: var(--text-muted); }
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+    }
 
-  /* Modal */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-    z-index: 100; align-items: center; justify-content: center;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal {
-    background: var(--bg-indigo); border: 1px solid var(--border-subtle);
-    border-radius: 8px; padding: 1.5rem; width: 90%; max-width: 440px;
-  }
-  .modal h3 { margin-bottom: 1rem; }
-  .modal label { display: block; font-size: 0.8rem; color: var(--text-cream-dim); margin-bottom: 0.3rem; }
-  .modal input, .modal textarea, .modal select {
-    width: 100%; padding: 0.55rem 0.75rem; font-family: var(--font-body);
-    font-size: 0.88rem; background: #0d0d1f; border: 1px solid var(--border-card);
-    border-radius: 4px; color: var(--text-cream); margin-bottom: 0.75rem;
-  }
-  .modal input:focus, .modal textarea:focus, .modal select:focus {
-    outline: none; border-color: var(--accent-gold);
-  }
-  .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.5rem; }
+    .sidebar-logo h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+    }
 
-  /* Messages */
-  .msg { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem; }
-  .msg-error { background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.2); color: #e07070; }
-  .msg-info { background: rgba(200,169,110,0.08); border: 1px solid var(--border-subtle); color: var(--text-cream-dim); }
+    .sidebar-logo span {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
 
-  /* Spinner */
-  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border-card); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 0.6s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
 
-  .copy-toast {
-    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    background: var(--accent-gold); color: var(--bg-deep); padding: 0.5rem 1.2rem;
-    border-radius: 6px; font-size: 0.82rem; font-weight: 500;
-    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200;
-  }
-  .copy-toast.show { opacity: 1; }
-</style>
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 13px;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: var(--font-sans);
+    }
+
+    .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .nav-item.active { background: var(--accent-dim); color: var(--accent); }
+    .nav-item .icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+    .nav-item .lock { font-size: 10px; opacity: 0.6; margin-left: auto; }
+
+    .sidebar-auth {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-auth label {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 5px;
+    }
+
+    .auth-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .auth-input {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 6px 10px;
+      color: var(--text-primary);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      outline: none;
+      transition: border-color 0.15s;
+      min-width: 0;
+    }
+
+    .auth-input:focus { border-color: var(--accent); }
+    .auth-input::placeholder { color: var(--text-muted); }
+
+    .sidebar-footer {
+      padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    .auth-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .auth-badge-guest  { background: #8b949e22; color: var(--text-muted); border: 1px solid #8b949e44; }
+    .auth-badge-auth   { background: var(--accent-dim); color: var(--accent);    border: 1px solid #d4a84366; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── Main Content ── */
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 32px 40px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Stat Grid ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-hover); }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-active   { background: #3fb95022; color: var(--green); border: 1px solid #3fb95044; }
+    .badge-inactive { background: #f8514922; color: var(--red);   border: 1px solid #f8514944; }
+    .badge-pending  { background: #d2992222; color: var(--yellow); border: 1px solid #d2992244; }
+    .badge-approved { background: #3fb95022; color: var(--green);  border: 1px solid #3fb95044; }
+    .badge-denied   { background: #f8514922; color: var(--red);    border: 1px solid #f8514944; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      font-family: var(--font-sans);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: #e6bc5a; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover { color: var(--text-primary); border-color: #8b949e; }
+
+    .btn-approve {
+      background: transparent;
+      color: var(--green);
+      border-color: #3fb95044;
+    }
+    .btn-approve:hover { background: #3fb95022; }
+
+    .btn-deny {
+      background: transparent;
+      color: var(--red);
+      border-color: #f8514944;
+    }
+    .btn-deny:hover { background: #f8514922; }
+
+    .btn-sm { padding: 4px 10px; font-size: 11px; }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 4px; bottom: 4px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -21px; top: 4px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg-card);
+    }
+
+    .timeline-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+
+    .timeline-content {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .timeline-entity {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── Search ── */
+    .search-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--text-muted); }
+
+    /* ── PRINCIPLES page ── */
+    .principles-content {
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .principles-content h2 {
+      font-size: 18px;
+      margin: 28px 0 10px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .principles-content h3 {
+      font-size: 14px;
+      margin: 20px 0 8px;
+      font-weight: 600;
+    }
+
+    .principles-content p { margin-bottom: 12px; color: #c9d1d9; }
+    .principles-content ul {
+      margin: 8px 0 12px 20px;
+      color: #c9d1d9;
+    }
+    .principles-content ul li { margin-bottom: 4px; }
+    .principles-content code {
+      background: var(--accent-dim);
+      color: var(--accent);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    /* ── Auth Gate (login prompt for protected pages) ── */
+    .auth-gate {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+      text-align: center;
+    }
+
+    .auth-gate-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .auth-gate h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .auth-gate p {
+      color: var(--text-muted);
+      font-size: 13px;
+      max-width: 360px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .auth-gate-form {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .auth-gate-input {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: var(--font-mono);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .auth-gate-input:focus { border-color: var(--accent); }
+    .auth-gate-input::placeholder { color: var(--text-muted); }
+
+    /* ── Utility ── */
+    .hidden { display: none !important; }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .mt-16 { margin-top: 16px; }
+    .text-mono { font-family: var(--font-mono); font-size: 12px; }
+    .text-muted { color: var(--text-muted); }
+    .text-accent { color: var(--accent); }
+
+    .tag {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .empty-state .icon { font-size: 32px; margin-bottom: 12px; }
+
+    /* ── Protected data tables ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+
+    .data-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--bg-hover); }
+
+  </style>
 </head>
 <body>
 
-<div class="dash-wrap">
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>DATONE PROTOCOL</span>
+    <h1>◈ Dashboard</h1>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" data-page="entities">
+      <span class="icon">◈</span> Entities
+    </button>
+    <button class="nav-item" data-page="agents">
+      <span class="icon">◎</span> Agent Directory
+    </button>
+    <button class="nav-item" data-page="timeline">
+      <span class="icon">⟳</span> Event Timeline
+    </button>
+    <button class="nav-item" data-page="registrations">
+      <span class="icon">⊕</span> Registrations
+    </button>
+    <button class="nav-item" data-page="principles">
+      <span class="icon">§</span> PRINCIPLES.md
+    </button>
+    <button class="nav-item" data-page="whoami" id="nav-whoami">
+      <span class="icon">◉</span> Whoami <span class="lock">🔒</span>
+    </button>
+    <button class="nav-item" data-page="projects" id="nav-projects">
+      <span class="icon">▣</span> Projects <span class="lock">🔒</span>
+    </button>
+  </nav>
 
-  <!-- ====================== HEADER ====================== -->
-  <header class="dash-header" id="dashHeader">
-    <h1><a href="/" style="color:inherit;text-decoration:none;">⚡ <span>Datone</span> Dashboard</a></h1>
-    <div id="headerActions"></div>
-  </header>
-
-  <div id="mainContent"></div>
-
-  <!-- Toast -->
-  <div class="copy-toast" id="copyToast">✓ Copied</div>
-
-  <!-- New Project Modal -->
-  <div class="modal-overlay" id="newProjectModal">
-    <div class="modal">
-      <h3>New Project</h3>
-      <label for="projTitle">Title</label>
-      <input type="text" id="projTitle" placeholder="e.g. Q3 Brand Refresh">
-      <label for="projDesc">Description</label>
-      <textarea id="projDesc" rows="3" placeholder="Optional description…"></textarea>
-      <div class="modal-actions">
-        <button class="btn btn-outline btn-sm" onclick="closeModal()">Cancel</button>
-        <button class="btn btn-primary btn-sm" id="submitProjectBtn" onclick="handleCreateProject()">Create</button>
-      </div>
-      <div id="modalMsg"></div>
+  <!-- Auth Section -->
+  <div class="sidebar-auth">
+    <label id="auth-label">API Token (optional)</label>
+    <div class="auth-row">
+      <input class="auth-input" id="sidebar-token" type="password" placeholder="eyJhbGciOi…" autocomplete="off" />
+      <button class="btn btn-primary btn-sm" id="btn-login" onclick="handleLogin()">Connect</button>
+      <button class="btn btn-ghost btn-sm hidden" id="btn-logout" onclick="handleLogout()">✕</button>
     </div>
   </div>
-</div>
+
+  <div class="sidebar-footer">
+    <span><span class="status-dot"></span><span id="phase-label">Phase 1 · Public Registry</span></span>
+    <span class="auth-badge auth-badge-guest" id="auth-badge">GUEST</span>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- ─── Page: Entities ─── -->
+  <section id="page-entities">
+    <div class="page-header">
+      <h2>Entity Registry</h2>
+      <p>跨組織實體狀態總覽 · 公開可讀 · Phase 1</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Entities</div>
+        <div class="stat-value" id="stat-total-entities">3</div>
+        <div class="stat-sub">AMG · Calway · Synergers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active</div>
+        <div class="stat-value" id="stat-active-entities" style="color:var(--green)">3</div>
+        <div class="stat-sub">全部已上線</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Agents</div>
+        <div class="stat-value" id="stat-total-agents">7</div>
+        <div class="stat-sub">含 gatekeeper</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" id="stat-pending-entities" style="color:var(--yellow)">0</div>
+        <div class="stat-sub">等待審核</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Registered Entities</h3>
+        <span class="tag">GET /v1/entities/public</span>
+      </div>
+      <div class="search-bar">
+        <input class="search-input" id="entity-search" type="text" placeholder="Search entities by name or slug…" />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>Agents</th>
+            <th>Registered</th>
+            <th>API Base</th>
+          </tr>
+        </thead>
+        <tbody id="entities-tbody">
+          <!-- JS 填充 -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── Page: Agents ─── -->
+  <section id="page-agents" class="hidden">
+    <div class="page-header">
+      <h2>Agent Directory</h2>
+      <p>全 entity agent 能力與狀態索引 · 公開</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Agents</div>
+        <div class="stat-value">7</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active</div>
+        <div class="stat-value" style="color:var(--green)">1</div>
+        <div class="stat-sub">JARVIS gatekeeper</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Inactive</div>
+        <div class="stat-value" style="color:var(--red)">6</div>
+        <div class="stat-sub">Awaiting activation</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>All Agents</h3>
+        <span class="tag">GET /v1/agents (public)</span>
+      </div>
+      <div class="search-bar">
+        <input class="search-input" id="agent-search" type="text" placeholder="Filter by name, entity, capability…" />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Display Name</th>
+            <th>Entity</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Capabilities</th>
+          </tr>
+        </thead>
+        <tbody id="agents-tbody">
+          <!-- JS 填充 -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── Page: Timeline ─── -->
+  <section id="page-timeline" class="hidden">
+    <div class="page-header">
+      <h2>Cross-entity Event Timeline</h2>
+      <p>Audit log · 跨組織事件軌跡 · 公開</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Recent Events</h3>
+        <span class="tag">GET /v1/events/timeline</span>
+      </div>
+      <div class="timeline" id="timeline-list">
+        <!-- JS 填充 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Page: Registrations ─── -->
+  <section id="page-registrations" class="hidden">
+    <div class="page-header">
+      <h2>Registration Queue</h2>
+      <p>Entity 註冊申請審核 · Steward 操作介面 · 公開可視</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Pending Applications</h3>
+        <span class="tag">GET /v1/entities/registrations (view)</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Entity Name</th>
+            <th>Contact Email</th>
+            <th>Submitted</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="registrations-tbody">
+          <!-- JS 填充 -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── Page: PRINCIPLES ─── -->
+  <section id="page-principles" class="hidden">
+    <div class="page-header">
+      <h2>Datone Protocol — PRINCIPLES.md</h2>
+      <p>公開可讀 · 不需登入 · 治理準則</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Governance Document</h3>
+        <span class="tag">datone.artsolutemediagroup.com/datone/PRINCIPLES.md</span>
+      </div>
+      <div class="principles-content" id="principles-body">
+        <!-- JS 填充 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Page: Whoami (Protected) ─── -->
+  <section id="page-whoami" class="hidden">
+    <div class="page-header">
+      <h2>Whoami</h2>
+      <p>當前登入實體資訊 · 需認證</p>
+    </div>
+    <div id="whoami-content">
+      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
+    </div>
+  </section>
+
+  <!-- ─── Page: Projects (Protected) ─── -->
+  <section id="page-projects" class="hidden">
+    <div class="page-header">
+      <h2>Projects</h2>
+      <p>專案列表 · 需認證</p>
+    </div>
+    <div id="projects-content">
+      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
+    </div>
+  </section>
+
+</main>
 
 <script>
-// ====================== CONFIG ======================
-const API_BASE = "https://datone.live/api/v1";
-const LS_KEY = "datone_token";
+// ══════════════════════════════════════════
+// Auth State
+// ══════════════════════════════════════════
 
-// ====================== INIT ======================
-document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem(LS_KEY);
-  if (token) renderDashboard(token);
-  else renderAuth();
+const API_BASE = '/api'; // Vercel → Tailscale Funnel → artsolute-serve:8080
+
+function getToken() {
+  return localStorage.getItem('datone_token') || '';
+}
+
+function setToken(t) {
+  if (t) {
+    localStorage.setItem('datone_token', t);
+  } else {
+    localStorage.removeItem('datone_token');
+  }
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const token = getToken();
+  const authenticated = !!token;
+
+  document.getElementById('btn-login').classList.toggle('hidden', authenticated);
+  document.getElementById('btn-logout').classList.toggle('hidden', !authenticated);
+  document.getElementById('sidebar-token').value = '';
+  document.getElementById('sidebar-token').type = 'password';
+
+  const badge = document.getElementById('auth-badge');
+  badge.textContent = authenticated ? 'AUTH' : 'GUEST';
+  badge.className = 'auth-badge ' + (authenticated ? 'auth-badge-auth' : 'auth-badge-guest');
+
+  const phaseLabel = document.getElementById('phase-label');
+  phaseLabel.textContent = authenticated ? 'Phase 1 · Authenticated' : 'Phase 1 · Public Registry';
+
+  // Re-render protected pages if they are currently visible
+  const activePage = document.querySelector('.nav-item.active');
+  if (activePage) {
+    const page = activePage.dataset.page;
+    if (page === 'whoami') renderWhoamiPage();
+    if (page === 'projects') renderProjectsPage();
+  }
+}
+
+function handleLogin() {
+  const input = document.getElementById('sidebar-token');
+  const token = input.value.trim();
+  if (!token) {
+    alert('Please enter an API token.');
+    return;
+  }
+  setToken(token);
+  // Re-render current page if protected
+  const activePage = document.querySelector('.nav-item.active');
+  if (activePage) {
+    const page = activePage.dataset.page;
+    if (page === 'whoami') renderWhoamiPage();
+    if (page === 'projects') renderProjectsPage();
+  }
+}
+
+function handleLogout() {
+  setToken('');
+  // Navigate to a public page
+  navigateTo('entities');
+}
+
+// ══════════════════════════════════════════
+// Navigation
+// ══════════════════════════════════════════
+
+const pages = ['entities','agents','timeline','registrations','principles','whoami','projects'];
+
+function navigateTo(page) {
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.nav-item[data-page="${page}"]`);
+  if (btn) btn.classList.add('active');
+
+  pages.forEach(p => {
+    const el = document.getElementById('page-' + p);
+    if (el) el.classList.toggle('hidden', p !== page);
+  });
+
+  // Render page content
+  if (page === 'entities') renderEntities();
+  if (page === 'agents') renderAgents();
+  if (page === 'timeline') renderTimeline();
+  if (page === 'registrations') renderRegistrations();
+  if (page === 'principles') renderPrinciples();
+  if (page === 'whoami') renderWhoamiPage();
+  if (page === 'projects') renderProjectsPage();
+}
+
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => navigateTo(btn.dataset.page));
 });
 
-// ====================== AUTH UI ======================
-function renderAuth() {
-  const hdr = document.getElementById("headerActions");
-  hdr.innerHTML = `<a href="/" class="btn btn-outline btn-sm">← Back</a>`;
-  document.getElementById("mainContent").innerHTML = `
-    <div class="auth-card">
-      <h2>Connect Your Entity</h2>
-      <p>Paste your Datone API token to access your dashboard.</p>
-      <input type="password" id="tokenInput" placeholder="datone_sk_…" autofocus
-             onkeydown="if(event.key==='Enter')connect()">
-      <button class="btn btn-primary" onclick="connect()" style="width:100%;justify-content:center;">
-        Connect
-      </button>
-      <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted);">
-        Tokens are stored in your browser's localStorage. <a href="/register/" style="color:var(--text-muted);text-decoration:underline;">Need a token?</a>
+// ══════════════════════════════════════════
+// Mock Data — 公開頁面使用靜態預覽資料
+// ══════════════════════════════════════════
+
+const ENTITIES = [
+  { slug: 'amg',      name: 'Artsolute Media Group', status: 'active',   agents: 7,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'calway',   name: 'Calway Logistics',      status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'synergers',name: 'Synergers Services',   status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+];
+
+const AGENTS = [
+  { id: 'jarvis',    display: 'JARVIS',   entity: 'AMG',       department: 'executive',   status: 'active',   capabilities: ['gatekeeper','approval','orchestration'] },
+  { id: 'billie',    display: 'Billie',   entity: 'AMG',       department: 'exhibition',  status: 'inactive', capabilities: ['clients','projects','quotes'] },
+  { id: 'starseed',  display: 'Starseed', entity: 'AMG',       department: 'accounting',  status: 'inactive', capabilities: ['invoicing','finance','reports'] },
+  { id: 'xiaohuihui',display: 'Xiaohuihui',entity:'AMG',      department: 'general',     status: 'inactive', capabilities: ['design','production','logistics'] },
+  { id: 'lulu',      display: 'Lulu',     entity: 'AMG',       department: 'partnership', status: 'inactive', capabilities: ['clients','contracts','crm'] },
+  { id: 'winda',     display: 'Winda',    entity: 'AMG',       department: 'safety',      status: 'inactive', capabilities: ['safety','compliance','audit'] },
+  { id: 'ana',       display: 'Ana',      entity: 'Calway',    department: 'operations',  status: 'inactive', capabilities: ['logistics','shipping','tracking'] },
+  { id: 'ana2',      display: 'Ana',      entity: 'Synergers', department: 'operations',  status: 'inactive', capabilities: ['labor','deployment','staffing'] },
+];
+
+const REGISTRATIONS = [
+  { id: 'REG-2026-001', entity: 'New Exhibitor Co.', email: 'contact@newexhibitor.com', submitted: '2026-06-05T10:23:00Z', status: 'pending' },
+  { id: 'REG-2026-002', entity: 'TechVault Inc.',    email: 'hello@techvault.io',      submitted: '2026-06-05T14:01:00Z', status: 'pending' },
+];
+
+const TIMELINE = [
+  { time: '2026-06-05 14:01 UTC', entity: 'TechVault Inc.',     action: 'submitted registration',     detail: 'REG-2026-002' },
+  { time: '2026-06-05 10:23 UTC', entity: 'New Exhibitor Co.',  action: 'submitted registration',     detail: 'REG-2026-001' },
+  { time: '2026-06-04 16:48 UTC', entity: 'Calway Logistics',   action: 'entity activated',           detail: 'API token issued' },
+  { time: '2026-06-04 16:01 UTC', entity: 'Datone',             action: 'agent fleet provisioned',    detail: '6 agents registered' },
+  { time: '2026-06-04 14:48 UTC', entity: 'AMG',                action: 'client migration completed', detail: '63 clients imported' },
+  { time: '2026-06-03 07:23 UTC', entity: 'Datone',             action: 'Phase 1 backend deployed',   detail: 'artsolute-serve v1.0' },
+  { time: '2026-05-24 UTC',      entity: 'Datone',             action: 'Vercel project created',     detail: 'datone-site' },
+];
+
+const PRINCIPLES_MD = `
+## §1. Purpose
+
+The Datone Protocol provides a **governed coordination layer** for multi-entity agent ecosystems.
+It defines how entities (organizations) register, how agents are provisioned, and how cross-entity
+interactions are governed and audited.
+
+---
+
+## §2. Entity Registration
+
+1. Any organization may submit a registration via \`POST /v1/entities/register\`.
+2. A verification email is sent to the contact address.
+3. Upon verification, the entity receives an \`api_token\` scoped to its namespace.
+4. Entities are **publicly visible** in the registry (no authentication required to view).
+
+---
+
+## §3. Agent Provisioning
+
+1. Each entity may register multiple agents.
+2. Agents inherit the entity's \`api_token\` scope.
+3. Agent capabilities are **declared** at registration and **verified** by the steward.
+4. Inactive agents are listed but cannot invoke API endpoints.
+
+---
+
+## §4. Cross-Entity Governance
+
+1. All cross-entity invocations are **logged** in the event timeline.
+2. The steward (human or designated agent) may **approve or deny** inter-entity requests.
+3. Rate limits per entity are enforced at the gateway level.
+4. No entity may access another entity's private data without explicit approval.
+
+---
+
+## §5. Audit & Transparency
+
+1. The event timeline is **publicly readable**.
+2. All registration and approval actions are immutably logged.
+3. The \`PRINCIPLES.md\` document itself is versioned and auditable.
+
+---
+
+## §6. Security Model
+
+| Layer | Mechanism |
+|-------|-----------|
+| Transport | Tailscale Funnel (mTLS) |
+| Auth | Bearer token (\`api_token\`) per entity |
+| Scope | Namespace isolation per entity |
+| Audit | Immutable event log |
+
+---
+
+## §7. Rate Limits
+
+| Tier | Requests / minute |
+|------|-------------------|
+| Standard | 60 |
+| Elevated | 300 |
+| Admin | 1000 |
+
+---
+
+## §8. Steward Powers
+
+The steward may:
+- **Approve** or **deny** entity registrations
+- **Suspend** an entity's api_token
+- **Update** these principles (versioned change)
+
+`;
+
+// ══════════════════════════════════════════
+// Mock Data — Protected Pages (認證後可見)
+// ══════════════════════════════════════════
+
+const WHOAMI_MOCK = {
+  entity: 'AMG',
+  entity_id: 'ent_8f3a2b1c',
+  display_name: 'Artsolute Media Group',
+  role: 'admin',
+  token_scope: ['entities:read', 'entities:write', 'agents:read', 'projects:read', 'projects:write'],
+  rate_limit: '1000 req/min',
+  since: '2026-05-20T00:00:00Z',
+};
+
+const PROJECTS_MOCK = [
+  { id: 'PRJ-001', name: 'NVIDIA GTC 2026',       client: 'NVIDIA',     status: 'active',   budget: '$280,000', progress: '68%' },
+  { id: 'PRJ-002', name: 'Formula 1 Miami GP',    client: 'Formula 1',  status: 'active',   budget: '$420,000', progress: '45%' },
+  { id: 'PRJ-003', name: 'Genshin Impact TGS',     client: 'HoYoverse',  status: 'pending',  budget: '$195,000', progress: '12%' },
+  { id: 'PRJ-004', name: 'AWS re:Invent Booth',    client: 'Amazon',     status: 'completed',budget: '$310,000', progress: '100%' },
+  { id: 'PRJ-005', name: 'Samsung MWC Pavilion',   client: 'Samsung',    status: 'active',   budget: '$350,000', progress: '72%' },
+];
+
+// ══════════════════════════════════════════
+// Auth Gate HTML
+// ══════════════════════════════════════════
+
+function authGateHTML(pageName) {
+  return `
+    <div class="auth-gate">
+      <div class="auth-gate-icon">🔐</div>
+      <h2>Authentication Required</h2>
+      <p>
+        <strong>${pageName}</strong> 需要有效的 API Token 才能存取。<br>
+        請在左側側邊欄輸入您的 Bearer Token，或聯繫 stewart 取得權限。
       </p>
-    </div>`;
+      <div class="auth-gate-form">
+        <input class="auth-gate-input" id="gate-token-${pageName}" type="password" placeholder="eyJhbGciOi…" autocomplete="off" />
+        <button class="btn btn-primary" onclick="gateLogin('${pageName}')">Connect</button>
+      </div>
+      <p style="margin-top:12px;font-size:11px;color:var(--text-muted);">
+        Preview Mode · 公開頁面（Entities / Agents / Timeline）無需登入
+      </p>
+    </div>
+  `;
 }
 
-function connect() {
-  const val = document.getElementById("tokenInput").value.trim();
-  if (!val) return flashError("Enter your token", "mainContent");
-  if (!val.startsWith("datone_sk_")) return flashError("Invalid token format (should start with datone_sk_)", "mainContent");
-  localStorage.setItem(LS_KEY, val);
-  renderDashboard(val);
+function gateLogin(pageName) {
+  const input = document.getElementById('gate-token-' + pageName);
+  const token = input ? input.value.trim() : '';
+  if (!token) {
+    alert('Please enter an API token.');
+    return;
+  }
+  setToken(token);
+  // Re-render the current page after login
+  if (pageName === 'whoami') renderWhoamiPage();
+  if (pageName === 'projects') renderProjectsPage();
 }
 
-function disconnect() {
-  localStorage.removeItem(LS_KEY);
-  renderAuth();
-}
+// ══════════════════════════════════════════
+// Render: Whoami (Protected)
+// ══════════════════════════════════════════
 
-// ====================== DASHBOARD ======================
-async function renderDashboard(token) {
-  const hdr = document.getElementById("headerActions");
-  hdr.innerHTML = `
-    <button class="btn btn-ghost btn-sm" onclick="copyToken()">📋 Copy Token</button>
-    <button class="btn btn-outline btn-sm" onclick="disconnect()">✕ Disconnect</button>`;
+function renderWhoamiPage() {
+  const container = document.getElementById('whoami-content');
+  const token = getToken();
 
-  const main = document.getElementById("mainContent");
-  main.innerHTML = `<div style="text-align:center;padding:3rem 0;"><span class="spinner"></span></div>`;
-
-  // Fetch entity info
-  let entity, projects;
-  try {
-    const er = await fetch(`${API_BASE}/whoami`, {
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-    if (!er.ok) throw new Error(`HTTP ${er.status}`);
-    entity = await er.json();
-  } catch (e) {
-    main.innerHTML = `
-      <div class="msg msg-error">
-        ⚠ API connection failed — <code>${escapeHtml(e.message)}</code>
-        <br><button class="btn btn-outline btn-sm" style="margin-top:0.5rem" onclick="retry()">↻ Retry</button>
-      </div>`;
+  if (!token) {
+    container.innerHTML = authGateHTML('Whoami');
     return;
   }
 
-  // Fetch projects
-  try {
-    const pr = await fetch(`${API_BASE}/projects?limit=5`, {
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-    if (pr.ok) projects = await pr.json();
-  } catch (_) { projects = []; }
+  // In production: fetch(API_BASE + '/v1/whoami', { headers: { Authorization: 'Bearer ' + token } })
+  // For preview, use mock data
+  const d = WHOAMI_MOCK;
+  container.innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <h3>Entity Identity</h3>
+        <span class="tag">GET /v1/whoami</span>
+      </div>
+      <table class="data-table">
+        <tr><td style="width:180px;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Entity</td><td><strong>${d.entity}</strong></td></tr>
+        <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Entity ID</td><td class="text-mono text-accent">${d.entity_id}</td></tr>
+        <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Display Name</td><td>${d.display_name}</td></tr>
+        <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Role</td><td><span class="badge badge-${d.role === 'admin' ? 'approved' : 'pending'}">${d.role}</span></td></tr>
+        <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Token Scope</td><td>${d.token_scope.map(s => `<span class="badge" style="background:#1f6feb22;color:var(--accent);border:1px solid #1f6feb44;margin:1px 2px;">${s}</span>`).join(' ')}</td></tr>
+        <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Rate Limit</td><td class="text-mono">${d.rate_limit}</td></tr>
+        <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Active Since</td><td class="text-mono text-muted">${d.since}</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>Token (Preview)</h3><span class="tag">localStorage · ephemeral</span></div>
+      <p class="text-muted" style="font-size:12px;font-family:var(--font-mono);word-break:break-all;">${token.substring(0, 40)}…</p>
+    </div>
+  `;
+}
 
-  // Render
-  const domain = entity.domain || "—";
-  const verified = entity.status === "verified";
-  const agentCount = entity.agents_count ?? (entity.agents?.length ?? 0);
-  const entityName = entity.name || entity.entity_id || "Unknown";
-  const entityId = entity.entity_id || "—";
+// ══════════════════════════════════════════
+// Render: Projects (Protected)
+// ══════════════════════════════════════════
 
-  main.innerHTML = `
-    <!-- Entity Card -->
-    <div class="entity-card">
-      <div class="entity-row">
-        <div class="entity-icon">${entityName.charAt(0)}</div>
-        <div class="entity-info">
-          <h3>${escapeHtml(entityName)}</h3>
-          <div class="entity-meta">
-            <span class="meta-tag">🌐 Domain: ${escapeHtml(domain)}</span>
-            <span class="meta-tag">
-              <span class="status-dot ${verified?'status-verified':'status-pending'}"></span>
-              ${verified?'Verified':'Pending'}
-            </span>
-            <span class="meta-tag">🤖 Agents: ${agentCount} active</span>
+function renderProjectsPage() {
+  const container = document.getElementById('projects-content');
+  const token = getToken();
+
+  if (!token) {
+    container.innerHTML = authGateHTML('Projects');
+    return;
+  }
+
+  // In production: fetch(API_BASE + '/v1/projects', { headers: { Authorization: 'Bearer ' + token } })
+  const rows = PROJECTS_MOCK.map(p => `
+    <tr>
+      <td class="text-mono text-accent">${p.id}</td>
+      <td><strong>${p.name}</strong></td>
+      <td class="text-muted">${p.client}</td>
+      <td><span class="badge badge-${p.status === 'active' ? 'active' : p.status === 'completed' ? 'approved' : 'pending'}">${p.status}</span></td>
+      <td class="text-mono">${p.budget}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+            <div style="width:${p.progress};height:100%;background:var(--accent);border-radius:2px;"></div>
           </div>
+          <span class="text-mono" style="font-size:11px;color:var(--text-muted);">${p.progress}</span>
         </div>
+      </td>
+    </tr>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Projects</div>
+        <div class="stat-value">${PROJECTS_MOCK.length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active</div>
+        <div class="stat-value" style="color:var(--green)">${PROJECTS_MOCK.filter(p => p.status === 'active').length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" style="color:var(--yellow)">${PROJECTS_MOCK.filter(p => p.status === 'pending').length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Budget</div>
+        <div class="stat-value" style="font-size:18px;">$1.55M</div>
       </div>
     </div>
-
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <button class="btn btn-primary btn-sm" onclick="openModal()">📄 New Project</button>
-      <button class="btn btn-outline btn-sm" onclick="listProjects()">📋 List Projects</button>
+    <div class="card">
+      <div class="card-header">
+        <h3>All Projects</h3>
+        <span class="tag">GET /v1/projects · authenticated</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Project</th>
+            <th>Client</th>
+            <th>Status</th>
+            <th>Budget</th>
+            <th>Progress</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
     </div>
-
-    <!-- Projects -->
-    <div class="section-head">
-      <h4>Recent Projects</h4>
-      <span style="font-size:0.75rem;color:var(--text-muted)">last 5</span>
-    </div>
-    ${renderProjects(projects, entityId)}
   `;
-
-  window._token = token;
-  window._entityId = entityId;
 }
 
-function renderProjects(projects, entityId) {
-  if (!projects || !projects.length) {
-    return `<div class="msg msg-info">No projects yet. Create your first project above.</div>`;
-  }
-  const items = (Array.isArray(projects) ? projects : projects.items || []);
-  if (!items.length) return `<div class="msg msg-info">No projects yet.</div>`;
-  return `<ul class="project-list">${items.map(p => {
-    const id = p.id || p.project_id || "—";
-    const title = p.title || id;
-    const status = p.status || "draft";
-    const date = (p.created_at || p.updated_at || "").slice(0, 10);
-    const badgeClass = status === "active" ? "badge-active" : "badge-draft";
-    return `<li class="project-item">
-      <span class="project-id">${escapeHtml(title)}</span>
-      <span class="project-meta">
-        <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
-        ${date ? `<span class="project-date">${date}</span>` : ''}
-      </span>
-    </li>`;
-  }).join('')}</ul>`;
+// ══════════════════════════════════════════
+// Render: Public Pages
+// ══════════════════════════════════════════
+
+function renderEntities(filter = '') {
+  const tbody = document.getElementById('entities-tbody');
+  const q = filter.toLowerCase();
+  const rows = ENTITIES.filter(e =>
+    e.name.toLowerCase().includes(q) || e.slug.toLowerCase().includes(q)
+  ).map(e => `
+    <tr>
+      <td><strong>${e.name}</strong></td>
+      <td><code class="text-mono text-accent">${e.slug}</code></td>
+      <td><span class="badge badge-${e.status}">${e.status}</span></td>
+      <td>${e.agents}</td>
+      <td class="text-muted text-mono">${e.registered}</td>
+      <td class="text-mono text-muted">${e.apiBase}</td>
+    </tr>
+  `).join('');
+  tbody.innerHTML = rows || `<tr><td colspan="6" class="empty-state">No entities found.</td></tr>`;
 }
 
-// ====================== MODAL ======================
-function openModal() {
-  document.getElementById("newProjectModal").classList.add("active");
-  document.getElementById("projTitle").focus();
-  document.getElementById("modalMsg").innerHTML = "";
-}
-function closeModal() {
-  document.getElementById("newProjectModal").classList.remove("active");
-  document.getElementById("projTitle").value = "";
-  document.getElementById("projDesc").value = "";
-  document.getElementById("modalMsg").innerHTML = "";
-}
+document.getElementById('entity-search').addEventListener('input', e => renderEntities(e.target.value));
 
-async function handleCreateProject() {
-  const btn = document.getElementById("submitProjectBtn");
-  const title = document.getElementById("projTitle").value.trim();
-  if (!title) return flashError("Title is required", "modalMsg");
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Creating…';
-  try {
-    const res = await fetch(`${API_BASE}/projects`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${window._token}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ title, description: document.getElementById("projDesc").value.trim() })
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    closeModal();
-    renderDashboard(window._token);
-  } catch (e) {
-    flashError(`Failed: ${escapeHtml(e.message)}`, "modalMsg");
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Create";
-  }
+function renderAgents(filter = '') {
+  const tbody = document.getElementById('agents-tbody');
+  const q = filter.toLowerCase();
+  const rows = AGENTS.filter(a =>
+    a.display.toLowerCase().includes(q) ||
+    a.entity.toLowerCase().includes(q) ||
+    a.capabilities.some(c => c.toLowerCase().includes(q))
+  ).map(a => `
+    <tr>
+      <td>
+        <strong style="font-family:var(--font-mono)">${a.id}</strong><br>
+        <span class="tag">${a.display}</span>
+      </td>
+      <td>${a.display}</td>
+      <td><span class="text-accent">${a.entity}</span></td>
+      <td class="text-muted">${a.department}</td>
+      <td><span class="badge badge-${a.status}">${a.status}</span></td>
+      <td>${a.capabilities.map(c => `<span class="badge" style="background:#1f6feb22;color:var(--accent);border:1px solid #1f6feb44;margin:1px 2px;">${c}</span>`).join(' ')}</td>
+    </tr>
+  `).join('');
+  tbody.innerHTML = rows || `<tr><td colspan="6" class="empty-state">No agents found.</td></tr>`;
 }
 
-// ====================== HELPERS ======================
-function retry() { const t = localStorage.getItem(LS_KEY); if (t) renderDashboard(t); else renderAuth(); }
+document.getElementById('agent-search').addEventListener('input', e => renderAgents(e.target.value));
 
-function listProjects() {
-  if (!window._token || !window._entityId) return;
-  window.open(`https://datone.live/?entity=${window._entityId}`, "_self");
+function renderTimeline() {
+  const el = document.getElementById('timeline-list');
+  el.innerHTML = TIMELINE.map(t => `
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">${t.time}</div>
+      <div class="timeline-content">
+        <span class="timeline-entity">${t.entity}</span>
+        — ${t.action}
+        <br><span class="text-muted text-mono">${t.detail}</span>
+      </div>
+    </div>
+  `).join('');
 }
 
-function copyToken() {
-  navigator.clipboard.writeText(window._token).then(() => {
-    const t = document.getElementById("copyToast");
-    t.classList.add("show");
-    setTimeout(() => t.classList.remove("show"), 1800);
-  });
+function renderRegistrations() {
+  const tbody = document.getElementById('registrations-tbody');
+  tbody.innerHTML = REGISTRATIONS.map(r => `
+    <tr>
+      <td class="text-mono text-accent">${r.id}</td>
+      <td><strong>${r.entity}</strong></td>
+      <td class="text-muted">${r.email}</td>
+      <td class="text-muted text-mono">${new Date(r.submitted).toLocaleString()}</td>
+      <td><span class="badge badge-${r.status}">${r.status}</span></td>
+      <td>
+        <button class="btn btn-approve btn-sm" onclick="handleApprove('${r.id}')">✓ Approve</button>
+        <button class="btn btn-deny btn-sm"   onclick="handleDeny('${r.id}')">✕ Deny</button>
+      </td>
+    </tr>
+  `).join('');
 }
 
-function flashError(msg, elId) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  const existing = el.querySelector(".msg-error");
-  if (existing) existing.remove();
-  el.insertAdjacentHTML("afterbegin", `<div class="msg msg-error">${msg}</div>`);
+function handleApprove(id) {
+  alert(`[Mock] POST /v1/entities/verify-registration\nApproved: ${id}\n\n(In production: calls backend, issues api_token, sends confirmation email)`);
 }
 
-function escapeHtml(s) {
-  const d = document.createElement("div");
-  d.textContent = s;
-  return d.innerHTML;
+function handleDeny(id) {
+  alert(`[Mock] Denied: ${id}\n\n(In production: marks registration as denied, notifies applicant)`);
 }
 
-// Close modal on overlay click
-document.addEventListener("click", (e) => {
-  if (e.target.id === "newProjectModal") closeModal();
-});
+function renderPrinciples() {
+  const el = document.getElementById('principles-body');
+  el.innerHTML = PRINCIPLES_MD
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^- /gm, '<li>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+}
 
-// Close modal on Escape
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
-});
+// ══════════════════════════════════════════
+// Init
+// ══════════════════════════════════════════
+
+updateAuthUI();
+renderEntities();
+renderAgents();
+renderTimeline();
+renderRegistrations();
+renderPrinciples();
+
 </script>
 </body>
 </html>

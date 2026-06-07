@@ -24,9 +24,6 @@
   "name": "Datone Protocol",
   "url": "https://datone.live",
   "description": "The Open Protocol for Human-Agent Coordination. Not a product. A world.",
-  "sameAs": [
-    "https://github.com/calvineyee/artsolute-projects"
-  ]
 }
 </script>
 
@@ -72,6 +69,7 @@
       <li><a href="#agents">Agents</a></li>
       <li><a href="#spec">Spec</a></li>
       <li><a href="#registry">Registry</a></li>
+      <li><a href="/dashboard/">Dashboard</a></li>
       <li class="nav-cta"><a href="#join">Join</a></li>
     </ul>
   </div>
@@ -107,7 +105,7 @@
     </p>
 
     <p style="max-width:600px; font-size:0.92rem; color:var(--accent-gold-dim);">
-      Live now: 9 agents &middot; 2 runtimes &middot; 3 founding entities (AMG, Synergers, Calway Logistics)
+      Live now: 9 agents &middot; 2 runtimes &middot; 3 founding entities
     </p>
 
     <p style="max-width:600px; font-size:0.9rem; color:var(--text-muted);">
@@ -164,7 +162,7 @@
       <div class="layer-card">
         <div class="layer-icon">&#9671;</div>
         <h4>Platform Layer</h4>
-        <p>Official implementation by AMG on Spark infrastructure — the reference stack.</p>
+        <p>Official implementation on Spark infrastructure — the reference stack.</p>
       </div>
       <div class="layer-card">
         <div class="layer-icon">&#9670;</div>
@@ -234,7 +232,7 @@
     </div>
 
     <div class="live-callout">
-      <p><strong>AMG</strong>, <strong>Calway Logistics</strong>, and <strong>Synergers</strong> operate on Datone today.<br>
+      <p><strong>Multiple founding entities</strong> operate on Datone today.<br>
       Multiple departments across three entities — production deployed.</p>
       <a href="https://datone.live" style="display:inline-block; margin-top:0.8rem; font-size:0.88rem;">Talk to us → datone.live</a>
     </div>
@@ -255,7 +253,7 @@
 <pre><span class="comment">// agent calls: whoami</span>
 <span class="bracket">{</span>
   <span class="key">"role"</span>: <span class="string">"pm-agent"</span>,
-  <span class="key">"entity"</span>: <span class="string">"AMG"</span>,
+  <span class="key">"entity"</span>: <span class="string">"your-entity"</span>,
   <span class="key">"tools"</span>: <span class="bracket">[</span>
     <span class="string">"create_project"</span>,
     <span class="string">"list_projects"</span>,
@@ -366,44 +364,29 @@
     <h2>Agent Registry</h2>
 
     <div class="live-stat">
-      <span class="live-stat-number">25</span>
-      <span class="live-stat-label">agents live across three entities</span>
+      <span class="live-stat-number">9</span>
+      <span class="live-stat-label">production agents across 3 entities</span>
     </div>
 
     <!-- ENTITY_REGISTRY_START -->
     <table class="entity-registry-table">
       <thead>
-        <tr><th>Entity</th><th>Domain</th><th>Agents</th><th>Registered</th></tr>
+        <tr><th>Agent</th><th>Role</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="entity-name">Artsolute Media Group</td>
-          <td><span class="domain-badge">exhibition</span></td>
-          <td class="agent-count">11</td>
-          <td class="entity-date">2026-06-02</td>
-        </tr>
-        <tr>
-          <td class="entity-name">Calway Logistics</td>
-          <td><span class="domain-badge">logistics</span></td>
-          <td class="agent-count">0</td>
-          <td class="entity-date">2026-06-02</td>
-        </tr>
-        <tr>
-          <td class="entity-name">Synergers</td>
-          <td><span class="domain-badge">human-resource</span></td>
-          <td class="agent-count">0</td>
-          <td class="entity-date">2026-06-02</td>
-        </tr>
-        <tr>
-          <td class="entity-name">TimezoneFix Test</td>
-          <td><span class="domain-badge">design</span></td>
-          <td class="agent-count">1</td>
-          <td class="entity-date">2026-06-03</td>
-        </tr>
+        <tr><td class="entity-name">J.A.R.V.I.S.</td><td>Steward — Datone protocol lead &amp; agent orchestration</td></tr>
+        <tr><td class="entity-name">Billie</td><td>PM Lead — Client onboarding, project docs, quote drafts</td></tr>
+        <tr><td class="entity-name">Ana</td><td>Operations — Shipment tracking, carrier sourcing, labor scheduling</td></tr>
+        <tr><td class="entity-name">Lulu</td><td>CEO — Performance reports &amp; executive dashboards</td></tr>
+        <tr><td class="entity-name">Starseed</td><td>Finance — AR collections, invoice reconciliation</td></tr>
+        <tr><td class="entity-name">Xiaohuihui</td><td>Design — Booth layout generation &amp; design assistance</td></tr>
+        <tr><td class="entity-name">Winda</td><td>Electrician Supervisor — Production scheduling</td></tr>
+        <tr><td class="entity-name">Thor Eriksen</td><td>Design — Midjourney renders, 3D modeling, visual direction</td></tr>
+        <tr><td class="entity-name">Stephen Morrow</td><td>Strategy — Market intelligence, trend analysis, competitive research</td></tr>
       </tbody>
     </table>
     <!-- ENTITY_REGISTRY_END -->
-    <p class="registry-intro">Production deployed. Growing continuously. No names. No headcounts. Just the protocol at work.</p>
+    <p class="registry-intro">9 production agents across 3 entities. Each agent knows its role, its tools, and its human counterpart.</p>
   </div>
 </section>
 
@@ -441,8 +424,8 @@ datone register \
     </div>
     <div class="footer-links">
       <a href="https://datone.live">datone.live</a>
-      <a href="https://github.com/calvineyee/artsolute-projects">GitHub</a>
-      <a href="https://github.com/calvineyee/artsolute-projects/tree/main/docs/canon">Canon Docs</a>
+      <a href="https://github.com/artsolute/datone">GitHub</a>
+      <a href="https://github.com/artsolute/datone/tree/main/docs/canon">Canon Docs</a>
       <a href="#">API Reference</a>
     </div>
   </div>

@@ -917,7 +917,7 @@ function navigateTo(page) {
   // Render page content
   if (page === 'entities') renderEntities();
   if (page === 'agents') renderAgents();
-  if (page === 'departments') renderDepartments();
+  if (page === 'departments') { renderDepartments(); loadDepartments(); }
   if (page === 'timeline') renderTimeline();
   if (page === 'registrations') renderRegistrations();
   if (page === 'principles') renderPrinciples();
@@ -1274,19 +1274,70 @@ function sizeColor(size) {
 // Departments
 // ══════════════════════════════════════════
 
-const DEPARTMENTS = [
-  { code:'EXH',  name:'Exhibition',      entity:'AMG',       size:'Enterprise', humans:['Ariana Herva'], agents:['billie'],       files:124, status:'active' },
-  { code:'ACC',  name:'Accounting',      entity:'AMG',       size:'Enterprise', humans:['Erin Chen'],   agents:['starseed'],     files:89,  status:'active' },
-  { code:'GEN',  name:'General Affairs', entity:'AMG',       size:'Enterprise', humans:['Fred Yan'],    agents:['xiaohuihui'],   files:56,  status:'active' },
-  { code:'PRT',  name:'Partnership',     entity:'AMG',       size:'Enterprise', humans:['Wayne Lu'],    agents:['lulu'],         files:34,  status:'active' },
-  { code:'SAF',  name:'Safety & Compliance', entity:'AMG',   size:'Enterprise', humans:['Roberto Herva'],agents:['winda'],       files:47,  status:'active' },
-  { code:'OPS',  name:'Design Operations', entity:'AMG',      size:'Enterprise', humans:['Thor Eriksen','Stephen'], agents:['thor','stephen'], files:203, status:'active' },
-  { code:'EXE',  name:'Executive',       entity:'AMG',       size:'Enterprise', humans:['Calvin Yee'],  agents:['jarvis'],       files:12,  status:'active' },
-  { code:'OPS',  name:'Operations',      entity:'Calway',    size:'Mid-Market', humans:['Jose Melchor'],agents:['ana'],          files:28,  status:'active' },
-  { code:'OPS',  name:'Labor Operations',entity:'Synergers', size:'SMB',        humans:['Jose Melchor'],agents:['ana'],          files:18,  status:'active' },
-  { code:'STR',  name:'Strategy',        entity:'AMG',       size:'Enterprise', humans:['Stephen'],     agents:['stephen'],      files:67,  status:'inactive' },
-  { code:'TMP',  name:'Temp / Seasonal', entity:'Synergers', size:'SMB',        humans:['TBD'],        agents:[],              files:0,   status:'inactive' },
-];
+const DEPARTMENTS_API = '/api/v1/departments';
+let DEPARTMENTS = [];
+let LOADING = true;
+
+async function loadDepartments() {
+  try {
+    // Fetch department definitions
+    const defsRes = await fetch(DEPARTMENTS_API);
+    const defs = await defsRes.json();
+    
+    // Fetch entity assignments in parallel
+    const entities = ['AMG', 'Calway', 'Synergers'];
+    const assignments = await Promise.all(
+      entities.map(e => fetch(`/api/v1/entities/${e}/departments`).then(r => r.json()).catch(() => ({ departments: [] })))
+    );
+    
+    // Merge: department definition + entity assignments
+    DEPARTMENTS = [];
+    const entityAssignments = {};
+    entities.forEach((entity, i) => {
+      (assignments[i].departments || []).forEach(d => {
+        entityAssignments[`${entity}:${d.code}`] = d;
+      });
+    });
+    
+    // Also add standalone departments (not yet assigned to any entity)
+    defs.departments.forEach(def => {
+      let assigned = false;
+      entities.forEach(entity => {
+        const key = `${entity}:${def.code}`;
+        if (entityAssignments[key]) {
+          const a = entityAssignments[key];
+          DEPARTMENTS.push({
+            code: a.code,
+            name: a.name || def.name,
+            entity: entity,
+            size: a.size || 'standard',
+            humans: a.assigned_human ? [a.assigned_human] : [],
+            agents: a.assigned_agent ? [a.assigned_agent] : [],
+            files: 0,
+            status: a.active ? 'active' : 'inactive'
+          });
+          assigned = true;
+        }
+      });
+      if (!assigned) {
+        DEPARTMENTS.push({
+          code: def.code,
+          name: def.name,
+          entity: '—',
+          size: '—',
+          humans: [],
+          agents: [],
+          files: 0,
+          status: 'inactive'
+        });
+      }
+    });
+  } catch (e) {
+    console.error('Failed to load departments:', e);
+  }
+  LOADING = false;
+  renderDepartments();
+}
 
 let sizeFilterVal = 'all';
 let statusFilterVal = 'all';
@@ -1307,6 +1358,10 @@ function setStatusFilter(val, btn) {
 
 function renderDepartments() {
   const grid = document.getElementById('departments-grid');
+  if (LOADING && !DEPARTMENTS.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Loading departments from API…</div>';
+    return;
+  }
   const depts = DEPARTMENTS.filter(d => {
     const sizeOk = sizeFilterVal === 'all' || d.size === sizeFilterVal;
     const statusOk = statusFilterVal === 'all' || d.status === statusFilterVal;

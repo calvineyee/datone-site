@@ -14,7 +14,7 @@
       --bg-card:      #1c2129;
       --bg-hover:     #242c38;
       --border:       #30363d;
-      --accent:       #d4a843;       /* gold accent (changed from blue) */
+      --accent:       #d4a843;       /* 金色 accent（原藍改金） */
       --accent-dim:   #d4a84333;
       --accent-2:     #bc8cff;
       --green:        #3fb950;
@@ -566,6 +566,9 @@
     <button class="nav-item" data-page="agents">
       <span class="icon">◎</span> Agent Directory
     </button>
+    <button class="nav-item" data-page="departments">
+      <span class="icon">▤</span> Departments
+    </button>
     <button class="nav-item" data-page="timeline">
       <span class="icon">⟳</span> Event Timeline
     </button>
@@ -573,7 +576,7 @@
       <span class="icon">⊕</span> Registrations
     </button>
     <button class="nav-item" data-page="principles">
-      <span class="icon">§</span> PRINCIPLES
+      <span class="icon">§</span> PRINCIPLES.md
     </button>
     <button class="nav-item" data-page="whoami" id="nav-whoami">
       <span class="icon">◉</span> Whoami <span class="lock">🔒</span>
@@ -606,7 +609,7 @@
   <section id="page-entities">
     <div class="page-header">
       <h2>Entity Registry</h2>
-      <p>Cross-entity state overview · Public read-only · Phase 1</p>
+      <p>跨組織實體狀態總覽 · 公開可讀 · Phase 1</p>
     </div>
 
     <div class="stat-grid">
@@ -618,17 +621,17 @@
       <div class="stat-card">
         <div class="stat-label">Active</div>
         <div class="stat-value" id="stat-active-entities" style="color:var(--green)">3</div>
-        <div class="stat-sub">All online</div>
+        <div class="stat-sub">全部已上線</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Total Agents</div>
         <div class="stat-value" id="stat-total-agents">7</div>
-        <div class="stat-sub">Including gatekeeper</div>
+        <div class="stat-sub">含 gatekeeper</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Pending</div>
         <div class="stat-value" id="stat-pending-entities" style="color:var(--yellow)">0</div>
-        <div class="stat-sub">Awaiting review</div>
+        <div class="stat-sub">等待審核</div>
       </div>
     </div>
 
@@ -652,7 +655,7 @@
           </tr>
         </thead>
         <tbody id="entities-tbody">
-          <!-- Filled by JS -->
+          <!-- JS 填充 -->
         </tbody>
       </table>
     </div>
@@ -662,13 +665,13 @@
   <section id="page-agents" class="hidden">
     <div class="page-header">
       <h2>Agent Directory</h2>
-      <p>All entity agent capabilities and status index · Public</p>
+      <p>全 entity agent 能力與狀態索引 · 公開</p>
     </div>
 
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-label">Total Agents</div>
-        <div class="stat-value">7</div>
+        <div class="stat-value">9</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Active</div>
@@ -702,17 +705,49 @@
           </tr>
         </thead>
         <tbody id="agents-tbody">
-          <!-- Filled by JS -->
+          <!-- JS 填充 -->
         </tbody>
       </table>
     </div>
   </section>
 
+  <!-- ─── Page: Departments ─── -->
+  <section id="page-departments" class="hidden">
+    <div class="page-header">
+      <h2>Departments</h2>
+      <p>Cross-entity department registry · human & agent assignments · file count · public</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="card" style="padding:14px 20px;margin-bottom:20px;">
+      <div class="flex-between" style="gap:12px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;">Company Size</span>
+          <button class="btn btn-ghost btn-sm size-filter active" data-size="all" onclick="setSizeFilter('all',this)">All</button>
+          <button class="btn btn-ghost btn-sm size-filter" data-size="Enterprise" onclick="setSizeFilter('Enterprise',this)" style="border-color:#8b5cf644;color:#a78bfa;">Enterprise</button>
+          <button class="btn btn-ghost btn-sm size-filter" data-size="Mid-Market" onclick="setSizeFilter('Mid-Market',this)" style="border-color:#d4a84344;color:var(--accent);">Mid-Market</button>
+          <button class="btn btn-ghost btn-sm size-filter" data-size="SMB" onclick="setSizeFilter('SMB',this)" style="border-color:#3fb95044;color:var(--green);">SMB</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;">Status</span>
+          <button class="btn btn-ghost btn-sm status-filter active" data-status="all" onclick="setStatusFilter('all',this)">All</button>
+          <button class="btn btn-ghost btn-sm status-filter" data-status="active" onclick="setStatusFilter('active',this)" style="color:var(--green);border-color:#3fb95044;">Active</button>
+          <button class="btn btn-ghost btn-sm status-filter" data-status="inactive" onclick="setStatusFilter('inactive',this)" style="color:var(--red);border-color:#f8514944;">Inactive</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="departments-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+      <!-- JS 填充 -->
+    </div>
+  </section>
+
+
   <!-- ─── Page: Timeline ─── -->
   <section id="page-timeline" class="hidden">
     <div class="page-header">
       <h2>Cross-entity Event Timeline</h2>
-      <p>Audit log · Cross-entity event trail · Public</p>
+      <p>Audit log · 跨組織事件軌跡 · 公開</p>
     </div>
     <div class="card">
       <div class="card-header">
@@ -720,7 +755,7 @@
         <span class="tag">GET /v1/events/timeline</span>
       </div>
       <div class="timeline" id="timeline-list">
-        <!-- Filled by JS -->
+        <!-- JS 填充 -->
       </div>
     </div>
   </section>
@@ -729,7 +764,7 @@
   <section id="page-registrations" class="hidden">
     <div class="page-header">
       <h2>Registration Queue</h2>
-      <p>Entity registration review · Steward interface · Publicly visible</p>
+      <p>Entity 註冊申請審核 · Steward 操作介面 · 公開可視</p>
     </div>
     <div class="card">
       <div class="card-header">
@@ -748,7 +783,7 @@
           </tr>
         </thead>
         <tbody id="registrations-tbody">
-          <!-- Filled by JS -->
+          <!-- JS 填充 -->
         </tbody>
       </table>
     </div>
@@ -757,16 +792,16 @@
   <!-- ─── Page: PRINCIPLES ─── -->
   <section id="page-principles" class="hidden">
     <div class="page-header">
-      <h2>Datone Protocol — PRINCIPLES</h2>
-      <p>Publicly readable · No login required · Governance principles</p>
+      <h2>Datone Protocol — PRINCIPLES.md</h2>
+      <p>公開可讀 · 不需登入 · 治理準則</p>
     </div>
     <div class="card">
       <div class="card-header">
         <h3>Governance Document</h3>
-        <span class="tag">datone.artsolutemediagroup.com/datone/PRINCIPLES</span>
+        <span class="tag">datone.artsolutemediagroup.com/datone/PRINCIPLES.md</span>
       </div>
       <div class="principles-content" id="principles-body">
-        <!-- Filled by JS -->
+        <!-- JS 填充 -->
       </div>
     </div>
   </section>
@@ -775,10 +810,10 @@
   <section id="page-whoami" class="hidden">
     <div class="page-header">
       <h2>Whoami</h2>
-      <p>Current entity identity · Authentication required</p>
+      <p>當前登入實體資訊 · 需認證</p>
     </div>
     <div id="whoami-content">
-      <!-- Shows auth gate when not logged in; shows data after login -->
+      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
     </div>
   </section>
 
@@ -786,10 +821,10 @@
   <section id="page-projects" class="hidden">
     <div class="page-header">
       <h2>Projects</h2>
-      <p>Project list · Authentication required</p>
+      <p>專案列表 · 需認證</p>
     </div>
     <div id="projects-content">
-      <!-- Shows auth gate when not logged in; shows data after login -->
+      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
     </div>
   </section>
 
@@ -867,7 +902,7 @@ function handleLogout() {
 // Navigation
 // ══════════════════════════════════════════
 
-const pages = ['entities','agents','timeline','registrations','principles','whoami','projects'];
+const pages = ['entities','agents','departments','timeline','registrations','principles','whoami','projects'];
 
 function navigateTo(page) {
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -882,6 +917,7 @@ function navigateTo(page) {
   // Render page content
   if (page === 'entities') renderEntities();
   if (page === 'agents') renderAgents();
+  if (page === 'departments') renderDepartments();
   if (page === 'timeline') renderTimeline();
   if (page === 'registrations') renderRegistrations();
   if (page === 'principles') renderPrinciples();
@@ -894,13 +930,13 @@ document.querySelectorAll('.nav-item').forEach(btn => {
 });
 
 // ══════════════════════════════════════════
-// Mock Data — static preview data for public pages
+// Mock Data — 公開頁面使用靜態預覽資料
 // ══════════════════════════════════════════
 
 const ENTITIES = [
-  { slug: 'amg',      name: 'Artsolute Media Group', status: 'active',   agents: 7,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-  { slug: 'calway',   name: 'Calway Logistics',      status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-  { slug: 'synergers',name: 'Synergers Services',   status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'amg',      name: 'Artsolute Media Group', companySize: 'Enterprise', status: 'active',   agents: 8,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'calway',   name: 'Calway Logistics',      companySize: 'Mid-Market', status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'synergers',name: 'Synergers Services',   companySize: 'SMB',       status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
 ];
 
 const AGENTS = [
@@ -910,6 +946,8 @@ const AGENTS = [
   { id: 'xiaohuihui',display: 'Xiaohuihui',entity:'AMG',      department: 'general',     status: 'inactive', capabilities: ['design','production','logistics'] },
   { id: 'lulu',      display: 'Lulu',     entity: 'AMG',       department: 'partnership', status: 'inactive', capabilities: ['clients','contracts','crm'] },
   { id: 'winda',     display: 'Winda',    entity: 'AMG',       department: 'safety',      status: 'inactive', capabilities: ['safety','compliance','audit'] },
+  { id: 'thor',      display: 'Thor',     entity: 'AMG',       department: 'design-ops',  status: 'inactive', capabilities: ['design-ops','prepress','review'] },
+  { id: 'stephen',   display: 'Stephen',  entity: 'AMG',       department: 'strategy',    status: 'inactive', capabilities: ['strategy','planning','specs'] },
   { id: 'ana',       display: 'Ana',      entity: 'Calway',    department: 'operations',  status: 'inactive', capabilities: ['logistics','shipping','tracking'] },
   { id: 'ana2',      display: 'Ana',      entity: 'Synergers', department: 'operations',  status: 'inactive', capabilities: ['labor','deployment','staffing'] },
 ];
@@ -936,7 +974,7 @@ The Datone Protocol provides a **governed coordination layer** for multi-entity 
 It defines how entities (organizations) register, how agents are provisioned, and how cross-entity
 interactions are governed and audited.
 
-
+---
 
 ## §2. Entity Registration
 
@@ -945,7 +983,7 @@ interactions are governed and audited.
 3. Upon verification, the entity receives an \`api_token\` scoped to its namespace.
 4. Entities are **publicly visible** in the registry (no authentication required to view).
 
-
+---
 
 ## §3. Agent Provisioning
 
@@ -954,7 +992,7 @@ interactions are governed and audited.
 3. Agent capabilities are **declared** at registration and **verified** by the steward.
 4. Inactive agents are listed but cannot invoke API endpoints.
 
-
+---
 
 ## §4. Cross-Entity Governance
 
@@ -963,15 +1001,15 @@ interactions are governed and audited.
 3. Rate limits per entity are enforced at the gateway level.
 4. No entity may access another entity's private data without explicit approval.
 
-
+---
 
 ## §5. Audit & Transparency
 
 1. The event timeline is **publicly readable**.
 2. All registration and approval actions are immutably logged.
-3. The \`PRINCIPLES\` document itself is versioned and auditable.
+3. The \`PRINCIPLES.md\` document itself is versioned and auditable.
 
-
+---
 
 ## §6. Security Model
 
@@ -982,7 +1020,7 @@ interactions are governed and audited.
 | Scope | Namespace isolation per entity |
 | Audit | Immutable event log |
 
-
+---
 
 ## §7. Rate Limits
 
@@ -992,7 +1030,7 @@ interactions are governed and audited.
 | Elevated | 300 |
 | Admin | 1000 |
 
-
+---
 
 ## §8. Steward Powers
 
@@ -1004,7 +1042,7 @@ The steward may:
 `;
 
 // ══════════════════════════════════════════
-// Mock Data — Protected Pages (visible after auth)
+// Mock Data — Protected Pages (認證後可見)
 // ══════════════════════════════════════════
 
 const WHOAMI_MOCK = {
@@ -1035,15 +1073,15 @@ function authGateHTML(pageName) {
       <div class="auth-gate-icon">🔐</div>
       <h2>Authentication Required</h2>
       <p>
-        <strong>${pageName}</strong> requires a valid API token.<br>
-        Enter your Bearer Token in the left sidebar, or contact the steward for access.
+        <strong>${pageName}</strong> 需要有效的 API Token 才能存取。<br>
+        請在左側側邊欄輸入您的 Bearer Token，或聯繫 stewart 取得權限。
       </p>
       <div class="auth-gate-form">
         <input class="auth-gate-input" id="gate-token-${pageName}" type="password" placeholder="eyJhbGciOi…" autocomplete="off" />
         <button class="btn btn-primary" onclick="gateLogin('${pageName}')">Connect</button>
       </div>
       <p style="margin-top:12px;font-size:11px;color:var(--text-muted);">
-        Preview Mode · Public pages (Entities / Agents / Timeline) do not require login
+        Preview Mode · 公開頁面（Entities / Agents / Timeline）無需登入
       </p>
     </div>
   `;
@@ -1187,13 +1225,14 @@ function renderEntities(filter = '') {
     <tr>
       <td><strong>${e.name}</strong></td>
       <td><code class="text-mono text-accent">${e.slug}</code></td>
+      <td><span class="badge" style="background:${sizeColor(e.companySize)};color:#fff;border:1px solid ${sizeColor(e.companySize)}88;">${e.companySize}</span></td>
       <td><span class="badge badge-${e.status}">${e.status}</span></td>
       <td>${e.agents}</td>
       <td class="text-muted text-mono">${e.registered}</td>
       <td class="text-mono text-muted">${e.apiBase}</td>
     </tr>
   `).join('');
-  tbody.innerHTML = rows || `<tr><td colspan="6" class="empty-state">No entities found.</td></tr>`;
+  tbody.innerHTML = rows || `<tr><td colspan="7" class="empty-state">No entities found.</td></tr>`;
 }
 
 document.getElementById('entity-search').addEventListener('input', e => renderEntities(e.target.value));
@@ -1222,6 +1261,95 @@ function renderAgents(filter = '') {
 }
 
 document.getElementById('agent-search').addEventListener('input', e => renderAgents(e.target.value));
+
+
+function sizeColor(size) {
+  if (size === 'Enterprise') return '#8b5cf6';
+  if (size === 'Mid-Market') return '#d4a843';
+  if (size === 'SMB') return '#3fb950';
+  return '#8b949e';
+}
+
+// ══════════════════════════════════════════
+// Departments
+// ══════════════════════════════════════════
+
+const DEPARTMENTS = [
+  { code:'EXH',  name:'Exhibition',      entity:'AMG',       size:'Enterprise', humans:['Ariana Herva'], agents:['billie'],       files:124, status:'active' },
+  { code:'ACC',  name:'Accounting',      entity:'AMG',       size:'Enterprise', humans:['Erin Chen'],   agents:['starseed'],     files:89,  status:'active' },
+  { code:'GEN',  name:'General Affairs', entity:'AMG',       size:'Enterprise', humans:['Fred Yan'],    agents:['xiaohuihui'],   files:56,  status:'active' },
+  { code:'PRT',  name:'Partnership',     entity:'AMG',       size:'Enterprise', humans:['Wayne Lu'],    agents:['lulu'],         files:34,  status:'active' },
+  { code:'SAF',  name:'Safety & Compliance', entity:'AMG',   size:'Enterprise', humans:['Roberto Herva'],agents:['winda'],       files:47,  status:'active' },
+  { code:'OPS',  name:'Design Operations', entity:'AMG',      size:'Enterprise', humans:['Thor Eriksen','Stephen'], agents:['thor','stephen'], files:203, status:'active' },
+  { code:'EXE',  name:'Executive',       entity:'AMG',       size:'Enterprise', humans:['Calvin Yee'],  agents:['jarvis'],       files:12,  status:'active' },
+  { code:'OPS',  name:'Operations',      entity:'Calway',    size:'Mid-Market', humans:['Jose Melchor'],agents:['ana'],          files:28,  status:'active' },
+  { code:'OPS',  name:'Labor Operations',entity:'Synergers', size:'SMB',        humans:['Jose Melchor'],agents:['ana'],          files:18,  status:'active' },
+  { code:'STR',  name:'Strategy',        entity:'AMG',       size:'Enterprise', humans:['Stephen'],     agents:['stephen'],      files:67,  status:'inactive' },
+  { code:'TMP',  name:'Temp / Seasonal', entity:'Synergers', size:'SMB',        humans:['TBD'],        agents:[],              files:0,   status:'inactive' },
+];
+
+let sizeFilterVal = 'all';
+let statusFilterVal = 'all';
+
+function setSizeFilter(val, btn) {
+  sizeFilterVal = val;
+  document.querySelectorAll('.size-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDepartments();
+}
+
+function setStatusFilter(val, btn) {
+  statusFilterVal = val;
+  document.querySelectorAll('.status-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDepartments();
+}
+
+function renderDepartments() {
+  const grid = document.getElementById('departments-grid');
+  const depts = DEPARTMENTS.filter(d => {
+    const sizeOk = sizeFilterVal === 'all' || d.size === sizeFilterVal;
+    const statusOk = statusFilterVal === 'all' || d.status === statusFilterVal;
+    return sizeOk && statusOk;
+  });
+
+  if (!depts.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No departments match the current filters.</div>';
+    return;
+  }
+
+  grid.innerHTML = depts.map(d => {
+    const humanList = d.humans.map(h => `<span class="badge" style="background:#1f6feb22;color:var(--accent);border:1px solid #1f6feb44;margin:1px 2px;">${h}</span>`).join(' ');
+    const agentList = d.agents.map(a => `<span class="badge" style="background:#d4a84322;color:var(--accent);border:1px solid #d4a84344;margin:1px 2px;">${a}</span>`).join(' ') || '<span class="text-muted" style="font-size:11px;">—</span>';
+    const statusBadge = d.status === 'active'
+      ? '<span class="badge badge-active">active</span>'
+      : '<span class="badge badge-inactive">inactive</span>';
+    const sizeBadge = `<span class="badge" style="background:${sizeColor(d.size)}22;color:${sizeColor(d.size)};border:1px solid ${sizeColor(d.size)}44;margin:1px 2px;">${d.size}</span>`;
+    return `
+    <div class="card" style="padding:18px 20px;">
+      <div class="card-header" style="margin-bottom:12px;padding-bottom:10px;">
+        <div>
+          <span style="font-size:10px;font-family:var(--font-mono);color:var(--text-muted);letter-spacing:0.08em;">${d.code}</span>
+          <h3 style="font-size:14px;font-weight:600;margin-top:2px;">${d.name}</h3>
+          <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;">${sizeBadge}${statusBadge}</div>
+        </div>
+        <span class="tag">${d.entity}</span>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Humans</div>
+        <div>${humanList}</div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Agents</div>
+        <div>${agentList}</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--border);">
+        <span style="font-size:11px;color:var(--text-muted);">Files / Documents</span>
+        <span style="font-size:18px;font-weight:700;font-family:var(--font-mono);color:var(--text-primary);">${d.files}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
 
 function renderTimeline() {
   const el = document.getElementById('timeline-list');

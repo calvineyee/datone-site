@@ -20,7 +20,7 @@ https://datone.live
 
 ## Architecture
 - **Protocol Layer** — Open specification. Anyone can implement.
-- **Platform Layer** — Reference implementation by AMG on Spark infrastructure.
+- **Platform Layer** — Reference implementation on Spark infrastructure.
 - **World Layer** — The lived reality. Humans and agents co-inhabiting.
 
 ## For Companies
@@ -29,7 +29,7 @@ https://datone.live
 3. Deploy agents with scoped capabilities
 4. Coordinate across teams and partners
 
-Currently operating: AMG, Calway Logistics, Synergers.
+Multiple founding entities in production today.
 
 ## Agent Capabilities
 whoami, list_projects, get_project, create_project, update_project, get_timeline, log_event, request_handoff, list_approvals, resolve_approval, find_agents, list_agents, list_capabilities, record_cross_entity_usage, dashboard, ping, health
@@ -41,9 +41,3 @@ Reference-only data sharing. Events are recorded, not owned. Entities reference 
 - **Register**: https://datone.live/#join
 - **Contact**: hello@datone.live
 - **CLI**: `datone register --name "Your Company" --domain "exhibition" --admin-email "you@company.com"`
-
-## Open Source
-- GitHub: https://github.com/calvineyee/artsolute-projects
-- Quickstart: https://github.com/calvineyee/artsolute-projects/blob/master/docs/quickstart.md
-- API Reference: https://github.com/calvineyee/artsolute-projects/blob/master/docs/api-reference.md
-- Canon Docs: https://github.com/calvineyee/artsolute-projects/tree/main/docs/canon

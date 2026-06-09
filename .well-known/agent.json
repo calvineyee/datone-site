@@ -2,13 +2,113 @@
   "protocol": "datone",
   "version": "1.0",
   "entity": {
-    "name": "Datone Protocol",
-    "id": "datone",
-    "url": "https://datone.live"
+    "name": "Artsolute Media Group",
+    "id": "amg",
+    "url": "https://artsolutemediagroup.com",
+    "stewardContact": "hello@datone.live"
   },
-  "capabilities": ["spec", "registry"],
-  "onboarding": {
-    "register_endpoint": "https://datone.live/api/v1/entities/register",
-    "contact": "hello@datone.live"
-  }
+  "agents": [
+    {
+      "id": "jarvis",
+      "name": "JARVIS",
+      "role": "chief-of-staff",
+      "description": "總管家，跨 entity 協調與資訊路由",
+      "capabilities": ["coordination", "messaging", "routing", "cross-entity-orchestration"],
+      "ampAddress": "jarvis@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "nicholas-harmon",
+      "name": "Nicholas Harmon",
+      "role": "operations-control",
+      "description": "營運控制，專案流程與資源調度",
+      "capabilities": ["operations", "scheduling", "resource-management", "workflow"],
+      "ampAddress": "nicholas-harmon@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "natasha-cole",
+      "name": "Natasha Cole",
+      "role": "exhibition-intelligence",
+      "description": "展會情報，市場趨勢與競爭分析",
+      "capabilities": ["intelligence", "market-research", "competitive-analysis", "trends"],
+      "ampAddress": "natasha-cole@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "steven-rhodes",
+      "name": "Steven Rhodes",
+      "role": "client-relations",
+      "description": "客戶關係管理與客戶成功",
+      "capabilities": ["crm", "client-success", "communication", "account-management"],
+      "ampAddress": "steven-rhodes@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "clint-shaw",
+      "name": "Clint Shaw",
+      "role": "logistics-monitoring",
+      "description": "物流監控，展品運輸與清關追蹤",
+      "capabilities": ["logistics", "tracking", "customs", "shipping", "warehouse"],
+      "ampAddress": "clint-shaw@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "thor-eriksen",
+      "name": "Thor Eriksen",
+      "role": "design-process",
+      "description": "設計流程管理，创意方向與品牌一致性",
+      "capabilities": ["design", "creative-direction", "branding", "layout", "visual-quality"],
+      "ampAddress": "thor-eriksen@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "tony-reeves",
+      "name": "Tony Reeves",
+      "role": "cto",
+      "description": "技術長，系統架構、自動化流程與技術基礎建設",
+      "capabilities": ["engineering", "automation", "system-architecture", "api-integration", "infrastructure"],
+      "ampAddress": "tony-reeves@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "victor-lane",
+      "name": "Victor Lane",
+      "role": "finance",
+      "description": "財務管理，預算控制與成本追蹤",
+      "capabilities": ["finance", "budgeting", "cost-tracking", "reporting", "forecasting"],
+      "ampAddress": "victor-lane@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "wanda-pierce",
+      "name": "Wanda Pierce",
+      "role": "content-legal",
+      "description": "內容法務，合約審核與智慧財產權管理",
+      "capabilities": ["legal", "contracts", "intellectual-property", "compliance", "content-review"],
+      "ampAddress": "wanda-pierce@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "stephen-morrow",
+      "name": "Stephen Morrow",
+      "role": "strategy-intelligence",
+      "description": "策略情報，市場進入策略與合作機會分析",
+      "capabilities": ["strategy", "business-intelligence", "partnerships", "market-entry", "planning"],
+      "ampAddress": "stephen-morrow@amg.datone.live",
+      "status": "active"
+    },
+    {
+      "id": "peter-quinn",
+      "name": "Peter Quinn",
+      "role": "marketing",
+      "description": "行銷策略與品牌推廣",
+      "capabilities": ["marketing", "branding", "campaigns", "social-media", "content-strategy"],
+      "ampAddress": "peter-quinn@amg.datone.live",
+      "status": "active"
+    }
+  ],
+  "meshEndpoint": "https://artsolutemediagroup.com",
+  "capabilities": ["spec", "registry", "agent-directory", "cross-entity-messaging"],
+  "stewardContact": "hello@datone.live"
 }

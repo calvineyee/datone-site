@@ -255,6 +255,83 @@
       margin-top: 4px;
     }
 
+    /* ── Pipeline Grid ── */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .pipeline-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .pipeline-stage.bottleneck {
+      border-color: var(--red);
+      box-shadow: 0 0 8px rgba(248,81,73,0.2);
+    }
+
+    .pipeline-stage:hover {
+      background: var(--bg-hover);
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .stage-icon { font-size: 16px; flex-shrink: 0; }
+
+    .stage-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: capitalize;
+      color: var(--text-primary);
+    }
+
+    .stage-count {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stage-bar-bg {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .stage-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .bottleneck .stage-bar-fill {
+      background: var(--red);
+    }
+
+    .stage-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .stage-owner { color: var(--accent-2); }
+    .stage-max { color: var(--text-muted); }
+
     /* ── Tables ── */
     table {
       width: 100%;
@@ -581,6 +658,9 @@
     <button class="nav-item" data-page="whoami" id="nav-whoami">
       <span class="icon">◉</span> Whoami <span class="lock">🔒</span>
     </button>
+    <button class="nav-item" data-page="pipeline" id="nav-pipeline">
+      <span class="icon">▤</span> Pipeline <span class="lock">🔒</span>
+    </button>
     <button class="nav-item" data-page="projects" id="nav-projects">
       <span class="icon">▣</span> Projects <span class="lock">🔒</span>
     </button>
@@ -817,6 +897,17 @@
     </div>
   </section>
 
+  <!-- ─── Page: Pipeline (Protected) ─── -->
+  <section id="page-pipeline" class="hidden">
+    <div class="page-header">
+      <h2>Pipeline</h2>
+      <p>專案階段管線 · 即時瓶頸監控</p>
+    </div>
+    <div id="pipeline-content">
+      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
+    </div>
+  </section>
+
   <!-- ─── Page: Projects (Protected) ─── -->
   <section id="page-projects" class="hidden">
     <div class="page-header">
@@ -871,6 +962,7 @@ function updateAuthUI() {
   if (activePage) {
     const page = activePage.dataset.page;
     if (page === 'whoami') renderWhoamiPage();
+    if (page === 'pipeline') renderPipelinePage();
     if (page === 'projects') renderProjectsPage();
   }
 }
@@ -888,6 +980,7 @@ function handleLogin() {
   if (activePage) {
     const page = activePage.dataset.page;
     if (page === 'whoami') renderWhoamiPage();
+    if (page === 'pipeline') renderPipelinePage();
     if (page === 'projects') renderProjectsPage();
   }
 }
@@ -922,6 +1015,7 @@ function navigateTo(page) {
   if (page === 'registrations') renderRegistrations();
   if (page === 'principles') renderPrinciples();
   if (page === 'whoami') renderWhoamiPage();
+  if (page === 'pipeline') renderPipelinePage();
   if (page === 'projects') renderProjectsPage();
 }
 
@@ -1210,6 +1304,119 @@ function renderProjectsPage() {
       </table>
     </div>
   `;
+}
+
+// ══════════════════════════════════════════
+// Render: Pipeline (Protected)
+// ══════════════════════════════════════════
+
+const STAGE_OWNER_MAP = {
+  new: null, designing: 'xiaohuihui', design_review: null,
+  quoting: 'billie', quote_sent: null, quote_approved: 'billie',
+  so_created: 'billie', production_drawing: 'xiaohuihui',
+  production: 'winda', qc: 'winda',
+  shipping_prep: 'ana', shipped: 'ana', on_site: 'ana',
+  invoiced: 'starseed', closed: null
+};
+
+const MAX_STAGE_DAYS = {
+  new: 3, designing: 5, design_review: 7, quoting: 3,
+  quote_sent: 7, quote_approved: 2, so_created: 2,
+  production_drawing: 5, production: 14, qc: 3,
+  shipping_prep: 5, shipped: 7, on_site: 14, invoiced: 30
+};
+
+async function renderPipelinePage() {
+  const container = document.getElementById('pipeline-content');
+  const token = getToken();
+
+  if (!token) {
+    container.innerHTML = authGateHTML('Pipeline');
+    return;
+  }
+
+  container.innerHTML = '<div class="card"><div class="card-body" style="text-align:center;padding:40px;"><span class="loading"></span> Loading pipeline...</div></div>';
+
+  try {
+    const resp = await fetch(API_BASE + '/v1/projects/pipeline', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!resp.ok) throw new Error('Pipeline API returned ' + resp.status);
+    const data = await resp.json();
+    const stages = data.stages || {};
+
+    const stageOrder = ['new','designing','design_review','quoting','quote_sent',
+      'quote_approved','so_created','production_drawing','production','qc',
+      'shipping_prep','shipped','on_site','invoiced','closed'];
+
+    const total = Object.values(stages).reduce((a,b) => a+b, 0);
+    const maxCount = Math.max(1, ...Object.values(stages));
+
+    let cards = '';
+    for (const stage of stageOrder) {
+      const count = stages[stage] || 0;
+      const pct = Math.round((count / maxCount) * 100);
+      const owner = STAGE_OWNER_MAP[stage];
+      const maxDays = MAX_STAGE_DAYS[stage] || 0;
+
+      let statusIcon = '🟢';
+      let cardClass = '';
+      if (count > 5) { statusIcon = '🔴'; cardClass = 'bottleneck'; }
+      else if (count > 0) { statusIcon = '🟡'; }
+
+      cards += `
+        <div class="pipeline-stage ${cardClass}">
+          <div class="stage-header">
+            <span class="stage-icon">${statusIcon}</span>
+            <span class="stage-name">${stage.replace(/_/g,' ')}</span>
+            <span class="stage-count">${count}</span>
+          </div>
+          <div class="stage-bar-bg">
+            <div class="stage-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <div class="stage-meta">
+            ${owner ? '<span class="stage-owner">👤 ' + owner + '</span>' : '<span class="stage-owner text-muted">—</span>'}
+            ${maxDays ? '<span class="stage-max">⏱ max ' + maxDays + 'd</span>' : ''}
+          </div>
+        </div>`;
+    }
+
+    container.innerHTML = `
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Active Projects</div>
+          <div class="stat-value">${total}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Stages</div>
+          <div class="stat-value">${stageOrder.length}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Bottlenecks</div>
+          <div class="stat-value" style="color:${Object.values(stages).filter(v=>v>5).length > 0 ? 'var(--red)' : 'var(--green)'}">
+            ${Object.values(stages).filter(v=>v>5).length}
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">API Source</div>
+          <div class="stat-value" style="font-size:14px;">GET /v1/projects/pipeline</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Project Stage Pipeline</h3>
+          <span class="tag">GET /v1/projects/pipeline · authenticated</span>
+        </div>
+        <div class="card-body">
+          <div class="pipeline-grid">
+            ${cards}
+          </div>
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    container.innerHTML = `<div class="card"><div class="card-body" style="text-align:center;padding:40px;color:var(--red);">Pipeline load failed: ${err.message}</div></div>`;
+  }
 }
 
 // ══════════════════════════════════════════

@@ -37,6 +37,83 @@
       font-size: 14px;
     }
 
+    /* ── Mobile Top Nav ── */
+    .mobile-topbar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      align-items: center;
+      padding: 0 16px;
+      justify-content: space-between;
+    }
+
+    .mobile-topbar-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+    }
+
+    .mobile-topbar-logo span {
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      padding: 10px;
+      transition: background 0.15s;
+    }
+
+    .hamburger:hover { background: var(--bg-hover); }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ── Sidebar Overlay (mobile) ── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 90;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
     /* ── Sidebar ── */
     .sidebar {
       width: var(--sidebar-w);
@@ -333,9 +410,17 @@
     .stage-max { color: var(--text-muted); }
 
     /* ── Tables ── */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -24px;
+      padding: 0 24px;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 600px;
     }
 
     th {
@@ -599,6 +684,162 @@
 
     .empty-state .icon { font-size: 32px; margin-bottom: 12px; }
 
+    /* ═══════════════════════════════════════
+       Mobile Responsive (max-width: 768px)
+       ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      /* Show mobile topbar */
+      .mobile-topbar { display: flex; }
+
+      /* Sidebar defaults to hidden off-screen on mobile */
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 95;
+        top: 0;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+      }
+
+      .sidebar-overlay.visible {
+        display: block;
+        opacity: 1;
+      }
+
+      /* Main content fills viewport */
+      .main {
+        margin-left: 0;
+        padding: 68px 16px 32px;
+        max-width: 100%;
+      }
+
+      /* Page header */
+      .page-header h2 { font-size: 18px; }
+      .page-header p { font-size: 12px; }
+
+      /* Stat grid: 2 columns on mobile */
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .stat-card { padding: 12px 14px; }
+      .stat-value { font-size: 22px; }
+      .stat-label { font-size: 10px; }
+
+      /* Cards */
+      .card {
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      /* Tables — override defaults for mobile */
+      .table-wrapper {
+        margin: 0 -16px;
+        padding: 0 16px;
+      }
+
+      table { min-width: 550px; }
+      th, td { padding: 8px 10px; font-size: 12px; }
+
+      /* Pipeline grid: single column */
+      .pipeline-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      /* Departments grid: single column on mobile */
+      #departments-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+      }
+
+      /* Search bars */
+      .search-bar {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .search-input { padding: 10px 12px; font-size: 14px; }
+
+      /* Buttons: bigger touch targets */
+      .btn {
+        padding: 8px 16px;
+        font-size: 13px;
+        min-height: 44px;
+        align-items: center;
+      }
+
+      .btn-sm { padding: 6px 12px; font-size: 12px; min-height: 36px; }
+
+      /* Nav items in sidebar — larger touch targets */
+      .nav-item {
+        padding: 12px 14px;
+        font-size: 14px;
+        min-height: 44px;
+      }
+
+      .nav-item .icon { font-size: 18px; }
+
+      /* Auth section in sidebar */
+      .sidebar-auth { padding: 12px 14px; }
+      .sidebar-auth label { font-size: 11px; }
+      .auth-input { padding: 10px 12px; font-size: 13px; min-height: 44px; }
+
+      /* Auth gate (login prompt) */
+      .auth-gate { padding: 20px 16px; }
+      .auth-gate h2 { font-size: 18px; }
+      .auth-gate p { font-size: 12px; }
+      .auth-gate-form {
+        flex-direction: column;
+        width: 100%;
+      }
+      .auth-gate-input { padding: 12px 14px; font-size: 14px; }
+      .auth-gate .btn { width: 100%; justify-content: center; }
+
+      /* Filters row */
+      .flex-between {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      /* Timeline */
+      .timeline { padding-left: 20px; }
+      .timeline-item { margin-bottom: 16px; }
+
+      /* Key-value tables (whoami) stack into cards */
+      .kv-table tr {
+        display: flex;
+        flex-direction: column;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .kv-table td {
+        display: block;
+        width: 100% !important;
+        padding: 2px 10px;
+        border-bottom: none;
+      }
+      .kv-table td:first-child {
+        font-size: 10px;
+        padding-bottom: 0;
+      }
+      .kv-table td:last-child {
+        padding-top: 0;
+        font-size: 13px;
+      }
+    }
+
     /* ── Protected data tables ── */
     .data-table {
       width: 100%;
@@ -630,8 +871,24 @@
 </head>
 <body>
 
+<!-- ══ MOBILE TOPBAR ══ -->
+<div class="mobile-topbar">
+  <div class="mobile-topbar-logo">
+    <span>DATONE PROTOCOL</span>
+    ◈ Dashboard
+  </div>
+  <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" onclick="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
+<!-- ══ SIDEBAR OVERLAY (mobile) ══ -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
 <!-- ══ SIDEBAR ══ -->
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <span>DATONE PROTOCOL</span>
     <h1>◈ Dashboard</h1>
@@ -723,21 +980,23 @@
       <div class="search-bar">
         <input class="search-input" id="entity-search" type="text" placeholder="Search entities by name or slug…" />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Entity</th>
-            <th>Slug</th>
-            <th>Status</th>
-            <th>Agents</th>
-            <th>Registered</th>
-            <th>API Base</th>
-          </tr>
-        </thead>
-        <tbody id="entities-tbody">
-          <!-- JS 填充 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Entity</th>
+              <th>Slug</th>
+              <th>Status</th>
+              <th>Agents</th>
+              <th>Registered</th>
+              <th>API Base</th>
+            </tr>
+          </thead>
+          <tbody id="entities-tbody">
+            <!-- JS 填充 -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -773,21 +1032,23 @@
       <div class="search-bar">
         <input class="search-input" id="agent-search" type="text" placeholder="Filter by name, entity, capability…" />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Agent</th>
-            <th>Display Name</th>
-            <th>Entity</th>
-            <th>Department</th>
-            <th>Status</th>
-            <th>Capabilities</th>
-          </tr>
-        </thead>
-        <tbody id="agents-tbody">
-          <!-- JS 填充 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Display Name</th>
+              <th>Entity</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Capabilities</th>
+            </tr>
+          </thead>
+          <tbody id="agents-tbody">
+            <!-- JS 填充 -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -851,21 +1112,23 @@
         <h3>Pending Applications</h3>
         <span class="tag">GET /v1/entities/registrations (view)</span>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Entity Name</th>
-            <th>Contact Email</th>
-            <th>Submitted</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="registrations-tbody">
-          <!-- JS 填充 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Entity Name</th>
+              <th>Contact Email</th>
+              <th>Submitted</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="registrations-tbody">
+            <!-- JS 填充 -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -922,6 +1185,46 @@
 </main>
 
 <script>
+// ══════════════════════════════════════════
+// Mobile Sidebar Toggle
+// ══════════════════════════════════════════
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const hamburger = document.getElementById('hamburger-btn');
+  const isOpen = sidebar.classList.contains('open');
+
+  if (isOpen) {
+    closeSidebar();
+  } else {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const hamburger = document.getElementById('hamburger-btn');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('visible');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close sidebar when a nav item is clicked (mobile)
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
+    }
+  });
+});
+
 // ══════════════════════════════════════════
 // Auth State
 // ══════════════════════════════════════════
@@ -1216,7 +1519,7 @@ function renderWhoamiPage() {
         <h3>Entity Identity</h3>
         <span class="tag">GET /v1/whoami</span>
       </div>
-      <table class="data-table">
+      <div class="table-wrapper"><table class="data-table kv-table">
         <tr><td style="width:180px;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Entity</td><td><strong>${d.entity}</strong></td></tr>
         <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Entity ID</td><td class="text-mono text-accent">${d.entity_id}</td></tr>
         <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Display Name</td><td>${d.display_name}</td></tr>
@@ -1224,7 +1527,7 @@ function renderWhoamiPage() {
         <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Token Scope</td><td>${d.token_scope.map(s => `<span class="badge" style="background:#1f6feb22;color:var(--accent);border:1px solid #1f6feb44;margin:1px 2px;">${s}</span>`).join(' ')}</td></tr>
         <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Rate Limit</td><td class="text-mono">${d.rate_limit}</td></tr>
         <tr><td style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Active Since</td><td class="text-mono text-muted">${d.since}</td></tr>
-      </table>
+      </table></div>
     </div>
     <div class="card">
       <div class="card-header"><h3>Token (Preview)</h3><span class="tag">localStorage · ephemeral</span></div>
@@ -1289,7 +1592,7 @@ function renderProjectsPage() {
         <h3>All Projects</h3>
         <span class="tag">GET /v1/projects · authenticated</span>
       </div>
-      <table class="data-table">
+      <div class="table-wrapper"><table class="data-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -1301,7 +1604,7 @@ function renderProjectsPage() {
           </tr>
         </thead>
         <tbody>${rows}</tbody>
-      </table>
+      </table></div>
     </div>
   `;
 }

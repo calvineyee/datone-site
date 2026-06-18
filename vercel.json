@@ -3,6 +3,14 @@
     {
       "source": "/api/:path*",
       "destination": "https://nvidia.tail8fe1c2.ts.net/:path*"
+    },
+    {
+      "source": "/spec",
+      "destination": "/spec.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html"
     }
   ]
 }

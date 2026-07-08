@@ -50,6 +50,7 @@
     border-radius:50%;animation:sp 1s linear infinite;margin:60px auto;}
   @keyframes sp{to{transform:rotate(360deg)}}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;}
+.tag.owner{font-weight:600;letter-spacing:0;text-transform:none;}.own-claude{color:#89b8ff;border-color:#234a6a;background:#101c2e;}.own-tony{color:#e6c17a;border-color:#4a3a1c;background:#231d10;}.own-team{color:#9ad6a6;border-color:#234a2c;background:#132018;}.own-calvin{color:#e59ad6;border-color:#5a2b52;background:#2a1626;}
 </style>
 </head>
 <body>
@@ -70,6 +71,12 @@
 <script>
 const API = '/api';
 let _filter = '', _all = [];
+const OWNER = {
+  'claude-backend': {label:'Claude · backend', cls:'own-claude'},
+  'tony-tenant':    {label:'Tony · tenant app', cls:'own-tony'},
+  'team-sheet':     {label:'Team · Google Sheet', cls:'own-team'},
+  'calvin':         {label:'Calvin · decision', cls:'own-calvin'},
+};
 
 async function api(path, opts = {}) {
   const res = await fetch(API + path, {
@@ -116,6 +123,11 @@ function render() {
   body.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', onAct));
 }
 
+function ownerTag(o) {
+  const m = OWNER[o]; if (!m) return '';
+  return '<span class="tag owner ' + m.cls + '">→ ' + esc(m.label) + '</span>';
+}
+
 function cardHtml(p) {
   const acts = (p.status === 'submitted' || p.status === 'under_review')
     ? '<div class="acts">' +
@@ -130,6 +142,7 @@ function cardHtml(p) {
     '<div class="tags">' +
       '<span class="tag risk-' + esc(p.risk_level) + '">' + esc(p.risk_level) + ' risk</span>' +
       '<span class="tag">' + esc(p.type) + '</span>' +
+      ownerTag(p.suggested_owner) +
       (p.entity_slug ? '<span class="tag">' + esc(p.entity_slug) + '</span>' : '') +
     '</div>' + rev + acts +
     '<div class="meta">' + esc(p.proposal_id) + ' · by ' + esc(p.proposed_by_agent || '—') + ' · ' + esc((p.created_at||'').slice(0,16)) + '</div>' +

@@ -1,8 +1,16 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://nvidia.tail8fe1c2.ts.net/:path*"
+      "source": "/api/(.*)",
+      "destination": "https://nvidia.tail8fe1c2.ts.net/api/$1"
+    },
+    {
+      "source": "/consume",
+      "destination": "/consume/index.html"
+    },
+    {
+      "source": "/people",
+      "destination": "/people/index.html"
     },
     {
       "source": "/spec",
@@ -11,6 +19,10 @@
     {
       "source": "/faq",
       "destination": "/faq.html"
+    },
+    {
+      "source": "/proposals",
+      "destination": "/proposals/index.html"
     }
   ]
 }

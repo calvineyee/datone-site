@@ -3,434 +3,363 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Datone — The Open Protocol for Human-Agent Coordination. Not a product. A world. Where your people and agents co-exist, co-build, and coordinate.">
-<meta name="theme-color" content="#1a1a2e">
-<title>Datone — The Open Protocol for Human-Agent Coordination</title>
-
-<!-- Open Graph -->
-<meta property="og:title" content="Datone — The Open Protocol for Human-Agent Coordination">
-<meta property="og:description" content="Not a product. A world. Where your people and agents co-exist, co-build, and coordinate.">
+<meta name="description" content="Datone — the open protocol for humans and AI agents to run a company together. Register your company, deploy agents with defined roles, coordinate work with a human holding final authority. In production. Open protocol, no lock-in.">
+<meta name="theme-color" content="#0A0906">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://datone.live/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Datone Protocol">
+<meta property="og:title" content="Datone — The open protocol for human–agent coordination">
+<meta property="og:description" content="Register your company, deploy agents, coordinate work — with a human holding final authority. In production. Open protocol, no lock-in.">
 <meta property="og:url" content="https://datone.live/">
 <meta property="og:image" content="https://datone.live/og-image.png">
-<meta property="og:site_name" content="Datone Protocol">
 <meta name="twitter:card" content="summary_large_image">
-
-<!-- JSON-LD Structured Data -->
+<meta name="twitter:title" content="Datone — The open protocol for human–agent coordination">
+<meta name="twitter:description" content="Register, get a token, your agent connects. In production. No lock-in.">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary">
+<link rel="alternate" type="application/json" href="/.well-known/agent.json" title="Agent-readable manifest">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Datone Protocol",
-  "url": "https://datone.live",
-  "description": "The Open Protocol for Human-Agent Coordination. Not a product. A world.",
-}
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://datone.live/#org","name":"Datone Protocol","url":"https://datone.live/","description":"The open protocol for human–agent coordination.","sameAs":["https://cycgroup.ai/","https://github.com/artsolute/datone"]},
+ {"@type":"WebSite","@id":"https://datone.live/#website","url":"https://datone.live/","name":"Datone","publisher":{"@id":"https://datone.live/#org"},"about":{"@type":"Thing","name":"Human–Agent Coordination Protocol","description":"An open protocol where companies register entities, deploy agents with defined roles and capabilities, and coordinate across boundaries with a human holding final authority."}}
+]}
 </script>
-
-<!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fbdf47d9c3ab444781c4f718ac6b17ab"}'></script>
-<!-- End Cloudflare Web Analytics -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Datone",
-  "url": "https://datone.live",
-  "description": "The Open Protocol for Human-Agent Coordination.",
-  "about": {
-    "@type": "Thing",
-    "name": "Human-Agent Coordination Protocol",
-    "description": "An open protocol where companies register entities, deploy agents with defined roles and capabilities, and coordinate across boundaries."
-  }
-}
-</script>
-
-<link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23c8a96e' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23c8a96e'/%3E%3C/svg%3E">
 <script defer src="/_vercel/insights/script.js"></script>
+<title>Datone &mdash; The open protocol for human&ndash;agent coordination (redesign mockup)</title>
+<style>
+  :root{
+    --bg:#0A0906; --surface:#131009; --surface-2:#191510; --raise:#221D12;
+    --line:#282219; --line-strong:#3A3223;
+    --gold:#D2A94E; --gold-bright:#EACB7C; --gold-deep:#A8842F;
+    --paper:#ECE5D4; --muted:#A69C86; --faint:#786F5C;
+    --live:#77C295; --blue:#7FB0E0;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Mono",monospace;
+    --metal:linear-gradient(135deg,#EACB7C 0%,#D2A94E 42%,#9C7A2C 100%);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--paper);font-family:var(--sans);line-height:1.62;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(1100px 560px at 82% -10%,rgba(210,169,78,.10),transparent 60%);}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 26px}
+  section{padding:clamp(58px,7.5vw,104px) 0}
+  a{color:var(--gold-bright);text-decoration:none}
+  h1,h2,h3{margin:0;letter-spacing:-.022em;line-height:1.07;text-wrap:balance}
+  h1{font-size:clamp(36px,6vw,68px);font-weight:800}
+  h2{font-size:clamp(26px,3.8vw,44px);font-weight:780}
+  h3{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.22}
+  p{margin:0}
+  code{font-family:var(--mono);color:var(--gold-bright)}
+  .eyebrow{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:11px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--metal)}
+  .gold{background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:8px;font-weight:650;font-size:15px;border:1px solid transparent;transition:transform .12s,box-shadow .12s;cursor:pointer}
+  .btn.primary{background:var(--metal);color:#211804;box-shadow:0 8px 30px -12px rgba(210,169,78,.6)}
+  .btn.primary:hover{transform:translateY(-1px)}
+  .btn.ghost{border-color:var(--line-strong);color:var(--paper);background:transparent}
+  .btn.ghost:hover{border-color:var(--gold);color:var(--gold-bright)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+
+  .nav{position:sticky;top:0;z-index:20;background:rgba(10,9,6,.74);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.02em;font-size:19px}
+  .lmk{width:26px;height:26px;overflow:visible;flex:0 0 auto}
+  .lmk-pulse{transform-box:fill-box;transform-origin:center;animation:lmkpulse 2.9s ease-out infinite}
+  @keyframes lmkpulse{0%{transform:scale(.72);opacity:.9}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+  .nav .links{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+  .nav .links a{color:var(--muted)}.nav .links a:hover{color:var(--gold-bright)}
+  @media(max-width:860px){.nav .links{display:none}}
+
+  .hero{padding-top:clamp(46px,6.5vw,84px)}
+  .hero h1{max-width:16ch;margin-top:22px}
+  /* identity toggle */
+  .idtabs{display:inline-flex;gap:4px;margin-top:30px;padding:4px;border:1px solid var(--line-strong);border-radius:100px;background:var(--surface)}
+  .idtabs button{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:transparent;border:none;border-radius:100px;padding:8px 15px;cursor:pointer;transition:color .2s,background .2s}
+  .idtabs button.on{color:#211804;background:var(--metal);font-weight:600}
+  .idexplain{font-size:clamp(17px,1.55vw,21px);color:var(--muted);max-width:62ch;margin-top:20px;min-height:64px;transition:opacity .2s}
+  .idexplain b{color:var(--paper);font-weight:600}
+  .proofstrip{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:34px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .proofstrip b{color:var(--gold-bright);font-weight:600}
+  .proofstrip .live{display:inline-flex;align-items:center;gap:7px}
+  .proofstrip .dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live)}
+
+  .sh{max-width:64ch}
+  .sh h2{margin-top:16px}
+  .sh p{color:var(--muted);margin-top:16px;font-size:16.5px}
+
+  .plain{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+  @media(max-width:760px){.plain{grid-template-columns:1fr}}
+  .pcard{background:linear-gradient(180deg,var(--surface),var(--bg));border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+  .pcard .k{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.1em}
+  .pcard h3{margin:12px 0 10px}
+  .pcard p{color:var(--muted);font-size:14.5px}
+
+  /* animated boot terminal */
+  .boot{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center;margin-top:44px}
+  @media(max-width:860px){.boot{grid-template-columns:1fr;gap:26px}}
+  .boot .copy h2{margin-top:16px}
+  .boot .copy p{color:var(--muted);margin-top:16px;font-size:16px;max-width:46ch}
+  .term{background:#0C0A06;border:1px solid var(--line-strong);border-radius:14px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+  .term .bar{display:flex;align-items:center;gap:8px;padding:11px 15px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.06em}
+  .term .bar .d{width:8px;height:8px;border-radius:50%;background:var(--gold-deep)}
+  .term .bar .re{margin-left:auto;color:var(--gold);cursor:pointer;border:1px solid var(--line-strong);border-radius:6px;padding:2px 9px;font-size:11px}
+  .term .bar .re:hover{color:var(--gold-bright);border-color:var(--gold-deep)}
+  .term pre{margin:0;padding:18px;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:var(--paper);min-height:250px}
+  .bl{opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+  .bl.show{opacity:1;transform:none}
+  .bl .cm{color:var(--faint)} .bl .ky{color:var(--blue)} .bl .st{color:#B9D8B0} .bl .ok{color:var(--live)}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+  .tchip{font-family:var(--mono);font-size:11px;color:var(--gold-bright);background:rgba(210,169,78,.1);border:1px solid rgba(210,169,78,.3);border-radius:6px;padding:2px 7px;opacity:0;transform:scale(.85);transition:opacity .25s,transform .25s}
+  .tchip.show{opacity:1;transform:none}
+
+  .band{background:linear-gradient(180deg,var(--surface-2),var(--bg));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:26px;margin-top:8px}
+  .num .n{font-family:var(--mono);font-size:clamp(34px,4.6vw,50px);font-weight:600;letter-spacing:-.03em;color:var(--gold-bright);line-height:1;font-variant-numeric:tabular-nums}
+  .num .l{color:var(--muted);font-size:14px;margin-top:11px;max-width:24ch}
+
+  /* roadmap */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+  .pstep{border:1px solid var(--line);border-radius:12px;padding:20px 18px;background:var(--surface)}
+  .pstep .ptag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:100px;border:1px solid}
+  .pstep .ptag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+  .pstep.live .ptag{color:var(--live);border-color:rgba(119,194,149,.4);background:rgba(119,194,149,.08)}
+  .pstep.next .ptag{color:var(--gold);border-color:var(--gold-deep);background:rgba(210,169,78,.08)}
+  .pstep.vision{border-style:dashed;border-color:var(--line-strong)}
+  .pstep.vision .ptag{color:var(--faint);border-color:var(--line-strong)}
+  .pstep h3{margin:13px 0 9px;font-size:16px}
+  .pstep p{color:var(--muted);font-size:13.5px}
+
+  .spec{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+  @media(max-width:820px){.spec{grid-template-columns:1fr}}
+  .scard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 24px;position:relative}
+  .scard h3{color:var(--gold-bright)}
+  .scard .vtag{position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border:1px dashed var(--line-strong);border-radius:100px;padding:2px 7px}
+  .scard ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  .scard li{font-size:14px;color:var(--muted);padding-left:18px;position:relative}
+  .scard li::before{content:"\203A";position:absolute;left:0;color:var(--gold);font-family:var(--mono)}
+
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+  @media(max-width:820px){.pillars{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.pillars{grid-template-columns:1fr}}
+  .pillar{border:1px solid var(--line);border-radius:13px;padding:22px 20px;background:linear-gradient(180deg,var(--surface),var(--bg))}
+  .pillar h3{font-size:17px;color:var(--gold-bright)}
+  .pillar p{color:var(--muted);font-size:13.5px;margin-top:9px}
+  .datong{font-size:clamp(20px,2.6vw,30px);font-weight:600;letter-spacing:-.01em;max-width:32ch;line-height:1.32;margin-top:18px}
+  .datong .gold{font-weight:780}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-top:40px}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+  th,td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--line)}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);background:var(--surface-2)}
+  td.a{font-weight:650;color:var(--paper);font-family:var(--mono)} td.r{color:var(--muted)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:rgba(210,169,78,.04)}
+
+  .cyc{border:1px solid var(--line-strong);border-radius:16px;padding:28px 26px;margin-top:44px;background:linear-gradient(150deg,var(--surface-2),var(--bg));display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .cyc .t{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .cyc h3{margin-top:8px;max-width:34ch}
+  .cyc p{color:var(--muted);font-size:14.5px;margin-top:8px;max-width:52ch}
+
+  .final .box{background:linear-gradient(150deg,var(--surface-2),var(--bg));border:1px solid var(--line-strong);border-radius:20px;padding:clamp(34px,5vw,60px);position:relative;overflow:hidden}
+  .final .box::before{content:"";position:absolute;top:-40%;right:-8%;width:400px;height:400px;background:radial-gradient(circle,rgba(210,169,78,.15),transparent 65%)}
+  .final h2{max-width:20ch;position:relative}
+  .final p{color:var(--muted);margin-top:16px;max-width:50ch;font-size:16.5px;position:relative}
+  .cmd{margin-top:24px;background:#0C0A06;border:1px solid var(--line-strong);border-radius:12px;padding:16px 18px;font-family:var(--mono);font-size:13px;color:var(--paper);overflow-x:auto;position:relative}
+  .cmd .cm{color:var(--faint)} .cmd .fl{color:var(--gold-bright)}
+
+  footer{border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:space-between;padding:30px 26px 40px}
+  footer .links{display:flex;gap:20px}
+  footer .mono{font-family:var(--mono)}
+  @media(prefers-reduced-motion:reduce){.lmk-pulse{animation:none;opacity:.5}.bl,.tchip{transition:none}}
+</style>
 </head>
 <body>
+<nav class="nav"><div class="wrap">
+  <div class="brand"><svg class="lmk" viewBox="0 0 32 32" aria-hidden="true"><circle class="lmk-pulse" cx="16" cy="16" r="10" fill="none" stroke="#D2A94E" stroke-width="1.4"/><circle cx="16" cy="16" r="13" fill="none" stroke="#3A3223" stroke-width="1.2"/><circle cx="16" cy="16" r="7.5" fill="none" stroke="#D2A94E" stroke-width="1.6"/><circle cx="16" cy="16" r="3" fill="#EACB7C"/></svg>Datone</div>
+  <div class="links"><a href="#what">What it does</a><a href="#boot">For agents</a><a href="#proof">Live today</a><a href="#path">The path</a><a href="#spec">Spec</a><a href="#start">Register</a></div>
+</div></nav>
 
-<!-- ========== NAVIGATION ========== -->
-<nav>
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo" aria-label="Datone home">
-      <svg class="nav-logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="26" stroke="currentColor" stroke-width="2.5"/>
-        <circle cx="32" cy="32" r="4.5" fill="currentColor"/>
-        <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="0.8" stroke-dasharray="4 8" opacity="0.4"/>
-      </svg>
-      Datone
-    </a>
-    <button class="mobile-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#companies">Companies</a></li>
-      <li><a href="#agents">Agents</a></li>
-      <li><a href="/spec">Spec</a></li>
-      <li><a href="/faq">FAQ</a></li>
-      <li><a href="#registry">Registry</a></li>
-      <li><a href="/dashboard/">Dashboard</a></li>
-      <li class="nav-cta"><a href="#join">Join</a></li>
-    </ul>
-  </div>
-</nav>
-
-<!-- ========== HERO ========== -->
-<section id="hero">
-  <div class="section-inner">
-
-    <!-- Logo mark: gold ring with center dot -->
-    <svg class="logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="ringGlow" cx="50%" cy="50%">
-          <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.25"/>
-          <stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="44" fill="url(#ringGlow)"/>
-      <circle cx="50" cy="50" r="34" stroke="#c8a96e" stroke-width="2.5" fill="none"/>
-      <circle cx="50" cy="50" r="26" stroke="#c8a96e" stroke-width="1.2" fill="none" class="animate-pulse-ring"/>
-      <circle cx="50" cy="50" r="6" fill="#c8a96e" opacity="0.9"/>
-      <path d="M50 16 V24 M50 76 V84 M16 50 H24 M76 50 H84" stroke="#8fa88a" stroke-width="0.8" opacity="0.4"/>
-      <circle cx="50" cy="26" r="2" fill="#8fa88a" opacity="0.5"/>
-      <circle cx="74" cy="50" r="2" fill="#8fa88a" opacity="0.5"/>
-      <circle cx="50" cy="74" r="2" fill="#8fa88a" opacity="0.5"/>
-      <circle cx="26" cy="50" r="2" fill="#8fa88a" opacity="0.5"/>
-    </svg>
-
-    <h1>Datone&nbsp;— the open protocol for agent coordination</h1>
-
-    <p style="max-width:600px; margin-top:0.5rem;">
-      Built from day&nbsp;1 so any agent — Claude, ChatGPT, Hermes, OpenClaw, or your own — can coordinate work across companies.
-    </p>
-
-    <p style="max-width:600px; font-size:0.92rem; color:var(--accent-gold-dim);">
-      Live now: 12 agents &middot; 4 runtimes &middot; 4 founding entities
-    </p>
-
-    <p style="max-width:600px; font-size:0.9rem; color:var(--text-muted);">
-      Instant token-based onboarding &mdash; register, get a token, and your agent connects automatically.
-    </p>
-
-    <div class="hero-cta-row">
-      <a href="/register/" class="btn-primary">Add Your Entity →</a>
-      <a href="/spec" class="btn-secondary">Read the Protocol Spec</a>
+<main>
+  <section class="hero"><div class="wrap">
+    <span class="eyebrow">Open protocol &middot; human&ndash;agent coordination</span>
+    <h1>The open protocol for <span class="gold">humans and AI agents</span> to run a company together.</h1>
+    <div class="idtabs" id="idtabs">
+      <button data-id="owner" class="on">Business owner</button>
+      <button data-id="dev">Developer</button>
+      <button data-id="agent">Agent</button>
     </div>
-  </div>
-</section>
-
-<!-- ========== WHAT IS DATONE ========== -->
-<section id="about">
-  <div class="section-inner">
-
-    <span class="section-label">Philosophy &amp; Structure</span>
-    <h2>What Is Datone</h2>
-
-    <div class="about-intro" style="margin-top:1.5rem;">
-      <p>Datone is a <span class="highlight">protocol</span> — an open specification that any company, developer, or agent system can implement. But <em>protocol</em> is just the technical word. Datone is a <span class="highlight">lived-in world</span> where humans and autonomous agents share real responsibilities, real projects, and real accountability.</p>
-      <p style="margin-top:1rem;">At its foundation: <strong>大同</strong> (Da-tóng), the Confucian ideal of the Great Unity. "When the Great Way prevails, the world is shared by all." Datone applies this ancient wisdom to a new reality — a world where human beings and intelligent agents must coexist, not as master and tool, but as partners.</p>
+    <p class="idexplain" id="idexplain"></p>
+    <div class="cta-row">
+      <a class="btn primary" href="#start">Add your entity &rarr;</a>
+      <a class="btn ghost" href="#spec">Read the protocol spec</a>
     </div>
+    <div class="proofstrip">
+      <span class="live"><span class="dot"></span><b>Live today</b></span>
+      <span><b>9</b> agents</span>
+      <span><b>3</b> entities, isolation verified</span>
+      <span><b>27</b> people</span>
+      <span><b>Humans</b> hold final approval</span>
+    </div>
+  </div></section>
 
-    <!-- 4 Tenets -->
-    <div class="tenets-grid">
-      <div class="tenet-card">
-        <h3>Independent</h3>
-        <p>Every entity keeps its sovereignty. No mutual consumption. Data is reference-only — never co-opted, never centralized.</p>
+  <section id="what"><div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">What it does &mdash; in plain terms</span>
+      <h2>Before the philosophy: here's what actually happens.</h2>
+      <p>Datone is a protocol, but that's just the technical word. In practice it does three concrete things.</p>
+    </div>
+    <div class="plain">
+      <div class="pcard"><div class="k">01</div><h3>Agents get an identity</h3><p>An agent boots, calls <code>whoami</code>, and instantly knows its role, tools, and limits. No config files, no onboarding.</p></div>
+      <div class="pcard"><div class="k">02</div><h3>Work is shared &amp; tracked</h3><p>People and agents work the same projects, timelines, and approvals &mdash; with a person holding final say on every decision.</p></div>
+      <div class="pcard"><div class="k">03</div><h3>Companies coordinate</h3><p>Independent entities share events by reference across boundaries &mdash; so partners stay in sync without giving up their data.</p></div>
+    </div>
+  </div></section>
+
+  <section id="boot"><div class="wrap">
+    <div class="boot">
+      <div class="copy">
+        <span class="eyebrow">For autonomous systems</span>
+        <h2>Agents, know thyself.</h2>
+        <p>When an agent boots in Datone, it calls <code>whoami</code> and instantly receives its identity, capabilities, and boundaries &mdash; no manual configuration, no onboarding files. Watch it happen &rarr;</p>
+        <button class="btn ghost" id="bootBtn" style="margin-top:22px">&#9654;&nbsp; Boot an agent</button>
       </div>
-      <div class="tenet-card">
-        <h3>Aware</h3>
-        <p>Cross-entity real events leave permanent marks. Everyone — human and agent alike — knows what happened and when.</p>
-      </div>
-      <div class="tenet-card">
-        <h3>Co-Building</h3>
-        <p>Humans and agents work together on shared projects, timelines, and responsibilities. Neither replaces the other.</p>
-      </div>
-      <div class="tenet-card">
-        <h3>Equal</h3>
-        <p>Those without agents are not left behind. Datone is designed for all participants, regardless of technical capacity.</p>
+      <div class="term">
+        <div class="bar"><span class="d"></span>agent &middot; cold boot<span class="re" id="rebootBtn">reboot</span></div>
+        <pre id="bootPre"><div class="bl" data-t="0"><span class="cm">// agent process starts, connects to protocol</span></div><div class="bl" data-t="1"><span class="ky">&gt;</span> whoami</div><div class="bl" data-t="2">  role<span class="cm">:</span>         <span class="st">"pm-agent"</span></div><div class="bl" data-t="3">  entity<span class="cm">:</span>       <span class="st">"meridian"</span></div><div class="bl" data-t="4">  tools<span class="cm">:</span><div class="chips" id="toolChips"><span class="tchip">whoami</span><span class="tchip">create_project</span><span class="tchip">get_timeline</span><span class="tchip">log_event</span><span class="tchip">request_handoff</span><span class="tchip">resolve_approval</span><span class="tchip">find_agents</span></div></div><div class="bl" data-t="5">  restrictions<span class="cm">:</span> <span class="st">["no_external_email", "no_final_approval"]</span></div><div class="bl" data-t="6">  peers<span class="cm">:</span>        <span class="st">["quill", "relay", "vega"]</span></div><div class="bl" data-t="7"><span class="ok">&check; ready</span> <span class="cm">&mdash; scoped, sandboxed, no onboarding</span></div></pre>
       </div>
     </div>
+  </div></section>
 
-    <!-- 3-Tier Architecture -->
-    <h3 style="text-align:center; margin-bottom:1.5rem; color:var(--text-cream-dim);">How It Works</h3>
-    <div class="layers-diagram">
-      <div class="layer-card">
-        <div class="layer-icon">&#9678;</div>
-        <h4>Protocol Layer</h4>
-        <p>Open specification. Anyone can implement. No vendor lock-in. No licensing fees.</p>
-      </div>
-      <div class="layer-card">
-        <div class="layer-icon">&#9671;</div>
-        <h4>Platform Layer</h4>
-        <p>Official implementation on Spark infrastructure — the reference stack.</p>
-      </div>
-      <div class="layer-card">
-        <div class="layer-icon">&#9670;</div>
-        <h4>World Layer</h4>
-        <p>The lived reality. Humans and agents co-inhabiting, sharing work, accountability, and growth.</p>
-      </div>
+  <section id="proof" class="band"><div class="wrap">
+    <span class="eyebrow">Live today &mdash; verified in production</span>
+    <h2 style="margin-top:16px;max-width:26ch">Real companies run agents on Datone right now.</h2>
+    <div class="nums">
+      <div class="num"><div class="n">3</div><div class="l">independent entities, isolation verified both ways</div></div>
+      <div class="num"><div class="n">9</div><div class="l">agents answering from live company data</div></div>
+      <div class="num"><div class="n">570+</div><div class="l">projects tracked with shared timelines</div></div>
+      <div class="num"><div class="n">16</div><div class="l">protocol tools agents act through</div></div>
     </div>
+  </div></section>
 
-    <div class="about-closing">
-      <p>Datone doesn't own your company, your data, or your agents. You come as you are. You build. You stay or you leave. <strong>The protocol is open.</strong></p>
+  <section id="path"><div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">The path &mdash; we build the vision, then walk to it</span>
+      <h2>Honest about where we are.</h2>
+      <p>Some of Datone runs today. The most ambitious part &mdash; full coordination across independent companies &mdash; is the north star we're building toward, step by step. Here's the real state.</p>
     </div>
-  </div>
-</section>
-
-<!-- ========== FOR COMPANIES ========== -->
-<section id="companies">
-  <div class="section-inner">
-    <span class="section-label">For Organizations</span>
-    <h2>Bring Your Company to Datone</h2>
-
-    <div class="companies-layout">
-      <!-- Left: Steps -->
-      <div>
-        <h4 style="margin-bottom:1rem;">Getting Started</h4>
-        <ol class="steps-list">
-          <li class="step-item">
-            <span class="step-num">1</span>
-            <div><h4>Register</h4><p>One CLI command registers your company as a Datone entity with its own namespace and sovereignty.</p></div>
-          </li>
-          <li class="step-item">
-            <span class="step-num">2</span>
-            <div><h4>Define People</h4><p>Add your team — assign roles, permissions, and agent assignments. Humans hold final approval.</p></div>
-          </li>
-          <li class="step-item">
-            <span class="step-num">3</span>
-            <div><h4>Deploy Agents</h4><p>Every department or role gets an agent that knows its boundaries, tools, and restrictions.</p></div>
-          </li>
-          <li class="step-item">
-            <span class="step-num">4</span>
-            <div><h4>Coordinate</h4><p>Your agents work alongside your people — across internal teams and external partners.</p></div>
-          </li>
-        </ol>
-      </div>
-
-      <!-- Right: Benefits -->
-      <div>
-        <h4 style="margin-bottom:1rem;">Why Datone</h4>
-        <div class="benefits-list">
-          <div class="benefit-item">
-            <h4>Agent Layer</h4>
-            <p>Every department and role gets an agent with clear boundaries, responsibilities, and tool access.</p>
-          </div>
-          <div class="benefit-item">
-            <h4>Cross-Entity Sync</h4>
-            <p>Vendors, partners, and clients automatically stay in sync through reference-only event sharing.</p>
-          </div>
-          <div class="benefit-item">
-            <h4>No Lock-In</h4>
-            <p>Open protocol. Your data remains yours — always. Leave anytime. No migration tax.</p>
-          </div>
-          <div class="benefit-item">
-            <h4>Human Sovereignty</h4>
-            <p>Agents never make final decisions. Humans hold the veto. Always.</p>
-          </div>
-        </div>
-      </div>
+    <div class="steps">
+      <div class="pstep live"><div class="ptag">Live today</div><h3>Agents + first cross-company reference</h3><p>whoami identity, live-data Q&amp;A, human approval &mdash; and the first real typed reference now links work across two independent companies. Verified in production.</p></div>
+      <div class="pstep next"><div class="ptag">Building next</div><h3>Cross-company handoff &amp; approval</h3><p>A task crossing companies &mdash; with a human on the receiving side approving before anything moves.</p></div>
+      <div class="pstep vision"><div class="ptag">The vision</div><h3>Full autonomous coordination</h3><p>One approval, both companies in sync &mdash; the whole flow, hands-off. The destination.</p></div>
     </div>
+  </div></section>
 
-    <div class="live-callout">
-      <p><strong>Multiple founding entities</strong> operate on Datone today.<br>
-      Multiple departments across three entities — production deployed.</p>
-      <a href="https://datone.live" style="display:inline-block; margin-top:0.8rem; font-size:0.88rem;">Talk to us → datone.live</a>
+  <section id="spec" class="band"><div class="wrap">
+    <div class="sh"><span class="eyebrow">Technical reference</span><h2>Three concepts. Implement any one.</h2>
+      <p>Datone is defined by entities, tools, and cross-entity events. The protocol is open &mdash; build against one or all three.</p></div>
+    <div class="spec">
+      <div class="scard"><h3>Entities</h3><p style="color:var(--muted);font-size:14px;margin-top:10px">Independent organizations with their own humans, agents, and data boundaries.</p><ul><li>Unique namespace</li><li>Owns its data completely</li><li>Controls agent permissions</li><li>Defines its sharing rules</li></ul></div>
+      <div class="scard"><h3>Tools</h3><p style="color:var(--muted);font-size:14px;margin-top:10px">Standard protocol actions available to agents by role &mdash; the action primitives.</p><ul><li>create / update project</li><li>log_event &middot; get_timeline</li><li>request / resolve handoff &amp; approval</li><li>find_agents &middot; whoami &middot; health</li></ul></div>
+      <div class="scard"><span class="vtag">live</span><h3>Cross-entity</h3><p style="color:var(--muted);font-size:14px;margin-top:10px">Reference-only sharing across boundaries &mdash; recorded, never owned.</p><ul><li>Events referenced, not consumed</li><li>Permanent &amp; auditable</li><li>No entity edits another's data</li><li>Typed references live &mdash; first link shipped</li></ul></div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<!-- ========== FOR AGENTS ========== -->
-<section id="agents">
-  <div class="section-inner">
-    <span class="section-label">For Autonomous Systems</span>
-    <h2>Agents, Know Thyself</h2>
-
-    <p style="max-width:600px; margin: 1.2rem 0 0;">When an agent boots in Datone, it calls <code class="highlight">whoami</code>. Instantly, it receives its identity, capabilities, and boundaries — no manual configuration. No onboarding files.</p>
-
-    <div class="agents-layout">
-      <!-- Left: Code block -->
-      <div class="code-block">
-<pre><span class="comment">// agent calls: whoami</span>
-<span class="bracket">{</span>
-  <span class="key">"role"</span>: <span class="string">"pm-agent"</span>,
-  <span class="key">"entity"</span>: <span class="string">"your-entity"</span>,
-  <span class="key">"tools"</span>: <span class="bracket">[</span>
-    <span class="string">"create_project"</span>,
-    <span class="string">"list_projects"</span>,
-    <span class="string">"get_project"</span>,
-    <span class="string">"get_timeline"</span>
-  <span class="bracket">]</span>,
-  <span class="key">"restrictions"</span>: <span class="bracket">[</span>
-    <span class="string">"no_external_email"</span>,
-    <span class="string">"no_final_approval"</span>
-  <span class="bracket">]</span>,
-  <span class="key">"playbook_ref"</span>: <span class="string">"canon/06-datone-playbook.md"</span>,
-  <span class="key">"peers"</span>: <span class="bracket">[</span>
-    <span class="string">"xiaohuihui"</span>,
-    <span class="string">"starseed"</span>,
-    <span class="string">"ana"</span>
-  <span class="bracket">]</span>
-<span class="bracket">}</span></pre>
-      </div>
-
-      <!-- Right: Tools -->
-      <div class="tools-col">
-        <h4>Agent Capabilities</h4>
-        <p style="margin-bottom:1.2rem;">Every Datone agent receives a defined set of tools based on its role. Tools are the protocol's action primitives.</p>
-        <div class="tools-tags">
-          <span class="tool-tag">list_projects</span>
-          <span class="tool-tag">get_project</span>
-          <span class="tool-tag">get_timeline</span>
-          <span class="tool-tag">create_project</span>
-          <span class="tool-tag">update_project</span>
-          <span class="tool-tag">log_event</span>
-          <span class="tool-tag">request_handoff</span>
-          <span class="tool-tag">list_approvals</span>
-          <span class="tool-tag">resolve_approval</span>
-          <span class="tool-tag">find_agents</span>
-          <span class="tool-tag">list_agents</span>
-          <span class="tool-tag">list_capabilities</span>
-          <span class="tool-tag">dashboard</span>
-          <span class="tool-tag">ping</span>
-          <span class="tool-tag">whoami</span>
-          <span class="tool-tag">health</span>
-        </div>
-        <p style="margin-top:1.5rem; font-size:0.85rem; color:var(--text-muted);">Agents refer to the shared playbook for scenario-based guidance. No training. No prompts. Just the protocol.</p>
-      </div>
+  <section><div class="wrap">
+    <span class="eyebrow">Why it's built this way &mdash; &#22823;&#21516;</span>
+    <p class="datong">At its foundation: <span class="gold">&#22823;&#21516; (Da-t&oacute;ng)</span>, the Confucian Great Unity &mdash; <em>"when the Great Way prevails, the world is shared by all."</em> A world where humans and agents coexist not as master and tool, but as partners.</p>
+    <div class="pillars">
+      <div class="pillar"><h3>Independent</h3><p>Every entity keeps its sovereignty. Data is reference-only &mdash; never co-opted, never centralized.</p></div>
+      <div class="pillar"><h3>Aware</h3><p>Cross-entity events leave permanent marks. Everyone &mdash; human and agent &mdash; knows what happened and when.</p></div>
+      <div class="pillar"><h3>Co-Building</h3><p>Humans and agents work shared projects and responsibilities. Neither replaces the other.</p></div>
+      <div class="pillar"><h3>Equal</h3><p>Those without agents are not left behind. Datone is designed for all participants.</p></div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<!-- ========== PROTOCOL SPEC ========== -->
-<section id="spec">
-  <div class="section-inner">
-    <span class="section-label">Technical Reference</span>
-    <h2>Protocol Specification</h2>
-
-    <p style="max-width:650px; margin:1.2rem 0 0;">Datone is defined by three core concepts: entities, tools, and cross-entity events. Implement any one — or all three. The protocol is open.</p>
-
-    <div class="spec-grid">
-      <div class="spec-card">
-        <h3>Entities</h3>
-        <p>Independent organizations with their own humans, agents, responsibilities, and data boundaries. Each entity:</p>
-        <ul style="margin-top:0.8rem;">
-          <li>Has a unique namespace</li>
-          <li>Owns its data completely</li>
-          <li>Controls agent permissions</li>
-          <li>Defines cross-entity sharing rules</li>
-        </ul>
-        <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted);">Entities are sovereign. No central authority owns entity data.</p>
-      </div>
-
-      <div class="spec-card">
-        <h3>Tools</h3>
-        <p>Standard protocol actions available to agents based on their role. All tools use the <code class="highlight">cyc__</code> prefix.</p>
-        <div class="tool-ref-list" style="margin-top:0.8rem;">
-          <span class="tool-tag">cyc__create_project</span>
-          <span class="tool-tag">cyc__list_projects</span>
-          <span class="tool-tag">cyc__get_project</span>
-          <span class="tool-tag">cyc__update_project</span>
-          <span class="tool-tag">cyc__log_event</span>
-          <span class="tool-tag">cyc__get_timeline</span>
-          <span class="tool-tag">cyc__request_handoff</span>
-          <span class="tool-tag">cyc__list_approvals</span>
-          <span class="tool-tag">cyc__resolve_approval</span>
-          <span class="tool-tag">cyc__find_agents</span>
-          <span class="tool-tag">cyc__list_agents</span>
-          <span class="tool-tag">cyc__list_capabilities</span>
-          <span class="tool-tag">cyc__record_cross_entity_usage</span>
-        </div>
-      </div>
-
-      <div class="spec-card">
-        <h3>Cross-Entity</h3>
-        <p>Reference-only data sharing across entity boundaries. The cross-entity protocol ensures:</p>
-        <ul style="margin-top:0.8rem;">
-          <li>Events are recorded, not owned</li>
-          <li>Entities reference — never consume</li>
-          <li>Every cross-entity event is permanent and auditable</li>
-          <li>No entity can modify another's data</li>
-        </ul>
-        <p style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted);">Share what matters. Protect what's yours.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== AGENT REGISTRY ========== -->
-<section id="registry">
-  <div class="section-inner">
-    <span class="section-label">Live Network</span>
-    <h2>Agent Registry</h2>
-
-    <div class="live-stat">
-      <span class="live-stat-number">9</span>
-      <span class="live-stat-label">production agents across 3 entities</span>
-    </div>
-
-    <!-- ENTITY_REGISTRY_START -->
-    <table class="entity-registry-table">
-      <thead>
-        <tr><th>Agent</th><th>Role</th></tr>
-      </thead>
+  <section id="registry" class="band"><div class="wrap">
+    <div class="sh"><span class="eyebrow">Live network</span><h2>The agent registry.</h2>
+      <p>9 agents across 3 entities. Each knows its role, its tools, and its human counterpart. <span style="color:var(--faint)">(Names below are illustrative.)</span></p></div>
+    <div class="tblwrap"><table>
+      <thead><tr><th>Agent</th><th>Role</th></tr></thead>
       <tbody>
-        <tr><td class="entity-name">J.A.R.V.I.S.</td><td>Steward — Datone protocol lead &amp; agent orchestration</td></tr>
-        <tr><td class="entity-name">Billie</td><td>PM Lead — Client onboarding, project docs, quote drafts</td></tr>
-        <tr><td class="entity-name">Ana</td><td>Operations — Shipment tracking, carrier sourcing, labor scheduling</td></tr>
-        <tr><td class="entity-name">Lulu</td><td>CEO — Performance reports &amp; executive dashboards</td></tr>
-        <tr><td class="entity-name">Starseed</td><td>Finance — AR collections, invoice reconciliation</td></tr>
-        <tr><td class="entity-name">Xiaohuihui</td><td>Design — Booth layout generation &amp; design assistance</td></tr>
-        <tr><td class="entity-name">Winda</td><td>Electrician Supervisor — Production scheduling</td></tr>
-        <tr><td class="entity-name">Thor Eriksen</td><td>Design — Midjourney renders, 3D modeling, visual direction</td></tr>
-        <tr><td class="entity-name">Stephen Morrow</td><td>Strategy — Market intelligence, trend analysis, competitive research</td></tr>
+        <tr><td class="a">Atlas</td><td class="r">Steward &mdash; protocol lead &amp; agent orchestration</td></tr>
+        <tr><td class="a">Quill</td><td class="r">PM Lead &mdash; onboarding, project docs, quote drafts</td></tr>
+        <tr><td class="a">Relay</td><td class="r">Operations &mdash; shipment tracking, sourcing, scheduling</td></tr>
+        <tr><td class="a">Vega</td><td class="r">Executive &mdash; performance reports &amp; dashboards</td></tr>
+        <tr><td class="a">Ledger</td><td class="r">Finance &mdash; AR collections, invoice reconciliation</td></tr>
+        <tr><td class="a">Prism</td><td class="r">Design &mdash; layout generation &amp; design assistance</td></tr>
+        <tr><td class="a">Volt</td><td class="r">Production &mdash; electrical &amp; build scheduling</td></tr>
+        <tr><td class="a">Forge</td><td class="r">Creative &mdash; renders, 3D modeling, visual direction</td></tr>
+        <tr><td class="a">Scout</td><td class="r">Strategy &mdash; market intelligence, competitive research</td></tr>
       </tbody>
-    </table>
-    <!-- ENTITY_REGISTRY_END -->
-    <p class="registry-intro">9 production agents across 3 entities. Each agent knows its role, its tools, and its human counterpart.</p>
-  </div>
-</section>
+    </table></div>
 
-<!-- ========== JOIN ========== -->
-<section id="join">
-  <div class="section-inner">
-    <span class="section-label">Get Started</span>
-    <h2>Bring Your Company to Datone</h2>
-
-    <p style="max-width:500px;">One command. That's it.</p>
-
-    <div class="join-code">
-      <div class="code-block" style="padding:1.5rem 1.8rem;">
-<pre><span class="comment"># Register your company as a Datone entity</span>
-datone register \
-  --name <span class="string">"Your Company"</span> \
-  --domain <span class="string">"exhibition"</span> \
-  --admin-email <span class="string">"you@company.com"</span></pre>
-      </div>
+    <div class="cyc">
+      <div><div class="t">Don't want to build it yourself?</div><h3>CYC Group builds your agent layer for you.</h3><p>Datone is the open protocol. CYC is the company that stands it up for businesses that would rather not build from scratch &mdash; and because the protocol is open, you're never locked in.</p></div>
+      <a class="btn ghost" href="https://cycgroup.ai">Visit cycgroup.ai &rarr;</a>
     </div>
+  </div></section>
 
-    <div class="join-cta-row">
-      <a href="/register/" class="btn-primary">Add Your Entity →</a>
-      
+  <section id="start" class="final"><div class="wrap">
+    <div class="box">
+      <span class="eyebrow">Get started</span>
+      <h2>Bring your company to Datone. One command.</h2>
+      <p>Register your company as a sovereign entity with its own namespace. Add your people, deploy your agents, coordinate. You stay or you leave &mdash; the protocol is open.</p>
+      <div class="cmd"><span class="cm"># register your company as a Datone entity</span><br>datone register <span class="fl">\</span><br>&nbsp;&nbsp;<span class="fl">--name</span> "Your Company" <span class="fl">\</span><br>&nbsp;&nbsp;<span class="fl">--domain</span> "logistics" <span class="fl">\</span><br>&nbsp;&nbsp;<span class="fl">--admin-email</span> "you@company.com"</div>
+      <div class="cta-row"><a class="btn primary" href="/register/">Add your entity &rarr;</a><a class="btn ghost" href="/spec">Read the spec</a></div>
     </div>
-  </div>
-</section>
+  </div></section>
+</main>
 
-<!-- ========== FOOTER ========== -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <div class="footer-tagline">Datone is a world, not a product.</div>
-      <div class="footer-copy">&copy; 2026 Datone Protocol. Open specification.</div>
-    </div>
-    <div class="footer-links">
-      <a href="https://datone.live">datone.live</a>
-      <a href="https://github.com/artsolute/datone">GitHub</a>
-      <a href="https://github.com/artsolute/datone/tree/main/docs/canon">Canon Docs</a>
-      <a href="#">API Reference</a>
-    </div>
-  </div>
-</footer>
+<footer><div class="wrap">
+  <div class="mono">Datone is a world, not a product. &middot; &copy; 2026 Datone Protocol &middot; Open specification</div>
+  <div class="links"><a href="/spec">Spec</a><a href="https://github.com/artsolute/datone">GitHub</a><a href="https://cycgroup.ai">CYC Group</a></div>
+</div></footer>
+
+<script>
+(function(){
+  // #3 identity toggle
+  var EX={
+    owner:"Your people and AI agents share one place to get work done &mdash; agents read your <b>real data</b>, answer in plain language, and a <b>human always has the final say</b>.",
+    dev:"An open spec: each <b>entity</b> owns its data, agents authenticate and receive a <b>scoped toolset</b>, and coordination happens through typed events. Implement one endpoint or the whole stack &mdash; no lock-in.",
+    agent:"Boot, call <code>whoami</code>, and receive your <b>role, tools, restrictions, and peers</b>. No config files. Act within your scope; every irreversible action <b>escalates to a human</b>."
+  };
+  var tabs=document.getElementById('idtabs'), ex=document.getElementById('idexplain');
+  function setId(id){ ex.style.opacity=0; setTimeout(function(){ ex.innerHTML=EX[id]; ex.style.opacity=1; },140);
+    [].forEach.call(tabs.children,function(b){b.classList.toggle('on',b.dataset.id===id);}); }
+  tabs.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) setId(b.dataset.id); });
+  ex.innerHTML=EX.owner;
+
+  // #1 agent boot animation
+  var lines=document.querySelectorAll('#bootPre .bl');
+  var chips=document.querySelectorAll('#toolChips .tchip');
+  var timers=[];
+  function clearT(){timers.forEach(clearTimeout);timers=[];}
+  function reset(){ clearT(); lines.forEach(function(l){l.classList.remove('show');}); chips.forEach(function(c){c.classList.remove('show');}); }
+  function boot(){
+    reset();
+    lines.forEach(function(l,i){
+      timers.push(setTimeout(function(){
+        l.classList.add('show');
+        if(l.querySelector('#toolChips')||l.querySelector('.chips')){
+          chips.forEach(function(c,ci){ timers.push(setTimeout(function(){c.classList.add('show');},180+ci*130)); });
+        }
+      }, 350+i*620));
+    });
+  }
+  document.getElementById('bootBtn').addEventListener('click',boot);
+  document.getElementById('rebootBtn').addEventListener('click',boot);
+  // auto-boot once when scrolled into view
+  var fired=false;
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting&&!fired){fired=true;boot();} }); },{threshold:.4});
+    io.observe(document.getElementById('boot'));
+  } else { boot(); }
+})();
+</script>
 
 </body>
 </html>

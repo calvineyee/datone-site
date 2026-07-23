@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex">
 <title>Datone · Improvement Proposals</title>
 <style>
-  :root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--border:#2a3140;--text:#e6edf3;
-        --muted:#8a94a6;--accent:#4c8dff;--green:#2ea043;--red:#d1414a;--amber:#c8912a;}
+  :root{--bg:#F7F6F2;--panel:#FFFFFF;--panel2:#EFEDE6;--border:#DDD9CF;--text:#20242A;
+        --muted:#5A6068;--accent:#33628F;--green:#4E7A4E;--red:#AE3A2E;--amber:#A8720E;}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
   header{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--border);}
@@ -24,25 +24,25 @@
   .card p{margin:0;color:var(--muted);font-size:13.5px;}
   .tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0;}
   .tag{font-size:11px;padding:2px 9px;border-radius:6px;border:1px solid var(--border);color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
-  .tag.risk-high{color:#ff9ea3;border-color:#5a2b30;background:#2a1618;}
-  .tag.risk-medium{color:#e6c17a;border-color:#4a3a1c;background:#231d10;}
-  .tag.risk-low{color:#9ad6a6;border-color:#234a2c;background:#132018;}
+  .tag.risk-high{color:#AE3A2E;border-color:#E0BDB8;background:#F3E0DD;}
+  .tag.risk-medium{color:#8A5D0B;border-color:#E3D3AE;background:#F5EAD3;}
+  .tag.risk-low{color:#3C6B3C;border-color:#BDD4BD;background:#E4EDE4;}
   .st{font-size:12px;padding:3px 10px;border-radius:20px;white-space:nowrap;}
-  .st-submitted{background:#132a4a;color:#89b8ff;}
-  .st-approved{background:#132a18;color:#6ede89;}
-  .st-rejected{background:#2a1416;color:#ff9098;}
-  .st-applied{background:#1c2230;color:#b6c2d9;}
-  .st-under_review{background:#2a2410;color:#e6c17a;}
-  .st-withdrawn{background:#1c2230;color:#8a94a6;}
+  .st-submitted{background:#E3EBF3;color:#33628F;}
+  .st-approved{background:#E4EDE4;color:#3C6B3C;}
+  .st-rejected{background:#F3E0DD;color:#AE3A2E;}
+  .st-applied{background:#EFEDE6;color:#5A6068;}
+  .st-under_review{background:#F5EAD3;color:#8A5D0B;}
+  .st-withdrawn{background:#EFEDE6;color:#5A6068;}
   .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
   .acts button{border:1px solid var(--border);background:var(--panel2);color:var(--text);
     border-radius:8px;padding:7px 14px;font-size:13px;cursor:pointer;transition:.12s;}
   .acts button:hover{transform:translateY(-1px);}
-  .acts .approve{border-color:#234a2c;color:#9ad6a6;}
-  .acts .approve:hover{background:#132018;}
-  .acts .reject{border-color:#5a2b30;color:#ff9ea3;}
-  .acts .reject:hover{background:#2a1618;}
-  .meta{color:#5f6b7d;font-size:11.5px;margin-top:10px;}
+  .acts .approve{border-color:#BDD4BD;color:#3C6B3C;}
+  .acts .approve:hover{background:#E4EDE4;}
+  .acts .reject{border-color:#E0BDB8;color:#AE3A2E;}
+  .acts .reject:hover{background:#F3E0DD;}
+  .meta{color:#8A9099;font-size:11.5px;margin-top:10px;}
   .rev{color:var(--muted);font-size:12.5px;margin-top:8px;border-left:2px solid var(--border);padding-left:10px;}
   .empty,.gate{text-align:center;color:var(--muted);padding:60px 20px;}
   .gate a{color:var(--accent);}
@@ -50,7 +50,7 @@
     border-radius:50%;animation:sp 1s linear infinite;margin:60px auto;}
   @keyframes sp{to{transform:rotate(360deg)}}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;}
-.tag.owner{font-weight:600;letter-spacing:0;text-transform:none;}.own-claude{color:#89b8ff;border-color:#234a6a;background:#101c2e;}.own-tony{color:#e6c17a;border-color:#4a3a1c;background:#231d10;}.own-team{color:#9ad6a6;border-color:#234a2c;background:#132018;}.own-calvin{color:#e59ad6;border-color:#5a2b52;background:#2a1626;}
+.tag.owner{font-weight:600;letter-spacing:0;text-transform:none;}.own-claude{color:#33628F;border-color:#B9CBDD;background:#E3EBF3;}.own-tony{color:#8A5D0B;border-color:#E3D3AE;background:#F5EAD3;}.own-team{color:#3C6B3C;border-color:#BDD4BD;background:#E4EDE4;}.own-calvin{color:#8E4A7C;border-color:#D8BDD0;background:#F0E0EB;}
 </style>
 </head>
 <body>

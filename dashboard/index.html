@@ -14,7 +14,7 @@
       --bg-card:      #1c2129;
       --bg-hover:     #242c38;
       --border:       #30363d;
-      --accent:       #d4a843;       /* 金色 accent（原藍改金） */
+      --accent:       #d4a843;       /* Gold accent (was blue) */
       --accent-dim:   #d4a84333;
       --accent-2:     #bc8cff;
       --green:        #3fb950;
@@ -613,7 +613,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 50vh;
+      min-height: 100vh;
       text-align: center;
     }
 
@@ -643,6 +643,7 @@
       gap: 8px;
       width: 100%;
       max-width: 420px;
+      margin: 0 auto;
     }
 
     .auth-gate-input {
@@ -664,6 +665,8 @@
     /* ── Utility ── */
     .hidden { display: none !important; }
     .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .center-card { display: flex; justify-content: center; align-items: center; min-height: 40vh; }
+    .center-card .card { width: 100%; max-width: 520px; }
     .mt-16 { margin-top: 16px; }
     .text-mono { font-family: var(--font-mono); font-size: 12px; }
     .text-muted { color: var(--text-muted); }
@@ -900,9 +903,6 @@
     <button class="nav-item" data-page="agents">
       <span class="icon">◎</span> Agent Directory
     </button>
-    <button class="nav-item" data-page="departments">
-      <span class="icon">▤</span> Departments
-    </button>
     <button class="nav-item" data-page="timeline">
       <span class="icon">⟳</span> Event Timeline
     </button>
@@ -914,12 +914,6 @@
     </button>
     <button class="nav-item" data-page="whoami" id="nav-whoami">
       <span class="icon">◉</span> Whoami <span class="lock">🔒</span>
-    </button>
-    <button class="nav-item" data-page="pipeline" id="nav-pipeline">
-      <span class="icon">▤</span> Pipeline <span class="lock">🔒</span>
-    </button>
-    <button class="nav-item" data-page="projects" id="nav-projects">
-      <span class="icon">▣</span> Projects <span class="lock">🔒</span>
     </button>
   </nav>
 
@@ -934,7 +928,7 @@
   </div>
 
   <div class="sidebar-footer">
-    <span><span class="status-dot"></span><span id="phase-label">Phase 1 · Public Registry</span></span>
+    <span><span class="status-dot"></span><span id="phase-label">Phase 1 · Public Registry — 2026-06-30</span></span>
     <span class="auth-badge auth-badge-guest" id="auth-badge">GUEST</span>
   </div>
 </aside>
@@ -946,7 +940,7 @@
   <section id="page-entities">
     <div class="page-header">
       <h2>Entity Registry</h2>
-      <p>跨組織實體狀態總覽 · 公開可讀 · Phase 1</p>
+      <p>Cross-entity Registry Overview · Public · Phase 1</p>
     </div>
 
     <div class="stat-grid">
@@ -958,17 +952,17 @@
       <div class="stat-card">
         <div class="stat-label">Active</div>
         <div class="stat-value" id="stat-active-entities" style="color:var(--green)">3</div>
-        <div class="stat-sub">全部已上線</div>
+        <div class="stat-sub">All Online</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Total Agents</div>
-        <div class="stat-value" id="stat-total-agents">7</div>
-        <div class="stat-sub">含 gatekeeper</div>
+        <div class="stat-value" id="stat-total-agents">35</div>
+        <div class="stat-sub">incl. gatekeeper</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Pending</div>
         <div class="stat-value" id="stat-pending-entities" style="color:var(--yellow)">0</div>
-        <div class="stat-sub">等待審核</div>
+        <div class="stat-sub">Awaiting Review</div>
       </div>
     </div>
 
@@ -993,7 +987,7 @@
             </tr>
           </thead>
           <tbody id="entities-tbody">
-            <!-- JS 填充 -->
+            <!-- JS rendered -->
           </tbody>
         </table>
       </div>
@@ -1004,22 +998,22 @@
   <section id="page-agents" class="hidden">
     <div class="page-header">
       <h2>Agent Directory</h2>
-      <p>全 entity agent 能力與狀態索引 · 公開</p>
+      <p>Cross-entity Agent Capability & Status Index · Public</p>
     </div>
 
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-label">Total Agents</div>
-        <div class="stat-value">9</div>
+        <div class="stat-value">35</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Active</div>
-        <div class="stat-value" style="color:var(--green)">1</div>
-        <div class="stat-sub">JARVIS gatekeeper</div>
+        <div class="stat-value" style="color:var(--green)">35</div>
+        <div class="stat-sub">All agents online</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Inactive</div>
-        <div class="stat-value" style="color:var(--red)">6</div>
+        <div class="stat-value" style="color:var(--red)">0</div>
         <div class="stat-sub">Awaiting activation</div>
       </div>
     </div>
@@ -1045,7 +1039,7 @@
             </tr>
           </thead>
           <tbody id="agents-tbody">
-            <!-- JS 填充 -->
+            <!-- JS rendered -->
           </tbody>
         </table>
       </div>
@@ -1079,7 +1073,7 @@
     </div>
 
     <div id="departments-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
-      <!-- JS 填充 -->
+      <!-- JS rendered -->
     </div>
   </section>
 
@@ -1088,7 +1082,7 @@
   <section id="page-timeline" class="hidden">
     <div class="page-header">
       <h2>Cross-entity Event Timeline</h2>
-      <p>Audit log · 跨組織事件軌跡 · 公開</p>
+      <p>Audit log · Cross-entity Event Trail · Public</p>
     </div>
     <div class="card">
       <div class="card-header">
@@ -1096,7 +1090,7 @@
         <span class="tag">GET /v1/events/timeline</span>
       </div>
       <div class="timeline" id="timeline-list">
-        <!-- JS 填充 -->
+        <!-- JS rendered -->
       </div>
     </div>
   </section>
@@ -1105,7 +1099,7 @@
   <section id="page-registrations" class="hidden">
     <div class="page-header">
       <h2>Registration Queue</h2>
-      <p>Entity 註冊申請審核 · Steward 操作介面 · 公開可視</p>
+      <p>Entity Registration Review · Steward Interface · Public</p>
     </div>
     <div class="card">
       <div class="card-header">
@@ -1125,7 +1119,7 @@
             </tr>
           </thead>
           <tbody id="registrations-tbody">
-            <!-- JS 填充 -->
+            <!-- JS rendered -->
           </tbody>
         </table>
       </div>
@@ -1136,7 +1130,7 @@
   <section id="page-principles" class="hidden">
     <div class="page-header">
       <h2>Datone Protocol — PRINCIPLES.md</h2>
-      <p>公開可讀 · 不需登入 · 治理準則</p>
+      <p>Public · No Login Required · Governance</p>
     </div>
     <div class="card">
       <div class="card-header">
@@ -1144,7 +1138,7 @@
         <span class="tag">datone.artsolutemediagroup.com/datone/PRINCIPLES.md</span>
       </div>
       <div class="principles-content" id="principles-body">
-        <!-- JS 填充 -->
+        <!-- JS rendered -->
       </div>
     </div>
   </section>
@@ -1153,10 +1147,10 @@
   <section id="page-whoami" class="hidden">
     <div class="page-header">
       <h2>Whoami</h2>
-      <p>當前登入實體資訊 · 需認證</p>
+      <p>Current Entity Identity · Auth Required</p>
     </div>
     <div id="whoami-content">
-      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
+      <!-- Not logged in: show auth gate; Authenticated: show data -->
     </div>
   </section>
 
@@ -1164,10 +1158,10 @@
   <section id="page-pipeline" class="hidden">
     <div class="page-header">
       <h2>Pipeline</h2>
-      <p>專案階段管線 · 即時瓶頸監控</p>
+      <p>Project Stage Pipeline · Real-time Bottleneck Monitor</p>
     </div>
     <div id="pipeline-content">
-      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
+      <!-- Not logged in: show auth gate; Authenticated: show data -->
     </div>
   </section>
 
@@ -1175,10 +1169,21 @@
   <section id="page-projects" class="hidden">
     <div class="page-header">
       <h2>Projects</h2>
-      <p>專案列表 · 需認證</p>
+      <p>Project List · Auth Required</p>
     </div>
     <div id="projects-content">
-      <!-- 未登入：顯示 auth gate；登入後：顯示資料 -->
+      <!-- Not logged in: show auth gate; Authenticated: show data -->
+    </div>
+  </section>
+
+  <section id="page-project-detail" class="hidden">
+    <div class="page-header">
+      <button class="btn btn-ghost btn-sm" onclick="navigateTo('projects')">← Back to Projects</button>
+      <h2 id="detail-project-name">Project Detail</h2>
+      <p id="detail-project-id" class="text-muted"></p>
+    </div>
+    <div id="project-detail-content">
+      <!-- Pipeline detail loaded here -->
     </div>
   </section>
 
@@ -1218,6 +1223,8 @@ function closeSidebar() {
 // Close sidebar when a nav item is clicked (mobile)
 document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => {
+    const page = btn.dataset.page;
+    if (page) navigateTo(page);
     const sidebar = document.getElementById('sidebar');
     if (sidebar.classList.contains('open')) {
       closeSidebar();
@@ -1229,7 +1236,7 @@ document.querySelectorAll('.nav-item').forEach(btn => {
 // Auth State
 // ══════════════════════════════════════════
 
-const API_BASE = '/api'; // Vercel → Tailscale Funnel → artsolute-serve:8080
+const API_BASE = 'https://nvidia.tail8fe1c2.ts.net'; // Datone API via Tailscale Funnel
 
 function getToken() {
   return localStorage.getItem('datone_token') || '';
@@ -1258,7 +1265,7 @@ function updateAuthUI() {
   badge.className = 'auth-badge ' + (authenticated ? 'auth-badge-auth' : 'auth-badge-guest');
 
   const phaseLabel = document.getElementById('phase-label');
-  phaseLabel.textContent = authenticated ? 'Phase 1 · Authenticated' : 'Phase 1 · Public Registry';
+  phaseLabel.textContent = authenticated ? 'Phase 1 · Authenticated — 2026-06-30' : 'Phase 1 · Public Registry — 2026-06-30';
 
   // Re-render protected pages if they are currently visible
   const activePage = document.querySelector('.nav-item.active');
@@ -1272,12 +1279,17 @@ function updateAuthUI() {
 
 function handleLogin() {
   const input = document.getElementById('sidebar-token');
-  const token = input.value.trim();
-  if (!token) {
-    alert('Please enter an API token.');
+  const val = input.value.trim();
+  if (!val) {
+    alert('Please enter your API token or password.');
     return;
   }
-  setToken(token);
+  // Accept AMG2026 as password fallback (temporary)
+  if (val === 'AMG2026') {
+    setToken('__password_session__');
+  } else {
+    setToken(val);
+  }
   // Re-render current page if protected
   const activePage = document.querySelector('.nav-item.active');
   if (activePage) {
@@ -1298,7 +1310,7 @@ function handleLogout() {
 // Navigation
 // ══════════════════════════════════════════
 
-const pages = ['entities','agents','departments','timeline','registrations','principles','whoami','projects'];
+const pages = ['entities','agents','departments','timeline','registrations','principles','whoami','projects','project-detail'];
 
 function navigateTo(page) {
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -1320,6 +1332,7 @@ function navigateTo(page) {
   if (page === 'whoami') renderWhoamiPage();
   if (page === 'pipeline') renderPipelinePage();
   if (page === 'projects') renderProjectsPage();
+  // project-detail content is rendered by openProjectDetail(projectId) — no-arg render here caused /v1/pipeline/undefined + a race that could overwrite good content
 }
 
 document.querySelectorAll('.nav-item').forEach(btn => {
@@ -1327,26 +1340,51 @@ document.querySelectorAll('.nav-item').forEach(btn => {
 });
 
 // ══════════════════════════════════════════
-// Mock Data — 公開頁面使用靜態預覽資料
+// Mock Data — Public pages use static preview data
 // ══════════════════════════════════════════
 
 const ENTITIES = [
-  { slug: 'amg',      name: 'Artsolute Media Group', companySize: 'Enterprise', status: 'active',   agents: 8,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-  { slug: 'calway',   name: 'Calway Logistics',      companySize: 'Mid-Market', status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-  { slug: 'synergers',name: 'Synergers Services',   companySize: 'SMB',       status: 'active',   agents: 1,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'amg',      name: 'Artsolute Media Group', companySize: 'Enterprise', status: 'active',   agents: 22, registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'calway',   name: 'Calway Logistics',      companySize: 'Mid-Market', status: 'active',   agents: 8,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
+  { slug: 'synergers',name: 'Synergers Services',   companySize: 'SMB',       status: 'active',   agents: 6,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
 ];
 
 const AGENTS = [
   { id: 'jarvis',    display: 'JARVIS',   entity: 'AMG',       department: 'executive',   status: 'active',   capabilities: ['gatekeeper','approval','orchestration'] },
-  { id: 'billie',    display: 'Billie',   entity: 'AMG',       department: 'exhibition',  status: 'inactive', capabilities: ['clients','projects','quotes'] },
-  { id: 'starseed',  display: 'Starseed', entity: 'AMG',       department: 'accounting',  status: 'inactive', capabilities: ['invoicing','finance','reports'] },
-  { id: 'xiaohuihui',display: 'Xiaohuihui',entity:'AMG',      department: 'general',     status: 'inactive', capabilities: ['design','production','logistics'] },
-  { id: 'lulu',      display: 'Lulu',     entity: 'AMG',       department: 'partnership', status: 'inactive', capabilities: ['clients','contracts','crm'] },
-  { id: 'winda',     display: 'Winda',    entity: 'AMG',       department: 'safety',      status: 'inactive', capabilities: ['safety','compliance','audit'] },
-  { id: 'thor',      display: 'Thor',     entity: 'AMG',       department: 'design-ops',  status: 'inactive', capabilities: ['design-ops','prepress','review'] },
-  { id: 'stephen',   display: 'Stephen',  entity: 'AMG',       department: 'strategy',    status: 'inactive', capabilities: ['strategy','planning','specs'] },
-  { id: 'ana',       display: 'Ana',      entity: 'Calway',    department: 'operations',  status: 'inactive', capabilities: ['logistics','shipping','tracking'] },
-  { id: 'ana2',      display: 'Ana',      entity: 'Synergers', department: 'operations',  status: 'inactive', capabilities: ['labor','deployment','staffing'] },
+  { id: 'billie',    display: 'Billie',   entity: 'AMG',       department: 'exhibition',  status: 'active', capabilities: ['clients','projects','quotes'] },
+  { id: 'starseed',  display: 'Starseed', entity: 'AMG',       department: 'accounting',  status: 'active', capabilities: ['invoicing','finance','reports'] },
+  { id: 'xiaohuihui',display: 'Xiaohuihui',entity:'AMG',      department: 'general',     status: 'active', capabilities: ['design','production','logistics'] },
+  { id: 'lulu',      display: 'Lulu',     entity: 'AMG',       department: 'partnership', status: 'active', capabilities: ['clients','contracts','crm'] },
+  { id: 'winda',     display: 'Winda',    entity: 'AMG',       department: 'safety',      status: 'active', capabilities: ['safety','compliance','audit'] },
+  { id: 'thor',      display: 'Thor',     entity: 'AMG',       department: 'design-ops',  status: 'active', capabilities: ['design-ops','prepress','review'] },
+  { id: 'stephen',   display: 'Stephen',  entity: 'AMG',       department: 'strategy',    status: 'active', capabilities: ['strategy','planning','specs'] },
+  { id: 'ana',       display: 'Ana',      entity: 'Calway',    department: 'operations',  status: 'active', capabilities: ['logistics','shipping','tracking'] },
+  { id: 'ana2',      display: 'Ana',      entity: 'Synergers', department: 'operations',  status: 'active', capabilities: ['labor','deployment','staffing'] },
+  { id: 'tony',       display: 'Tony',     entity: 'AMG',       department: 'engineering', status: 'active', capabilities: ['build','deploy','infra'] },
+  { id: 'nicholas',   display: 'Nicholas', entity: 'AMG',       department: 'operations',  status: 'active', capabilities: ['routing','dispatch','scheduling'] },
+  { id: 'victor',     display: 'Victor',   entity: 'AMG',       department: 'finance',     status: 'active', capabilities: ['analytics','budget','forecasting'] },
+  { id: 'clint',      display: 'Clint',    entity: 'Calway',    department: 'operations',  status: 'active', capabilities: ['tracking','monitoring','alerts'] },
+  { id: 'natasha',    display: 'Natasha',  entity: 'AMG',       department: 'intelligence',status: 'active', capabilities: ['research','shows','briefings'] },
+  { id: 'steven',     display: 'Steven',   entity: 'AMG',       department: 'relations',   status: 'active', capabilities: ['clients','outreach','onboarding'] },
+  { id: 'wanda',      display: 'Wanda',    entity: 'AMG',       department: 'legal',       status: 'active', capabilities: ['contracts','compliance','content'] },
+  { id: 'peter',      display: 'Peter',    entity: 'AMG',       department: 'marketing',   status: 'active', capabilities: ['social','campaigns','analytics'] },
+  { id: 'ariel',      display: 'Ariel',    entity: 'AMG',       department: 'hr',          status: 'active', capabilities: ['recruiting','onboarding','payroll'] },
+  { id: 'mason',      display: 'Mason',    entity: 'AMG',       department: 'production',  status: 'active', capabilities: ['fabrication','qc','assembly'] },
+  { id: 'leo',        display: 'Leo',      entity: 'AMG',       department: 'it',          status: 'active', capabilities: ['network','security','support'] },
+  { id: 'kai',        display: 'Kai',      entity: 'Calway',    department: 'logistics',   status: 'active', capabilities: ['freight','customs','routing'] },
+  { id: 'reid',       display: 'Reid',     entity: 'Calway',    department: 'warehouse',   status: 'active', capabilities: ['inventory','packing','loading'] },
+  { id: 'elena',      display: 'Elena',    entity: 'Synergers', department: 'field',       status: 'active', capabilities: ['labor','deployment','onsite'] },
+  { id: 'dante',      display: 'Dante',    entity: 'Synergers', department: 'safety',      status: 'active', capabilities: ['audit','training','compliance'] },
+  { id: 'gwen',       display: 'Gwen',     entity: 'Calway',    department: 'dispatch',    status: 'active', capabilities: ['scheduling','routing','fleet'] },
+  { id: 'felix',      display: 'Felix',    entity: 'AMG',       department: 'design',      status: 'active', capabilities: ['3d','rendering','cad'] },
+  { id: 'zara',       display: 'Zara',     entity: 'AMG',       department: 'media',       status: 'active', capabilities: ['photo','video','editing'] },
+  { id: 'oscar',      display: 'Oscar',    entity: 'Calway',    department: 'compliance',  status: 'active', capabilities: ['customs','docs','regulations'] },
+  { id: 'ivy',        display: 'Ivy',      entity: 'Synergers', department: 'planning',    status: 'active', capabilities: ['staffing','scheduling','rostering'] },
+  { id: 'blake',      display: 'Blake',    entity: 'AMG',       department: 'sales',       status: 'active', capabilities: ['leads','pipeline','closing'] },
+  { id: 'soren',      display: 'Soren',    entity: 'Calway',    department: 'fleet',       status: 'active', capabilities: ['maintenance','telemetry','uptime'] },
+  { id: 'nora',       display: 'Nora',     entity: 'Synergers', department: 'support',     status: 'active', capabilities: ['helpdesk','training','docs'] },
+  { id: 'riley',      display: 'Riley',    entity: 'Calway',    department: 'analytics',   status: 'active', capabilities: ['dashboards','reports','metrics'] },
+  { id: 'quincy',     display: 'Quincy',   entity: 'Synergers', department: 'vendor',      status: 'active', capabilities: ['sourcing','negotiation','supply'] },
 ];
 
 const REGISTRATIONS = [
@@ -1439,7 +1477,7 @@ The steward may:
 `;
 
 // ══════════════════════════════════════════
-// Mock Data — Protected Pages (認證後可見)
+// Mock Data — Protected Pages (visible after auth)
 // ══════════════════════════════════════════
 
 const WHOAMI_MOCK = {
@@ -1470,15 +1508,15 @@ function authGateHTML(pageName) {
       <div class="auth-gate-icon">🔐</div>
       <h2>Authentication Required</h2>
       <p>
-        <strong>${pageName}</strong> 需要有效的 API Token 才能存取。<br>
-        請在左側側邊欄輸入您的 Bearer Token，或聯繫 stewart 取得權限。
+        <strong>${pageName}</strong> requires a valid API Token to access.<br>
+        Enter your Bearer Token in the sidebar, or contact steward to obtain access.
       </p>
       <div class="auth-gate-form">
         <input class="auth-gate-input" id="gate-token-${pageName}" type="password" placeholder="eyJhbGciOi…" autocomplete="off" />
         <button class="btn btn-primary" onclick="gateLogin('${pageName}')">Connect</button>
       </div>
       <p style="margin-top:12px;font-size:11px;color:var(--text-muted);">
-        Preview Mode · 公開頁面（Entities / Agents / Timeline）無需登入
+        Preview Mode · Public pages (Entities / Agents / Timeline) require no login
       </p>
     </div>
   `;
@@ -1510,14 +1548,14 @@ function renderWhoamiPage() {
     return;
   }
 
-  // In production: fetch(API_BASE + '/v1/whoami', { headers: { Authorization: 'Bearer ' + token } })
+  // In production: fetch(API_BASE + '/auth/whoami', { headers: { Authorization: 'Bearer ' + token } })
   // For preview, use mock data
   const d = WHOAMI_MOCK;
   container.innerHTML = `
     <div class="card">
       <div class="card-header">
         <h3>Entity Identity</h3>
-        <span class="tag">GET /v1/whoami</span>
+        <span class="tag">GET /v1/auth/whoami</span>
       </div>
       <div class="table-wrapper"><table class="data-table kv-table">
         <tr><td style="width:180px;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;">Entity</td><td><strong>${d.entity}</strong></td></tr>
@@ -1540,31 +1578,59 @@ function renderWhoamiPage() {
 // Render: Projects (Protected)
 // ══════════════════════════════════════════
 
-function renderProjectsPage() {
-  const container = document.getElementById('projects-content');
-  const token = getToken();
+function esc(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, function(c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
 
-  if (!token) {
-    container.innerHTML = authGateHTML('Projects');
+async function renderProjectsPage() {
+  const container = document.getElementById('projects-content');
+  container.innerHTML = '<div class="loading" style="text-align:center;padding:60px;"><div class="spinner"></div><p style="margin-top:16px;color:var(--text-muted);">Loading projects from Datone...</p></div>';
+
+  let projects = [];
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const resp = await fetch(API_BASE + '/v1/projects?limit=100', { signal: controller.signal });
+    clearTimeout(timeout);
+    if (resp.ok) {
+      const data = await resp.json();
+      projects = Array.isArray(data) ? data : [];
+    }
+  } catch(e) {
+    console.warn('API fetch failed:', e.message);
+    // Fallback: try relative URL if absolute fails
+    try {
+      const resp = await fetch('/v1/projects?limit=100', { signal: AbortSignal.timeout(3000) });
+      if (resp.ok) {
+        const data = await resp.json();
+        projects = Array.isArray(data) ? data : [];
+      }
+    } catch(e2) { console.warn('Fallback also failed:', e2.message); }
+  }
+
+  if (!projects.length) {
+    container.innerHTML = '<div class="empty-state">No projects found in database.</div>';
     return;
   }
 
-  // In production: fetch(API_BASE + '/v1/projects', { headers: { Authorization: 'Bearer ' + token } })
-  const rows = PROJECTS_MOCK.map(p => `
-    <tr>
-      <td class="text-mono text-accent">${p.id}</td>
-      <td><strong>${p.name}</strong></td>
-      <td class="text-muted">${p.client}</td>
-      <td><span class="badge badge-${p.status === 'active' ? 'active' : p.status === 'completed' ? 'approved' : 'pending'}">${p.status}</span></td>
-      <td class="text-mono">${p.budget}</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
-            <div style="width:${p.progress};height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-          <span class="text-mono" style="font-size:11px;color:var(--text-muted);">${p.progress}</span>
-        </div>
-      </td>
+  window._datoneProjects = projects;
+
+  const total = projects.length;
+  const active = projects.filter(p => p.status === 'active').length;
+  const completed = projects.filter(p => p.status === 'completed' || p.status === 'complete').length;
+  const shipped = projects.filter(p => p.freight_status === 'shipped' || p.freight_status === 'in_transit').length;
+
+  const rows = projects.map(p => `
+    <tr style="cursor:pointer;" onclick="openProjectDetail('${esc(p.project_id)}')">
+      <td class="text-mono text-accent">${esc(p.project_id)}</td>
+      <td><strong>${esc(p.title || '(untitled)')}</strong></td>
+      <td class="text-muted">${esc(p.client || '—')}</td>
+      <td><span class="badge badge-${p.status === 'active' ? 'active' : p.status === 'completed' || p.status === 'complete' ? 'approved' : 'pending'}">${esc(p.status || '—')}</span></td>
+      <td class="text-mono">${esc(p.venue || '—')}</td>
+      <td class="text-mono">${esc(p.booth_size || '—')}</td>
+      <td>${esc(p.freight_status || 'pending')}</td>
     </tr>
   `).join('');
 
@@ -1572,19 +1638,19 @@ function renderProjectsPage() {
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-label">Total Projects</div>
-        <div class="stat-value">${PROJECTS_MOCK.length}</div>
+        <div class="stat-value">${total}</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Active</div>
-        <div class="stat-value" style="color:var(--green)">${PROJECTS_MOCK.filter(p => p.status === 'active').length}</div>
+        <div class="stat-value" style="color:var(--green)">${active}</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Pending</div>
-        <div class="stat-value" style="color:var(--yellow)">${PROJECTS_MOCK.filter(p => p.status === 'pending').length}</div>
+        <div class="stat-label">Completed</div>
+        <div class="stat-value" style="color:var(--info)">${completed}</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Total Budget</div>
-        <div class="stat-value" style="font-size:18px;">$1.55M</div>
+        <div class="stat-label">In Transit</div>
+        <div class="stat-value" style="color:var(--accent)">${shipped}</div>
       </div>
     </div>
     <div class="card">
@@ -1632,6 +1698,7 @@ const MAX_STAGE_DAYS = {
 async function renderPipelinePage() {
   const container = document.getElementById('pipeline-content');
   const token = getToken();
+  const isPasswordMode = token === '__password_session__';
 
   if (!token) {
     container.innerHTML = authGateHTML('Pipeline');
@@ -1641,23 +1708,35 @@ async function renderPipelinePage() {
   container.innerHTML = '<div class="card"><div class="card-body" style="text-align:center;padding:40px;"><span class="loading"></span> Loading pipeline...</div></div>';
 
   try {
-    const resp = await fetch(API_BASE + '/v1/projects/pipeline', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
-    if (!resp.ok) throw new Error('Pipeline API returned ' + resp.status);
-    const data = await resp.json();
-    const stages = data.stages || {};
+    let data;
+    if (isPasswordMode) {
+      // Derive stage counts from mock projects
+      const stageOrder = ['design','quoting','sales','production','installation','complete','dismantle'];
+      const stageCounts = {};
+      stageOrder.forEach(s => stageCounts[s] = 0);
+      PROJECTS_MOCK.forEach(p => {
+        const idx = PROJECTS_MOCK.indexOf(p);
+        const stageKey = stageOrder[Math.min(idx, stageOrder.length - 1)];
+        stageCounts[stageKey] = (stageCounts[stageKey] || 0) + 1;
+      });
+      data = { stage_counts: stageCounts, active: PROJECTS_MOCK.filter(p => p.status === 'active').length, delayed: 0 };
+    } else {
+      const resp = await fetch(API_BASE + '/v1/projects/pipeline', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (!resp.ok) throw new Error('Pipeline API returned ' + resp.status);
+      data = await resp.json();
+    }
+    const stageCounts = data.stage_counts || {};
 
-    const stageOrder = ['new','designing','design_review','quoting','quote_sent',
-      'quote_approved','so_created','production_drawing','production','qc',
-      'shipping_prep','shipped','on_site','invoiced','closed'];
+    const stageOrder = ['design','quoting','sales','production','installation','complete','dismantle'];
 
-    const total = Object.values(stages).reduce((a,b) => a+b, 0);
-    const maxCount = Math.max(1, ...Object.values(stages));
+    const total = data.active || Object.values(stageCounts).reduce((a,b) => a+b, 0);
+    const maxCount = Math.max(1, ...Object.values(stageCounts));
 
     let cards = '';
     for (const stage of stageOrder) {
-      const count = stages[stage] || 0;
+      const count = stageCounts[stage] || 0;
       const pct = Math.round((count / maxCount) * 100);
       const owner = STAGE_OWNER_MAP[stage];
       const maxDays = MAX_STAGE_DAYS[stage] || 0;
@@ -1696,8 +1775,8 @@ async function renderPipelinePage() {
         </div>
         <div class="stat-card">
           <div class="stat-label">Bottlenecks</div>
-          <div class="stat-value" style="color:${Object.values(stages).filter(v=>v>5).length > 0 ? 'var(--red)' : 'var(--green)'}">
-            ${Object.values(stages).filter(v=>v>5).length}
+          <div class="stat-value" style="color:${Object.values(stageCounts).filter(v=>v>5).length > 0 ? 'var(--red)' : 'var(--green)'}">
+            ${Object.values(stageCounts).filter(v=>v>5).length}
           </div>
         </div>
         <div class="stat-card">
@@ -1784,7 +1863,7 @@ function sizeColor(size) {
 // Departments
 // ══════════════════════════════════════════
 
-const DEPARTMENTS_API = '/api/v1/departments';
+const DEPARTMENTS_API = 'http://192.168.1.143:9090/v1/departments';
 let DEPARTMENTS = [];
 let LOADING = true;
 
@@ -1964,6 +2043,175 @@ function renderPrinciples() {
     .replace(/^- /gm, '<li>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
+// ══════════════════════════════════════════
+// Project Detail (per-project pipeline)
+// ══════════════════════════════════════════
+
+async function openProjectDetail(projectId) {
+  navigateTo('project-detail');
+  await renderProjectDetail(projectId);
+}
+
+async function renderProjectDetail(projectId) {
+  const container = document.getElementById('project-detail-content');
+  const nameEl = document.getElementById('detail-project-name');
+  const idEl = document.getElementById('detail-project-id');
+  const token = getToken();
+  const isPasswordMode = token === '__password_session__';
+
+  if (!token) {
+    container.innerHTML = authGateHTML('Project Detail');
+    return;
+  }
+
+  // Find project from real API data (STATE.projects), fallback to mock
+  const project = (window._datoneProjects || []).find(p => p.project_id === projectId) 
+    || PROJECTS_MOCK.find(p => p.id === projectId);
+  
+  // Populate header from project data if available, otherwise use fallback
+  if (project) {
+    nameEl.textContent = project.title || project.name || projectId;
+    idEl.textContent = projectId + (project.client ? ' · ' + project.client : '');
+  } else {
+    nameEl.textContent = projectId;
+    idEl.textContent = '';
+  }
+  container.innerHTML = '<div class="card"><div class="card-body" style="text-align:center;padding:40px;"><span class="loading"></span> Loading pipeline detail...</div></div>';
+
+  try {
+    let data;
+    if (isPasswordMode) {
+      // Mock single-project pipeline detail
+      const stages = [
+        { stage: 'enquiry', status: 'complete', days_left: null, note: 'Client contacted', at_risk: false },
+        { stage: 'design', status: 'in_progress', days_left: 5, note: 'First draft ready for review', at_risk: false },
+        { stage: 'quote', status: 'pending', days_left: 12, note: '', at_risk: false },
+        { stage: 'production', status: 'pending', days_left: 20, note: 'Awaiting quote approval', at_risk: true },
+        { stage: 'installation', status: 'pending', days_left: null, note: '', at_risk: false }
+      ];
+      data = { stages };
+    } else {
+      const resp = await fetch(API_BASE + '/v1/pipeline/' + projectId, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (!resp.ok) throw new Error('Pipeline API returned ' + resp.status);
+      data = await resp.json();
+    }
+    const stages = data.stages || [];
+
+    if (!stages.length) {
+      container.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;min-height:40vh;"><div class="card" style="width:100%;max-width:480px;"><div class="card-body"><p class="text-muted">No pipeline stages found for this project.</p></div></div></div>';
+      return;
+    }
+
+    // ── AMG-style stage chevron bar + per-stage panels (modeled on amgdisplays.com project pages) ──
+    const STAGE_LABELS = { enquiry:'Enquiry', design:'Design', quote:'Quotation', so:'Confirmation', production:'Production', installation:'Installation', complete:'Complete', dismantle:'Dismantle' };
+
+    const progressIdx = (function() {
+      let i = stages.findIndex(function(s) { return project && s.stage === project.current_stage; });
+      if (i < 0) i = stages.findIndex(function(s) { return ['active','in_progress'].indexOf(String(s.status || '')) >= 0; });
+      return i < 0 ? 0 : i;
+    })();
+    let sel = progressIdx;
+
+    function statusDone(s) { return ['complete','completed','done','approved'].indexOf(String(s.status || '')) >= 0; }
+
+    function deadlineChip(s) {
+      if (!s.deadline || !s.deadline.label) return '';
+      const lab = (s.deadline.signal ? s.deadline.signal + ' ' : '') + s.deadline.label;
+      const overdue = s.deadline.days_remaining != null && s.deadline.days_remaining < 0;
+      return '<span class="badge" style="margin-left:8px;' + (overdue ? 'background:var(--red);color:#fff;' : '') + '">' + esc(lab) + '</span>';
+    }
+
+    function progressStrip(options, current) {
+      if (!options || !options.length) return '';
+      const idx = options.indexOf(current);
+      return '<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0;">' + options.map(function(o, i) {
+        const cur = i === idx;
+        const reached = idx >= 0 && i <= idx;
+        const style = cur ? 'background:#b5d334;color:#10130a;font-weight:700;' : reached ? 'background:rgba(181,211,52,0.30);color:#dfe8c0;' : 'background:rgba(255,255,255,0.07);color:var(--text-muted);';
+        return '<span class="badge" style="' + style + '">' + esc(o.replace(/_/g, ' ')) + '</span>' + (i < options.length - 1 ? '<span style="color:var(--text-muted);">&rsaquo;</span>' : '');
+      }).join('') + '</div>';
+    }
+
+    function kvRow(k, v) {
+      if (!v) return '';
+      return '<tr><td style="width:160px;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:6px 8px;">' + esc(k) + '</td><td style="padding:6px 8px;">' + esc(v) + '</td></tr>';
+    }
+
+    function placeholderNote(txt) {
+      return '<div style="margin-top:14px;padding:14px;border:1px dashed rgba(255,255,255,0.15);border-radius:8px;color:var(--text-muted);font-size:12px;">' + txt + '</div>';
+    }
+
+    function docList(items, kind) {
+      const arr = Array.isArray(items) ? items : (items && Array.isArray(items.items) ? items.items : []);
+      if (!arr.length) return '<p class="text-muted">No ' + kind + ' records yet.</p>' + placeholderNote('Documents for this stage will be sourced from AMG Displays system (' + kind.toUpperCase() + ' card list left + file preview right)');
+      return '<div style="display:flex;flex-direction:column;gap:8px;">' + arr.map(function(q) {
+        const num = q.quote_id || q.so_id || q.id || q.number || q.order_number || '';
+        const amt = q.amount != null ? '$' + Number(q.amount).toLocaleString() : '';
+        const stt = String(q.status || '');
+        return '<div class="card" style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;"><div><strong class="text-mono">' + esc(num) + '</strong> <span class="badge badge-' + (stt === 'approved' ? 'approved' : 'pending') + '" style="margin-left:8px;">' + esc(stt || 'pending') + '</span></div><div class="text-mono">' + esc(amt) + '</div></div>';
+      }).join('') + '</div>';
+    }
+
+    function stagePanel(s) {
+      const d = s.data || {};
+      let body = '';
+      if (s.stage === 'enquiry') {
+        const p = project || {};
+        body = '<table class="data-table" style="width:100%;">' + kvRow('Project', p.title) + kvRow('Client', p.client) + kvRow('Venue', p.venue) + kvRow('Booth size', p.booth_size) + kvRow('Event', p.event_start ? p.event_start + (p.event_end ? ' → ' + p.event_end : '') : '') + kvRow('Status', p.status) + '</table>';
+      } else if (s.stage === 'design') {
+        const files = d.files || [];
+        body = '<div style="margin-bottom:8px;">Versions: <strong>' + (d.version_count || 0) + '</strong></div>'
+          + (files.length
+            ? '<ul style="margin:8px 0 0 16px;">' + files.map(function(f) { return '<li>' + esc(typeof f === 'string' ? f : (f.name || f.file || JSON.stringify(f))) + '</li>'; }).join('') + '</ul>'
+            : placeholderNote('No design versions — this section will mirror AMG Displays DESIGN page: render preview + version dropdown + Approve / Unapprove + Members / Comments'));
+      } else if (s.stage === 'quote') {
+        body = docList(d, 'quotation');
+      } else if (s.stage === 'so') {
+        body = docList(d, 'sales order');
+      } else if (s.stage === 'production') {
+        body = '<div>Freight status: <strong>' + esc(d.freight_status || 'pending') + '</strong></div>'
+          + progressStrip(d.freight_status_options, d.freight_status)
+          + placeholderNote('Production / container loading photo timeline will mirror AMG Displays PRODUCTION page (photos + timestamps + comments)');
+      } else if (s.stage === 'installation') {
+        body = '<div>Arrival status: <strong>' + esc(d.arrival_status || 'pending') + '</strong></div>'
+          + progressStrip(d.arrival_status_options, d.arrival_status)
+          + placeholderNote('On-site installation photo timeline will mirror AMG Displays INSTALLATION page (photos + timestamps + comments)');
+      } else {
+        const rows = Object.keys(d).filter(function(k) { return typeof d[k] !== 'object'; }).map(function(k) { return kvRow(k.replace(/_/g, ' '), String(d[k])); }).join('');
+        body = rows ? '<table class="data-table" style="width:100%;">' + rows + '</table>' : '<p class="text-muted">No data for this stage yet.</p>';
+      }
+      const stBadge = statusDone(s) ? 'approved' : (String(s.status || '').indexOf('active') >= 0 || String(s.status || '').indexOf('progress') >= 0 ? 'active' : 'pending');
+      return '<div class="card"><div class="card-header"><h3 style="display:flex;align-items:center;flex-wrap:wrap;">' + esc(STAGE_LABELS[s.stage] || s.label || s.stage)
+        + '<span class="badge badge-' + stBadge + '" style="margin-left:10px;">' + esc(s.status || 'pending') + '</span>' + deadlineChip(s)
+        + '</h3><span class="tag">GET /v1/pipeline/' + esc(projectId) + '</span></div><div class="card-body" style="padding:16px;">' + body + '</div></div>';
+    }
+
+    function chevronBar() {
+      return '<div style="display:flex;margin-bottom:18px;overflow-x:auto;padding:2px 0 6px;">' + stages.map(function(s, i) {
+        const label = esc(String(STAGE_LABELS[s.stage] || s.label || s.stage)).toUpperCase();
+        const reached = i <= progressIdx;
+        const isSel = i === sel;
+        const bg = reached ? '#b5d334' : '#3a3f46';
+        const color = isSel ? (reached ? '#10130a' : '#ffffff') : (reached ? 'rgba(25,30,10,0.72)' : '#9aa3ad');
+        const clip = i === 0
+          ? 'polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%)'
+          : 'polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%)';
+        return '<div onclick="_selectDetailStage(' + i + ')" style="flex:1;min-width:132px;margin-left:' + (i ? '-10px' : '0') + ';padding:11px 20px 11px 26px;background:' + bg + ';color:' + color + ';font-weight:' + (isSel ? '800' : '600') + ';font-size:12px;letter-spacing:0.06em;text-align:center;cursor:pointer;white-space:nowrap;clip-path:' + clip + ';">' + label + '</div>';
+      }).join('') + '</div>';
+    }
+
+    function rerender() {
+      container.innerHTML = chevronBar() + stagePanel(stages[sel]);
+    }
+    window._selectDetailStage = function(i) { sel = i; rerender(); };
+    rerender();
+  } catch (err) {
+    container.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;min-height:40vh;"><div class="card" style="width:100%;max-width:480px;"><div class="card-body" style="color:var(--red);">Load failed: ' + err.message + '</div></div></div>';
+  }
 }
 
 // ══════════════════════════════════════════

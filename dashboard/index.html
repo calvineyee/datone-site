@@ -1343,64 +1343,13 @@ document.querySelectorAll('.nav-item').forEach(btn => {
 // Mock Data — Public pages use static preview data
 // ══════════════════════════════════════════
 
-const ENTITIES = [
-  { slug: 'amg',      name: 'Artsolute Media Group', companySize: 'Enterprise', status: 'active',   agents: 22, registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-  { slug: 'calway',   name: 'Calway Logistics',      companySize: 'Mid-Market', status: 'active',   agents: 8,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-  { slug: 'synergers',name: 'Synergers Services',   companySize: 'SMB',       status: 'active',   agents: 6,  registered: '2026-05-20', apiBase: 'artsolute-serve:8080' },
-];
+const ENTITIES = [];   // demo fixtures removed 2026-08-04 — page is not wired to a live backend
 
-const AGENTS = [
-  { id: 'jarvis',    display: 'JARVIS',   entity: 'AMG',       department: 'executive',   status: 'active',   capabilities: ['gatekeeper','approval','orchestration'] },
-  { id: 'billie',    display: 'Billie',   entity: 'AMG',       department: 'exhibition',  status: 'active', capabilities: ['clients','projects','quotes'] },
-  { id: 'starseed',  display: 'Starseed', entity: 'AMG',       department: 'accounting',  status: 'active', capabilities: ['invoicing','finance','reports'] },
-  { id: 'xiaohuihui',display: 'Xiaohuihui',entity:'AMG',      department: 'general',     status: 'active', capabilities: ['design','production','logistics'] },
-  { id: 'lulu',      display: 'Lulu',     entity: 'AMG',       department: 'partnership', status: 'active', capabilities: ['clients','contracts','crm'] },
-  { id: 'winda',     display: 'Winda',    entity: 'AMG',       department: 'safety',      status: 'active', capabilities: ['safety','compliance','audit'] },
-  { id: 'thor',      display: 'Thor',     entity: 'AMG',       department: 'design-ops',  status: 'active', capabilities: ['design-ops','prepress','review'] },
-  { id: 'stephen',   display: 'Stephen',  entity: 'AMG',       department: 'strategy',    status: 'active', capabilities: ['strategy','planning','specs'] },
-  { id: 'ana',       display: 'Ana',      entity: 'Calway',    department: 'operations',  status: 'active', capabilities: ['logistics','shipping','tracking'] },
-  { id: 'ana2',      display: 'Ana',      entity: 'Synergers', department: 'operations',  status: 'active', capabilities: ['labor','deployment','staffing'] },
-  { id: 'tony',       display: 'Tony',     entity: 'AMG',       department: 'engineering', status: 'active', capabilities: ['build','deploy','infra'] },
-  { id: 'nicholas',   display: 'Nicholas', entity: 'AMG',       department: 'operations',  status: 'active', capabilities: ['routing','dispatch','scheduling'] },
-  { id: 'victor',     display: 'Victor',   entity: 'AMG',       department: 'finance',     status: 'active', capabilities: ['analytics','budget','forecasting'] },
-  { id: 'clint',      display: 'Clint',    entity: 'Calway',    department: 'operations',  status: 'active', capabilities: ['tracking','monitoring','alerts'] },
-  { id: 'natasha',    display: 'Natasha',  entity: 'AMG',       department: 'intelligence',status: 'active', capabilities: ['research','shows','briefings'] },
-  { id: 'steven',     display: 'Steven',   entity: 'AMG',       department: 'relations',   status: 'active', capabilities: ['clients','outreach','onboarding'] },
-  { id: 'wanda',      display: 'Wanda',    entity: 'AMG',       department: 'legal',       status: 'active', capabilities: ['contracts','compliance','content'] },
-  { id: 'peter',      display: 'Peter',    entity: 'AMG',       department: 'marketing',   status: 'active', capabilities: ['social','campaigns','analytics'] },
-  { id: 'ariel',      display: 'Ariel',    entity: 'AMG',       department: 'hr',          status: 'active', capabilities: ['recruiting','onboarding','payroll'] },
-  { id: 'mason',      display: 'Mason',    entity: 'AMG',       department: 'production',  status: 'active', capabilities: ['fabrication','qc','assembly'] },
-  { id: 'leo',        display: 'Leo',      entity: 'AMG',       department: 'it',          status: 'active', capabilities: ['network','security','support'] },
-  { id: 'kai',        display: 'Kai',      entity: 'Calway',    department: 'logistics',   status: 'active', capabilities: ['freight','customs','routing'] },
-  { id: 'reid',       display: 'Reid',     entity: 'Calway',    department: 'warehouse',   status: 'active', capabilities: ['inventory','packing','loading'] },
-  { id: 'elena',      display: 'Elena',    entity: 'Synergers', department: 'field',       status: 'active', capabilities: ['labor','deployment','onsite'] },
-  { id: 'dante',      display: 'Dante',    entity: 'Synergers', department: 'safety',      status: 'active', capabilities: ['audit','training','compliance'] },
-  { id: 'gwen',       display: 'Gwen',     entity: 'Calway',    department: 'dispatch',    status: 'active', capabilities: ['scheduling','routing','fleet'] },
-  { id: 'felix',      display: 'Felix',    entity: 'AMG',       department: 'design',      status: 'active', capabilities: ['3d','rendering','cad'] },
-  { id: 'zara',       display: 'Zara',     entity: 'AMG',       department: 'media',       status: 'active', capabilities: ['photo','video','editing'] },
-  { id: 'oscar',      display: 'Oscar',    entity: 'Calway',    department: 'compliance',  status: 'active', capabilities: ['customs','docs','regulations'] },
-  { id: 'ivy',        display: 'Ivy',      entity: 'Synergers', department: 'planning',    status: 'active', capabilities: ['staffing','scheduling','rostering'] },
-  { id: 'blake',      display: 'Blake',    entity: 'AMG',       department: 'sales',       status: 'active', capabilities: ['leads','pipeline','closing'] },
-  { id: 'soren',      display: 'Soren',    entity: 'Calway',    department: 'fleet',       status: 'active', capabilities: ['maintenance','telemetry','uptime'] },
-  { id: 'nora',       display: 'Nora',     entity: 'Synergers', department: 'support',     status: 'active', capabilities: ['helpdesk','training','docs'] },
-  { id: 'riley',      display: 'Riley',    entity: 'Calway',    department: 'analytics',   status: 'active', capabilities: ['dashboards','reports','metrics'] },
-  { id: 'quincy',     display: 'Quincy',   entity: 'Synergers', department: 'vendor',      status: 'active', capabilities: ['sourcing','negotiation','supply'] },
-];
+const AGENTS = [];   // demo fixtures removed 2026-08-04 — page is not wired to a live backend
 
-const REGISTRATIONS = [
-  { id: 'REG-2026-001', entity: 'New Exhibitor Co.', email: 'contact@newexhibitor.com', submitted: '2026-06-05T10:23:00Z', status: 'pending' },
-  { id: 'REG-2026-002', entity: 'TechVault Inc.',    email: 'hello@techvault.io',      submitted: '2026-06-05T14:01:00Z', status: 'pending' },
-];
+const REGISTRATIONS = [];   // demo fixtures removed 2026-08-04 — page is not wired to a live backend
 
-const TIMELINE = [
-  { time: '2026-06-05 14:01 UTC', entity: 'TechVault Inc.',     action: 'submitted registration',     detail: 'REG-2026-002' },
-  { time: '2026-06-05 10:23 UTC', entity: 'New Exhibitor Co.',  action: 'submitted registration',     detail: 'REG-2026-001' },
-  { time: '2026-06-04 16:48 UTC', entity: 'Calway Logistics',   action: 'entity activated',           detail: 'API token issued' },
-  { time: '2026-06-04 16:01 UTC', entity: 'Datone',             action: 'agent fleet provisioned',    detail: '6 agents registered' },
-  { time: '2026-06-04 14:48 UTC', entity: 'AMG',                action: 'client migration completed', detail: '63 clients imported' },
-  { time: '2026-06-03 07:23 UTC', entity: 'Datone',             action: 'Phase 1 backend deployed',   detail: 'artsolute-serve v1.0' },
-  { time: '2026-05-24 UTC',      entity: 'Datone',             action: 'Vercel project created',     detail: 'datone-site' },
-];
+const TIMELINE = [];   // demo fixtures removed 2026-08-04 — page is not wired to a live backend
 
 const PRINCIPLES_MD = `
 ## §1. Purpose
@@ -1480,23 +1429,12 @@ The steward may:
 // Mock Data — Protected Pages (visible after auth)
 // ══════════════════════════════════════════
 
-const WHOAMI_MOCK = {
-  entity: 'AMG',
-  entity_id: 'ent_8f3a2b1c',
-  display_name: 'Artsolute Media Group',
-  role: 'admin',
-  token_scope: ['entities:read', 'entities:write', 'agents:read', 'projects:read', 'projects:write'],
-  rate_limit: '1000 req/min',
-  since: '2026-05-20T00:00:00Z',
+const WHOAMI_MOCK = {   // demo fixture emptied 2026-08-04
+  entity: '—', entity_id: '—', display_name: '—', role: '—',
+  token_scope: [], rate_limit: '—', since: '—',
 };
 
-const PROJECTS_MOCK = [
-  { id: 'PRJ-001', name: 'NVIDIA GTC 2026',       client: 'NVIDIA',     status: 'active',   budget: '$280,000', progress: '68%' },
-  { id: 'PRJ-002', name: 'Formula 1 Miami GP',    client: 'Formula 1',  status: 'active',   budget: '$420,000', progress: '45%' },
-  { id: 'PRJ-003', name: 'Genshin Impact TGS',     client: 'HoYoverse',  status: 'pending',  budget: '$195,000', progress: '12%' },
-  { id: 'PRJ-004', name: 'AWS re:Invent Booth',    client: 'Amazon',     status: 'completed',budget: '$310,000', progress: '100%' },
-  { id: 'PRJ-005', name: 'Samsung MWC Pavilion',   client: 'Samsung',    status: 'active',   budget: '$350,000', progress: '72%' },
-];
+const PROJECTS_MOCK = [];   // demo fixtures removed 2026-08-04 — page is not wired to a live backend
 
 // ══════════════════════════════════════════
 // Auth Gate HTML

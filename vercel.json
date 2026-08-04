@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://nvidia.tail8fe1c2.ts.net/api/$1"
+      "destination": "https://datonemcp.artsolutemediagroup.com/api/$1"
     },
     {
       "source": "/consume",

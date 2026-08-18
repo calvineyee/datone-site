@@ -160,6 +160,24 @@
     .ask-box input:focus {
       border-color: var(--accent);
     }
+    .mic-btn {
+      flex: 0 0 auto; border: 1px solid var(--line); background: var(--bg2);
+      border-radius: 10px; cursor: pointer; font-size: 17px; line-height: 1;
+      padding: 0 13px; align-self: stretch; color: var(--text);
+      transition: background .15s, border-color .15s, transform .1s;
+    }
+    .mic-btn:hover { background: var(--bg3, var(--bg2)); }
+    .mic-btn:active { transform: scale(.94); }
+    .mic-btn.rec {
+      border-color: #d94f4f; background: #d94f4f; color: #fff;
+      animation: micpulse 1.1s ease-in-out infinite;
+    }
+    .mic-btn.busy { opacity: .55; cursor: progress; }
+    @keyframes micpulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(217,79,79,.55); }
+      50%      { box-shadow: 0 0 0 7px rgba(217,79,79,0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .mic-btn.rec { animation: none; } }
     .ask-box .btn {
       padding: 10px 18px;
     }
@@ -404,10 +422,24 @@ const API = '/api';
 const params = new URLSearchParams(window.location.search);
 const token = params.get('token');
 
+// Device link. Field staff open Datone from a link saved to their phone's home screen,
+// and that link carries the session in the URL. Why not the cookie: mail-app in-app
+// browsers discard it — verified 2026-08-18, /login/verify succeeded and the very next
+// /login/whoami came back "No session", bouncing people to the login screen every time.
+// Same model as the tenant recorder/translator links. The server accepts ?k= on read and
+// ask routes only, never on logout or uploads: a credential that lives in a URL should
+// not carry write power.
+const deviceKey = params.get('k') || '';
+
 const app = document.getElementById('app');
 
+function _withKey(path) {
+  if (!deviceKey) return path;
+  return path + (path.includes('?') ? '&' : '?') + 'k=' + encodeURIComponent(deviceKey);
+}
+
 async function api(path, opts = {}) {
-  const res = await fetch(API + path, {
+  const res = await fetch(API + _withKey(path), {
     credentials: 'include',
     ...opts,
     headers: {
@@ -447,7 +479,7 @@ if (token && token.length === 64) {
       setStatus(statusEl, '✓ Signed in as ' + result.email, 'ok');
       // Clean URL + load feed
       setTimeout(() => {
-        window.history.replaceState({}, '', '/consume');
+        window.history.replaceState({}, '', '/consume' + (deviceKey ? '?k=' + encodeURIComponent(deviceKey) : ''));
         loadFeed();
       }, 800);
     } else {
@@ -552,6 +584,9 @@ async function renderFeed(session) {
         <div class="ask-box">
           <input type="text" id="ask-input" placeholder="Ask Datone anything…"
                  onkeydown="_typeRipple(event); if(event.key==='Enter')doAsk()">
+          <button id="ask-mic" class="mic-btn" onclick="toggleMic()"
+                  title="Tap to speak, tap again to stop. English or Spanish."
+                  aria-label="Ask by voice">&#127908;</button>
           <button id="ask-btn" class="btn" onclick="doAsk()">Ask</button>
         </div>
         <span id="ask-clear" onclick="clearAsk()" style="display:none;">＋ New chat</span>
@@ -734,6 +769,83 @@ async function _sendFeedback(rating, question, ans, note) {
         answer_head: (ans || '').slice(0, 800), note: note || '' }),
     });
   } catch (e) { /* swallow — a failed vote must never surface an error */ }
+}
+
+// ── Voice input ────────────────────────────────────────────────────────────────
+// Several of the field crew are older and find typing on a phone slow, so the ask box
+// also takes speech. We record a short clip and hand the raw bytes to /api/ask/stt,
+// which passes them to the shop's own Whisper large-v3 (127.0.0.1:8115 — the same
+// service the tenant translator uses). Whisper identifies the language itself, so the
+// Spanish speakers can simply talk; nothing has to be selected first.
+let _micRec = null, _micStream = null, _micChunks = [];
+
+function _micSet(state, msg) {
+  const b = document.getElementById('ask-mic');
+  if (!b) return;
+  b.classList.toggle('rec', state === 'rec');
+  b.classList.toggle('busy', state === 'busy');
+  b.textContent = state === 'rec' ? '\u23F9' : '\uD83C\uDFA4';
+  if (msg) {
+    const inp = document.getElementById('ask-input');
+    if (inp) inp.placeholder = msg;
+  }
+}
+
+function _micStop() {
+  if (_micStream) { _micStream.getTracks().forEach(function (t) { t.stop(); }); _micStream = null; }
+  _micRec = null;
+}
+
+async function toggleMic() {
+  if (_micRec && _micRec.state === 'recording') { _micRec.stop(); return; }
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    _micSet('', 'Voice is not supported in this browser — please type');
+    return;
+  }
+  try {
+    _micStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+    });
+  } catch (e) {
+    _micSet('', 'Microphone blocked — allow it in your browser settings, or type');
+    return;
+  }
+  let mime = '';
+  ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].forEach(function (m) {
+    if (!mime && MediaRecorder.isTypeSupported(m)) mime = m;
+  });
+  try { _micRec = mime ? new MediaRecorder(_micStream, { mimeType: mime }) : new MediaRecorder(_micStream); }
+  catch (e) { _micRec = new MediaRecorder(_micStream); }
+
+  _micChunks = [];
+  _micRec.ondataavailable = function (ev) { if (ev.data && ev.data.size) _micChunks.push(ev.data); };
+  _micRec.onstop = async function () {
+    const blob = new Blob(_micChunks, { type: _micChunks.length ? _micChunks[0].type : 'audio/webm' });
+    _micStop();
+    if (!blob.size) { _micSet('', 'Nothing was recorded — try again'); return; }
+    _micSet('busy', 'Listening…');
+    try {
+      const res = await fetch(API + _withKey('/ask/stt'), {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': blob.type || 'application/octet-stream' },
+        body: blob
+      });
+      const js = await res.json();
+      const inp = document.getElementById('ask-input');
+      if (js && js.ok && (js.text || '').trim()) {
+        if (inp) { inp.value = js.text.trim(); inp.focus(); }
+        _micSet('', 'Press Ask, or edit what you said');
+      } else {
+        _micSet('', js && js.message === 'stt_unavailable'
+          ? 'Voice service is down — please type'
+          : 'Could not make that out — try again, or type');
+      }
+    } catch (e) {
+      _micSet('', 'Voice service unreachable — please type');
+    }
+  };
+  _micRec.start();
+  _micSet('rec', 'Listening — tap the button again when you are done');
 }
 
 async function doAsk() {

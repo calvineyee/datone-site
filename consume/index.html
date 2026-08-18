@@ -160,13 +160,17 @@
     .ask-box input:focus {
       border-color: var(--accent);
     }
+    /* The crew this is for are older and do not type quickly, so the mic has to read as
+       a real button, not a decoration: solid fill, and at least a 44px touch target. */
     .mic-btn {
-      flex: 0 0 auto; border: 1px solid var(--line); background: var(--bg2);
-      border-radius: 10px; cursor: pointer; font-size: 17px; line-height: 1;
-      padding: 0 13px; align-self: stretch; color: var(--text);
+      flex: 0 0 auto; border: 1px solid var(--line);
+      background: rgba(255,255,255,.07);
+      border-radius: 10px; cursor: pointer; font-size: 21px; line-height: 1;
+      min-width: 52px; min-height: 44px; padding: 0 14px;
+      align-self: stretch; color: var(--text);
       transition: background .15s, border-color .15s, transform .1s;
     }
-    .mic-btn:hover { background: var(--bg3, var(--bg2)); }
+    .mic-btn:hover { background: rgba(255,255,255,.14); border-color: var(--accent, var(--line)); }
     .mic-btn:active { transform: scale(.94); }
     .mic-btn.rec {
       border-color: #d94f4f; background: #d94f4f; color: #fff;

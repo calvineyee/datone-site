@@ -711,8 +711,11 @@ async function doUploadFile(f) {               // shared core — file picker OR
       if (res.status === 401) _m = 'Your session expired — please Sign out and sign in again, then retry';
       else if (res.status === 413) {
         var mb = (f.size/1048576).toFixed(1);
-        _m = 'That file is ' + mb + ' MB and was refused. Datone accepts 50 MB; anything larger is '
-           + 'stopped before it reaches us. Try splitting it, or upload just the text.';
+        var via = res.headers.get('server') || '?';
+        var vid = res.headers.get('x-vercel-id') || '';
+        _m = 'That file is ' + mb + ' MB and was refused (413) by: ' + via + (vid ? ' / ' + vid : '')
+           + '. Datone itself accepts 50 MB, so this was stopped in front of us. '
+           + 'Try splitting it, or upload just the text.';
       }
       else if (!_m) _m = 'error ' + res.status + ' — please try again';
       st.textContent = '✗ Upload failed: ' + _m;

@@ -709,7 +709,11 @@ async function doUploadFile(f) {               // shared core — file picker OR
       st.className = 'doc-upload-status err';
       var _m = j.message;
       if (res.status === 401) _m = 'Your session expired — please Sign out and sign in again, then retry';
-      else if (res.status === 413) _m = 'That file is over the 25 MB limit — split it, or upload the PDF text only';
+      else if (res.status === 413) {
+        var mb = (f.size/1048576).toFixed(1);
+        _m = 'That file is ' + mb + ' MB and was refused. Datone accepts 50 MB; anything larger is '
+           + 'stopped before it reaches us. Try splitting it, or upload just the text.';
+      }
       else if (!_m) _m = 'error ' + res.status + ' — please try again';
       st.textContent = '✗ Upload failed: ' + _m;
     }

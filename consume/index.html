@@ -691,10 +691,29 @@ async function doUploadFile(f) {               // shared core — file picker OR
     // Cookie doesn't cross origins, so pass the session as a form field
     // (whoami supplies it). Falls back to the proxied path if direct fails.
     let res;
-    // Straight through datone.live. There used to be a direct hop to the Tailscale host here to
-    // dodge a Vercel edge limit; measured 2026-08-18 a 30 MB body arrives intact this way, and the
-    // Funnel that hop needed is closed, so it only cost every upload a failed request first.
-    res = await fetch('/api/documents', { method: 'POST', body: fd, credentials: 'include' });
+    // Vercel caps a serverless function body at 4.5 MB (a platform limit, measured 2026-08-19:
+    // a 43.8 MB upload came back 413 with server:Vercel). Anything bigger has to skip the proxy and
+    // hit the backend host directly — datonemcp.* is the same :8080 backend over cloudflared, it
+    // took a 44 MB body fine and allows CORS from datone.live. The cookie does not cross origins,
+    // so the session goes as a form field, which the upload endpoint already accepts.
+    var BIG = 4 * 1024 * 1024;   // stay under Vercel's ~4.5 MB with headroom
+    let res;
+    if (f.size > BIG) {
+      var who = await api('/login/whoami');
+      if (who && who.session_id) {
+        var fdb = new FormData();
+        fdb.append('file', f);
+        fdb.append('doc_name', f.name.replace(/\.[^.]+$/, ''));
+        fdb.append('session', who.session_id);
+        res = await fetch('https://datonemcp.artsolutemediagroup.com/api/documents',
+                          { method: 'POST', body: fdb });
+      } else {
+        // no session to authenticate the direct call — fall through to the proxy and let it 401
+        res = await fetch('/api/documents', { method: 'POST', body: fd, credentials: 'include' });
+      }
+    } else {
+      res = await fetch('/api/documents', { method: 'POST', body: fd, credentials: 'include' });
+    }
     const j = await res.json().catch(function () { return { ok: false, message: res.statusText }; });
     if (!st) return;
     if (res.ok && j.ok) {

@@ -12,6 +12,18 @@ https://datone.live
 - **Registry**: https://datone.live/#registry
 - **Spec**: https://datone.live/#spec
 
+## What it actually does (in plain terms)
+- Agents connect to the systems a company already runs on (scheduling, spreadsheets, email, production data) and build the information people need from them.
+- Every morning, each person receives what is missing on their plate (unanswered quotes, jobs with no drawing, blocked work). One tap to answer.
+- Paperwork reads itself: drop a booking confirmation and the fields file themselves; a human reviews and approves. Company spreadsheets are filled in place, formulas untouched.
+- Nothing irreversible moves without a named human approval.
+
+## In production (verified 2026-08-26)
+Running daily inside a real manufacturing group: 3 independent entities (isolation verified), 23 registered agents, 41 people, 635 projects on shared timelines, 22 platform health guards (the system monitors itself). This is production, not a demo.
+
+## Recently shipped
+AI document extraction (confirmations to structured fields), approval workflows with export locks, per-person morning gap digest, self-monitoring health board.
+
 ## Four Tenets
 1. **Independent** — Every entity keeps its sovereignty. Data is reference-only.
 2. **Aware** — Cross-entity real events leave permanent marks.
@@ -38,6 +50,6 @@ whoami, list_projects, get_project, create_project, update_project, get_timeline
 Reference-only data sharing. Events are recorded, not owned. Entities reference — never consume. Every cross-entity event is permanent and auditable.
 
 ## Onboarding
-- **Register**: https://datone.live/#join
-- **Contact**: hello@datone.live
+- **Talk to us / inquiries**: https://datone.live/#contact (the form on the site is the fastest way to reach the team)
+- **Register an entity**: https://datone.live/#start
 - **CLI**: `datone register --name "Your Company" --domain "exhibition" --admin-email "you@company.com"`

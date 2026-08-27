@@ -5,7 +5,7 @@
     "name": "Artsolute Media Group",
     "id": "amg",
     "url": "https://artsolutemediagroup.com",
-    "stewardContact": "https://datone.live/#contact"
+    "stewardContact": "info@cycgroup.ai"
   },
   "agents": [
     {
@@ -110,5 +110,5 @@
   ],
   "meshEndpoint": "https://artsolutemediagroup.com",
   "capabilities": ["spec", "registry", "agent-directory", "cross-entity-messaging"],
-  "stewardContact": "https://datone.live/#contact"
+  "stewardContact": "info@cycgroup.ai"
 }

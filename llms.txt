@@ -51,5 +51,6 @@ Reference-only data sharing. Events are recorded, not owned. Entities reference 
 
 ## Onboarding
 - **Talk to us / inquiries**: https://datone.live/#contact (the form on the site is the fastest way to reach the team)
+- **Email**: info@cycgroup.ai (CYC Group, the company behind Datone)
 - **Register an entity**: https://datone.live/#start
 - **CLI**: `datone register --name "Your Company" --domain "exhibition" --admin-email "you@company.com"`

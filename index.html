@@ -64,7 +64,8 @@
 
   .nav{position:sticky;top:0;z-index:20;background:rgba(247,246,242,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-  .brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.3em;font-size:17px;color:var(--ink)}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:17px;color:var(--ink)}
+  .brand .wm{letter-spacing:.3em}
   .brand .o{color:var(--green)}
   .lmk{width:28px;height:28px;overflow:visible;flex:0 0 auto}
   .lmk-pulse{transform-box:fill-box;transform-origin:center;animation:lmkpulse 3s ease-out infinite}
@@ -181,7 +182,7 @@
 </head>
 <body>
 <nav class="nav"><div class="wrap">
-  <div class="brand"><svg class="lmk" viewBox="0 0 120 120" aria-hidden="true"><circle class="lmk-pulse" cx="60" cy="60" r="44" fill="none" stroke="#4E7A4E" stroke-width="7" opacity=".55"/><circle cx="60" cy="60" r="44" fill="none" stroke="#4E7A4E" stroke-width="16" stroke-linecap="round" stroke-dasharray="234 43" transform="rotate(-17.5 60 60)"/><circle cx="91.1" cy="28.9" r="9" fill="#16181D"/></svg>DAT<span class="o">O</span>NE</div>
+  <div class="brand"><svg class="lmk" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="44" fill="none" stroke="#4E7A4E" stroke-width="16" stroke-linecap="round" stroke-dasharray="234 43" transform="rotate(-17.5 60 60)"/><circle cx="91.1" cy="28.9" r="9" fill="#16181D"/></svg><span class="wm">DAT<span class="o">O</span>NE</span></div>
   <div class="links"><a href="#what">What it does</a><a href="#boot">For agents</a><a href="#proof">Live today</a><a href="#path">The path</a><a href="#spec">Spec</a><a href="#start">Register</a></div>
 </div></nav>
 

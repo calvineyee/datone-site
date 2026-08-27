@@ -172,6 +172,26 @@
   .cmd{margin-top:24px;background:#14161B;border:1px solid #2A2D34;border-radius:12px;padding:16px 18px;font-family:var(--mono);font-size:13px;color:#ECEFF3;overflow-x:auto;position:relative}
   .cmd .cm{color:#6E747E} .cmd .fl{color:#9FCB9F}
 
+  .made{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:44px}
+  @media(max-width:760px){.made{grid-template-columns:1fr}}
+  .mcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+  .mcard .pain{font-family:var(--mono);font-size:12.5px;color:#8A5D0B;background:#F8EFDC;border:1px solid rgba(178,130,42,.3);border-radius:100px;display:inline-block;padding:4px 12px}
+  .mcard h3{margin:14px 0 9px;color:var(--green-deep)}
+  .mcard p{color:var(--muted);font-size:14.5px}
+  .madeproof{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:26px;padding:16px 20px;background:var(--green-soft);border:1px solid rgba(78,122,78,.3);border-radius:12px;font-size:15px;color:var(--muted)}
+  .madeproof b{color:var(--ink)}
+  .madeproof .dot{width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 8px rgba(46,158,91,.7);flex:none}
+  .cform{margin-top:38px;max-width:640px;display:grid;gap:16px}
+  .cform label{display:grid;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink)}
+  .cform .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.cform .row2{grid-template-columns:1fr}}
+  .cform input,.cform textarea{font:inherit;font-size:15px;font-weight:400;padding:12px 14px;border:1px solid var(--line-strong);border-radius:10px;background:var(--panel);color:var(--ink);width:100%}
+  .cform input:focus,.cform textarea:focus{outline:2px solid var(--green);outline-offset:1px;border-color:var(--green)}
+  .cform .crow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .cform .cnote{font-size:12.5px;color:var(--faint)}
+  .cerr{color:#AE3A2E;font-size:13.5px;min-height:1em}
+  .cok{margin-top:38px;max-width:640px;background:var(--green-soft);border:1px solid rgba(78,122,78,.35);border-radius:12px;padding:22px 24px;font-size:16px;color:var(--muted)}
+  .cok b{color:var(--ink)}
   footer{border-top:1px solid var(--line);color:var(--faint);font-size:13px;background:var(--panel)}
   footer .wrap{display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:space-between;padding:30px 26px 40px}
   footer .links{display:flex;gap:20px}
@@ -183,7 +203,7 @@
 <body>
 <nav class="nav"><div class="wrap">
   <div class="brand"><svg class="lmk" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="44" fill="none" stroke="#4E7A4E" stroke-width="16" stroke-linecap="round" stroke-dasharray="234 43" transform="rotate(-17.5 60 60)"/><circle cx="91.1" cy="28.9" r="9" fill="#16181D"/></svg><span class="wm">DAT<span class="o">O</span>NE</span></div>
-  <div class="links"><a href="#what">What it does</a><a href="#boot">For agents</a><a href="#proof">Live today</a><a href="#path">The path</a><a href="#spec">Spec</a><a href="#start">Register</a></div>
+  <div class="links"><a href="#what">What it does</a><a href="#boot">For agents</a><a href="#proof">Live today</a><a href="#path">The path</a><a href="#spec">Spec</a><a href="#contact">Contact</a></div>
 </div></nav>
 
 <main>
@@ -197,7 +217,7 @@
     </div>
     <p class="idexplain" id="idexplain"></p>
     <div class="cta-row">
-      <a class="btn primary" href="#start">Add your entity &rarr;</a>
+      <a class="btn primary" href="#contact">Talk to us &rarr;</a>
       <a class="btn ghost" href="#spec">Read the protocol spec</a>
     </div>
     <div class="proofstrip">
@@ -209,7 +229,22 @@
     </div>
   </div></section>
 
-  <section id="what"><div class="wrap">
+  <section id="made"><div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">We built it inside a real company &mdash; and it worked</span>
+      <h2>Agents connected to a company's internal systems. Running every day.</h2>
+      <p>Datone wasn't designed on a whiteboard. Inside a working manufacturing group, our agents plug into the systems the company already ran on &mdash; the scheduling system, the spreadsheets, the mailbox, the production data &mdash; and build the information people actually need from them.</p>
+    </div>
+    <div class="made">
+      <div class="mcard"><div class="pain">&ldquo;We found out too late.&rdquo;</div><h3>Now the system tells you first</h3><p>Every morning each person gets what's missing on their plate &mdash; the quote that never became an order, the job with no drawing filed. One tap to answer.</p></div>
+      <div class="mcard"><div class="pain">&ldquo;Someone retypes every confirmation.&rdquo;</div><h3>Now paperwork reads itself</h3><p>Drop a booking confirmation on the page &mdash; flights, hotel, car rental file themselves into the right fields. A person reviews and approves.</p></div>
+      <div class="mcard"><div class="pain">&ldquo;Don't touch our spreadsheet.&rdquo;</div><h3>We didn't &mdash; agents fill it</h3><p>The exact workbook the payroll team already trusts, filled by agents. Formulas untouched, nothing to relearn.</p></div>
+      <div class="mcard"><div class="pain">&ldquo;Who approved this?&rdquo;</div><h3>Now nothing moves unsigned</h3><p>Approvals with names on them, in one queue &mdash; and the paperwork stays locked until a human signs off.</p></div>
+    </div>
+    <div class="madeproof"><span class="dot"></span>This is production, not a demo &mdash; <b>3 companies &middot; 23 agents &middot; 41 people &middot; 635 projects</b>, every day.<a class="btn primary" href="#contact" style="margin-left:auto">Talk to us &rarr;</a></div>
+  </div></section>
+
+  <section id="what" class="band"><div class="wrap">
     <div class="sh">
       <span class="eyebrow">What it does &mdash; in plain terms</span>
       <h2>Before the philosophy: here's what actually happens.</h2>
@@ -307,6 +342,26 @@
     </div>
   </div></section>
 
+  <section id="contact" class="band"><div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Want this in your company?</span>
+      <h2>Talk to us.</h2>
+      <p>Tell us what your company runs on and what keeps slipping through the cracks. We'll show you how agents would sit on top of your systems &mdash; a walkthrough, not a slide deck.</p>
+    </div>
+    <form class="cform" id="cform" autocomplete="off">
+      <div class="row2">
+        <label>Name<input name="name" required maxlength="120" placeholder="Your name"></label>
+        <label>Company<input name="company" maxlength="160" placeholder="Company (optional)"></label>
+      </div>
+      <label>Work email<input name="email" type="email" required maxlength="200" placeholder="you@company.com"></label>
+      <label>What does your company run on &mdash; and what keeps going missing?<textarea name="message" rows="4" maxlength="4000" placeholder="e.g. scheduling in one system, quotes in spreadsheets, confirmations by email&hellip; and we keep finding out too late."></textarea></label>
+      <input name="website" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
+      <div class="crow"><button class="btn primary" type="submit" id="csend">Send inquiry &rarr;</button><span class="cnote">Lands straight in Datone &mdash; our own inquiry queue, naturally.</span></div>
+      <div class="cerr" id="cerr"></div>
+    </form>
+    <div class="cok" id="cok" style="display:none"><b>Got it &mdash; thank you.</b> We read every inquiry and we'll get back to you.</div>
+  </div></section>
+
   <section id="start" class="final"><div class="wrap">
     <div class="box">
       <span class="eyebrow">Get started</span>
@@ -352,6 +407,17 @@
       }, 350+i*620));
     });
   }
+  var cf=document.getElementById('cform');
+  if(cf){cf.addEventListener('submit',function(ev){ev.preventDefault();
+    var btn=document.getElementById('csend'),err=document.getElementById('cerr');
+    btn.disabled=true;btn.textContent='Sending\u2026';err.textContent='';
+    var d={};['name','company','email','message','website'].forEach(function(k){d[k]=(cf.elements[k]&&cf.elements[k].value)||'';});
+    fetch('/api/consume/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+     .then(function(r){return r.json().then(function(j){return {s:r.status,j:j};});})
+     .then(function(x){ if(x.j&&x.j.ok){cf.style.display='none';document.getElementById('cok').style.display='block';}
+       else{err.textContent=(x.j&&x.j.error)||'Something went wrong \u2014 please try again.';btn.disabled=false;btn.textContent='Send inquiry \u2192';} })
+     .catch(function(){err.textContent='Network hiccup \u2014 please try again.';btn.disabled=false;btn.textContent='Send inquiry \u2192';});
+  });}
   document.getElementById('bootBtn').addEventListener('click',boot);
   document.getElementById('rebootBtn').addEventListener('click',boot);
   var fired=false;

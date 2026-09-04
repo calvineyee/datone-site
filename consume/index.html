@@ -238,7 +238,7 @@
     #hlogo { animation:lbLogo 4.8s ease-in-out infinite; }
     .ask-turn { margin: 0 0 18px; scroll-margin-top: 84px; }
     .ask-turn + .ask-turn { border-top: 1px solid #1f2937; padding-top: 16px; }
-    .ask-q { font-size:14px; color:#c7d2fe; background:#1a2236; border-radius:10px; padding:8px 12px; margin:0 0 10px; display:inline-block; max-width:100%; word-break:break-word; }
+    .ask-q { font-size:14px; color:#c7d2fe; background:#1a2236; border-radius:10px; padding:8px 12px; margin:0 0 10px; display:inline-block; max-width:100%; word-break:break-word; white-space:pre-wrap; text-align:left; }
     #ask-clear { font-size:12px; color:#9ca3af; cursor:pointer; margin:10px 0 0; display:inline-block; }
     #ask-clear:hover { color:#c7d2fe; }
     .ask-upload { margin:8px 0 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
@@ -264,6 +264,7 @@
     }
 
   .ask-fb{display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:6px;}.ask-fb-q{font-size:12px;color:var(--muted,#8a94a6);}.ask-fb-btn{background:none;border:1px solid var(--border,#2a3140);border-radius:6px;cursor:pointer;font-size:14px;line-height:1;padding:3px 8px;opacity:.75;transition:opacity .15s,transform .1s;}.ask-fb-btn:hover{opacity:1;transform:scale(1.08);}
+    #ask-input { resize:none; overflow-y:auto; line-height:1.45; font-family:inherit; font-size:inherit; min-height:44px; max-height:320px; white-space:pre-wrap; }
 </style>
 </head>
 <body>
@@ -586,8 +587,7 @@ async function renderFeed(session) {
       </div>
       <div class="ask-bar">
         <div class="ask-box">
-          <input type="text" id="ask-input" placeholder="Ask Datone anything…"
-                 onkeydown="_typeRipple(event); if(event.key==='Enter')doAsk()">
+          <textarea id="ask-input" rows="1" placeholder="Ask Datone anything… (paste a spec: Shift+Enter for a new line, Enter to send)" onkeydown="_typeRipple(event); if(event.key==='Enter' &amp;&amp; !event.shiftKey){event.preventDefault();doAsk();}" oninput="_growAsk(this)"></textarea>
           <button id="ask-mic" class="mic-btn" onclick="toggleMic()"
                   title="Tap to speak, tap again to stop. English or Spanish."
                   aria-label="Ask by voice">&#127908;</button>
@@ -669,6 +669,10 @@ function clearAsk() {
 
 // Upload a reference document into Datone (session-authed); it's chunked, embedded,
 // and immediately searchable via the ASK box. Multipart fetch (NOT api(), which forces JSON).
+function _growAsk(el) {                          // multi-line ask box grows with its content (max ~14 lines)
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 320) + 'px';
+}
 function doUpload(inp) {                       // from the <input type=file>
   const f = inp.files && inp.files[0];
   if (f) doUploadFile(f);
@@ -913,7 +917,7 @@ async function doAsk() {
   } finally {
     input.disabled = false;
     btn.disabled = false;
-    input.value = '';
+    input.value = ''; if (typeof _growAsk === 'function') _growAsk(input);
     input.focus({ preventScroll: true });
   }
 }

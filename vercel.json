@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/review-entry/(.*)",
+      "destination": "https://datonemcp.artsolutemediagroup.com/review-entry/$1"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "https://datonemcp.artsolutemediagroup.com/api/$1"
     },
